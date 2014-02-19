@@ -23,15 +23,13 @@ n=6;
 
 % Tbi is the parent class of all transformations from body to frame i -
 % with both homoegneous, rotation and position matrices/vectors
-Tbi=struct('gbi',zeros(4,4,n),'Rbi', zeros(3,3,n),'pbi', zeros(3,1,n),'Adgbi',zeros(6,6,n));
+Ti = struct('g0b',zeros(3,3),'g0i',zeros(4,4,n),'R0i', zeros(3,3,n),'p0i', zeros(3,1,n),  'Adg0i',zeros(6,6,n),'Adg0i_inv',zeros(6,6,n),   ...
+'gbi',zeros(4,4,n),'Rbi', zeros(3,3,n),'pbi', zeros(3,1,n),'Adgbi',zeros(6,6,n),'Adgbi_inv',zeros(6,6,n),...
+'g6e',eye(4) ,'g0e',zeros(4,4),'R0e', zeros(3,3),'p0e', zeros(3,1),  'Adg0e',zeros(6,6),'Adg0e_inv',zeros(6,6),   ...
+'gbe',zeros(4,4),'Rbe', zeros(3,3),'pbe', zeros(3,1),'Adgbe',zeros(6,6),'Adgbe_inv',zeros(6,6) ...
+);
 
-%Tbi.gbi=struct('gb1',zeros(4,4),'gb2',zeros(4,4),'gb3',zeros(4,4),'gb4',zeros(4,4),'gb5',zeros(4,4),'gb6',zeros(4,4));
-% Tbi.Rbi=struct('Rb1',zeros(3,3),'Rb2',zeros(3,3),'Rb3',zeros(3,3),'Rb4',zeros(3,3),'Rb5',zeros(3,3),'Rb6',zeros(3,3)); %, 'names', ['Rb1','Rb2','Rb3','Rb4','Rb5','Rb6']);
-% Tbi.pbi=struct('pb1',zeros(3,1),'pb2',zeros(3,1),'pb3',zeros(3,1),'pb4',zeros(3,1),'pb5',zeros(3,1),'pb6',zeros(3,1));%  , 'names',['pb1','pb2','pb3','pb4','pb5','pb6']);
-% Tbi.Adgbi=struct('Adgb1',zeros(6,6),'Adgb2',zeros(6,6),'Adgb3',zeros(6,6),'Adgb4',zeros(6,6),'Adgb5',zeros(6,6),'Adgb6',zeros(6,6));%  ,'names', ['Adgb1','Adgb2','Adgb3','Adgb4','Adgb5','Adgb6']);
-
-
-
+Ji = struct('Ji',zeros(n,n+6),'Je',zeros(n,n+6));
 
 DH=struct('a',zeros(n,1),'d',zeros(n,1),'alpha',zeros(n,1));
 DH.a(1) = 0.2;
@@ -56,7 +54,9 @@ DH.alpha(5) = -pi/2;
 DH.alpha(6) = 0;
 
 busInfo = Simulink.Bus.createObject(DH);
-busInfo2 = Simulink.Bus.createObject(Tbi);
+busInfo2 = Simulink.Bus.createObject(Ti);
+busInfo3 = Simulink.Bus.createObject(Ji);
+
 
 %% joint limits - global parameters 
 
@@ -98,13 +98,13 @@ six_link = SerialLink(l,'name','six link');
 
 aq=[0,3,0,0,0,1];
 
-six_link.fkine(aq)
-
+six_link.fkine(aq);
+g0b=eye(4);
 
 
 %%
 
-sim('uvms',1)
+%sim('uvms',1);
 
 
 

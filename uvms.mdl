@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.167"
+    ComputedModelVersion    "1.214"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Feb 19 14:38:04 2014"
-  RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:167>"
+  LastModifiedDate	  "Wed Feb 19 16:24:46 2014"
+  RTWModifiedTimeStamp	  314721894
+  ModelVersionFormat	  "1.%<AutoIncrement:214>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -67,8 +67,7 @@ Model {
     $ObjectID		    1
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
     model_		    "uvms"
-    signals_		    []
-    overrideMode_	    [0U]
+    overrideMode_	    [0.0]
     Array {
       Type		      "Cell"
       Dimension		      1
@@ -151,8 +150,8 @@ Model {
 	  SolverMode		  "Auto"
 	  EnableConcurrentExecution off
 	  ConcurrentTasks	  off
-	  Solver		  "ode45"
-	  SolverName		  "ode45"
+	  Solver		  "FixedStepDiscrete"
+	  SolverName		  "FixedStepDiscrete"
 	  SolverJacobianMethodControl "auto"
 	  ShapePreserveControl	  "DisableAll"
 	  ZeroCrossControl	  "UseLocalSettings"
@@ -613,8 +612,8 @@ Model {
 	PropName		"Components"
       }
       Name		      "Configuration"
-      CurrentDlgPage	      "Data Import//Export"
-      ConfigPrmDlgPosition     [ 12, 488, 836, 1261 ] 
+      CurrentDlgPage	      "Solver"
+      ConfigPrmDlgPosition     [ 308, 448, 1621, 1295 ] 
     }
     PropName		    "ConfigurationSets"
   }
@@ -745,7 +744,7 @@ Model {
   }
   System {
     Name		    "uvms"
-    Location		    [0, 481, 1920, 1459]
+    Location		    [1, 481, 1921, 1459]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -759,12 +758,12 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "30"
+    SIDHighWatermark	    "32"
     Block {
       BlockType		      Constant
       Name		      "Constant"
       SID		      "9"
-      Position		      [390, 180, 420, 210]
+      Position		      [350, 190, 380, 220]
       ZOrder		      -5
       Value		      "DH"
       OutDataTypeStr	      "Bus: slBus1"
@@ -779,9 +778,17 @@ Model {
       BlockType		      Constant
       Name		      "Constant1"
       SID		      "18"
-      Position		      [390, 110, 420, 140]
+      Position		      [315, 100, 345, 130]
       ZOrder		      -4
       Value		      "aq"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Constant2"
+      SID		      "32"
+      Position		      [200, 145, 230, 175]
+      ZOrder		      -4
+      Value		      "g0b"
     }
     Block {
       BlockType		      SubSystem
@@ -806,7 +813,7 @@ Model {
       MaskDescription	      "Embedded MATLAB block"
       MaskSelfModifiable      on
       MaskDisplay	      "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('pr"
-      "ivate/eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'fcn']);"
+      "ivate/eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'getJacobians']);"
       MaskIconFrame	      on
       MaskIconOpaque	      off
       MaskIconRotate	      "none"
@@ -830,7 +837,7 @@ Model {
 	SIDHighWatermark	"22"
 	Block {
 	  BlockType		  Inport
-	  Name			  "Tbi"
+	  Name			  "Ti"
 	  SID			  "19::1"
 	  Position		  [20, 101, 40, 119]
 	  IconDisplay		  "Port number"
@@ -857,7 +864,7 @@ Model {
 	  EnableBusSupport	  on
 	  Port {
 	    PortNumber		    2
-	    Name		    "y"
+	    Name		    "Ji"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
@@ -871,23 +878,23 @@ Model {
 	}
 	Block {
 	  BlockType		  Outport
-	  Name			  "y"
+	  Name			  "Ji"
 	  SID			  "19::5"
 	  Position		  [460, 101, 480, 119]
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  SrcBlock		  "Tbi"
+	  SrcBlock		  "Ti"
 	  SrcPort		  1
 	  DstBlock		  " SFunction "
 	  DstPort		  1
 	}
 	Line {
-	  Name			  "y"
+	  Name			  "Ji"
 	  Labels		  [0, 0]
 	  SrcBlock		  " SFunction "
 	  SrcPort		  2
-	  DstBlock		  "y"
+	  DstBlock		  "Ji"
 	  DstPort		  1
 	}
 	Line {
@@ -905,10 +912,17 @@ Model {
       }
     }
     Block {
+      BlockType		      Terminator
+      Name		      "Terminator"
+      SID		      "31"
+      Position		      [1550, 150, 1570, 170]
+      ZOrder		      -5
+    }
+    Block {
       BlockType		      SubSystem
       Name		      "Transformations"
       SID		      "2"
-      Ports		      [2, 1]
+      Ports		      [3, 1]
       Position		      [720, 90, 860, 230]
       ZOrder		      -4
       LibraryVersion	      "1.32"
@@ -927,7 +941,7 @@ Model {
       MaskDescription	      "Embedded MATLAB block"
       MaskSelfModifiable      on
       MaskDisplay	      "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('pr"
-      "ivate/eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'fcn']);"
+      "ivate/eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'getTransformations']);"
       MaskIconFrame	      on
       MaskIconOpaque	      off
       MaskIconRotate	      "none"
@@ -948,7 +962,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	"25"
+	SIDHighWatermark	"27"
 	Block {
 	  BlockType		  Inport
 	  Name			  "q"
@@ -959,10 +973,19 @@ Model {
 	}
 	Block {
 	  BlockType		  Inport
+	  Name			  "g0b"
+	  SID			  "2::26"
+	  Position		  [20, 136, 40, 154]
+	  ZOrder		  11
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Inport
 	  Name			  "DH"
 	  SID			  "2::1"
-	  Position		  [20, 136, 40, 154]
-	  Port			  "2"
+	  Position		  [20, 171, 40, 189]
+	  Port			  "3"
 	  IconDisplay		  "Port number"
 	}
 	Block {
@@ -979,15 +1002,15 @@ Model {
 	  Name			  " SFunction "
 	  SID			  "2::19"
 	  Tag			  "Stateflow S-Function uvms 2"
-	  Ports			  [2, 2]
+	  Ports			  [3, 2]
 	  Position		  [180, 100, 230, 180]
 	  ZOrder		  5
 	  FunctionName		  "sf_sfun"
-	  PortCounts		  "[2 2]"
+	  PortCounts		  "[3 2]"
 	  EnableBusSupport	  on
 	  Port {
 	    PortNumber		    2
-	    Name		    "Tbi"
+	    Name		    "Ti"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
@@ -1001,7 +1024,7 @@ Model {
 	}
 	Block {
 	  BlockType		  Outport
-	  Name			  "Tbi"
+	  Name			  "Ti"
 	  SID			  "2::23"
 	  Position		  [460, 101, 480, 119]
 	  ZOrder		  9
@@ -1014,17 +1037,23 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "DH"
+	  SrcBlock		  "g0b"
 	  SrcPort		  1
 	  DstBlock		  " SFunction "
 	  DstPort		  2
 	}
 	Line {
-	  Name			  "Tbi"
+	  SrcBlock		  "DH"
+	  SrcPort		  1
+	  DstBlock		  " SFunction "
+	  DstPort		  3
+	}
+	Line {
+	  Name			  "Ti"
 	  Labels		  [0, 0]
 	  SrcBlock		  " SFunction "
 	  SrcPort		  2
-	  DstBlock		  "Tbi"
+	  DstBlock		  "Ti"
 	  DstPort		  1
 	}
 	Line {
@@ -1047,7 +1076,7 @@ Model {
       SrcBlock		      "Constant"
       SrcPort		      1
       DstBlock		      "Transformations"
-      DstPort		      2
+      DstPort		      3
     }
     Line {
       SrcBlock		      "Constant1"
@@ -1060,6 +1089,18 @@ Model {
       SrcPort		      1
       DstBlock		      "Jacobians"
       DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Jacobians"
+      SrcPort		      1
+      DstBlock		      "Terminator"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Constant2"
+      SrcPort		      1
+      DstBlock		      "Transformations"
+      DstPort		      2
     }
   }
 }
@@ -1076,7 +1117,7 @@ Stateflow {
     name		    "uvms"
     created		    "19-Feb-2014 09:50:42"
     isLibrary		    0
-    firstTarget		    17
+    firstTarget		    18
     sfVersion		    76014001.00040001
   }
   chart {
@@ -1090,8 +1131,6 @@ Stateflow {
     firstJunction	    4
     viewObj		    2
     machine		    1
-    subviewS {
-    }
     ssIdHighWaterMark	    5
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -1099,7 +1138,7 @@ Stateflow {
     chartFileNumber	    1
     disableImplicitCasting  1
     eml {
-      name		      "fcn"
+      name		      "getJacobians"
     }
   }
   state {
@@ -1116,7 +1155,13 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function y = fcn(Tbi)\n%#codegen\n\ny=1;\n\n\n\nend"
+      script		      "function Ji = getJacobians(Ti)\n%#codegen\n    \n    n=6;\n    Ji = struct('Ji',zeros(n,n+6));\n "
+      "   ji=zeros(6,6)\n    for i=1:n\n        ji=getji(Ti,i);\n        Ji.Ji(:,:,i) = [Ti.Adgbi_inv(:,:,i), Ti.Adgbi_"
+      "inv(:,:,i)*ji];\n    end\n    \n    j6=getje(Ti);\n    Ji.Je=[Ti.Adgbe_inv, Ti.Adgbe_inv*j6];\n    \nend\n\n\n\n"
+      "\n% return matrix Ji (see report)\nfunction mat = getji(Ti,i)\n    n=6;\n    mat=zeros(6,6);\n    Xii=[0,0,0,0,0"
+      ",1]';\n    for j=1:n\n        if j<=i\n            mat(:,j) = Ti.Adg0i(:,:,i)*Xii;\n        end\n    end\n\nend\n"
+      "\n% return matrix Ji (see report)\nfunction mat = getje(Ti)\n    n=6;\n    mat=zeros(6,6);\n    Xii=[0,0,0,0,0,1"
+      "]';\n    for i=1:(n-1)\n        mat(:,i) = Ti.Adg0i(:,:,i)*Xii;\n    end\n    mat(:,6) = Ti.Adg0e*Xii;\n\nend"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -1153,7 +1198,7 @@ Stateflow {
   data {
     id			    6
     ssIdNumber		    4
-    name		    "Tbi"
+    name		    "Ti"
     linkNode		    [2 0 7]
     scope		    INPUT_DATA
     machine		    1
@@ -1172,7 +1217,7 @@ Stateflow {
   data {
     id			    7
     ssIdNumber		    5
-    name		    "y"
+    name		    "Ji"
     linkNode		    [2 6 0]
     scope		    OUTPUT_DATA
     machine		    1
@@ -1181,13 +1226,14 @@ Stateflow {
 	size			"-1"
       }
       type {
-	method			SF_INHERITED_TYPE
+	method			SF_SIMULINK_OBJECT_TYPE
 	primitive		SF_DOUBLE_TYPE
+	busObject		"slBus3"
       }
       complexity	      SF_COMPLEX_INHERITED
       frame		      SF_FRAME_NO
     }
-    dataType		    "Inherit: Same as Simulink"
+    dataType		    "Bus: slBus3"
   }
   instance {
     id			    8
@@ -1206,16 +1252,14 @@ Stateflow {
     firstJunction	    11
     viewObj		    9
     machine		    1
-    subviewS {
-    }
-    ssIdHighWaterMark	    8
+    ssIdHighWaterMark	    10
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    13
     chartFileNumber	    2
     disableImplicitCasting  1
     eml {
-      name		      "fcn"
+      name		      "getTransformations"
     }
   }
   state {
@@ -1232,30 +1276,36 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Tbi = fcn(q,DH)\n%#codegen\ncoder.extrinsic('disp');\nn=6;\nTbi=struct('gbi',zeros(4,4,n"
-      "),'Rbi', zeros(3,3,n),'pbi', zeros(3,1,n),'Adgbi',zeros(6,6,n));\n\n% Tbi.gbi(:,:,i) is the transformation from "
-      "b to i etc\ng=eye(4);\nfor i=1:n\n   Tbi.gbi(:,:,i) = g*getHom(q,DH,i);\n   Tbi.Rbi(:,:,i) = getRot(Tbi.gbi(:,:,"
-      "i));\n   Tbi.pbi(:,:,i) = getPos(Tbi.gbi(:,:,i));\n   Tbi.Adgbi(:,:,i) = getAdgbi(Tbi.Rbi(:,:,i), Tbi.pbi(:,:,i)"
-      " );\n   g=Tbi.gbi(:,:,i);\n   \nend\n\n\n\n\n% Tbi.gbi.gb1 = getHom(q,DH,1);\n% Tbi.gbi.gb2 = Tbi.gbi.gb1*getHom"
-      "(q,DH,2);\n% Tbi.gbi.gb3 = Tbi.gbi.gb2*getHom(q,DH,3);\n% Tbi.gbi.gb4 = Tbi.gbi.gb3*getHom(q,DH,4);\n% Tbi.gbi.g"
-      "b5 = Tbi.gbi.gb4*getHom(q,DH,5);\n% Tbi.gbi.gb6 = Tbi.gbi.gb5*getHom(q,DH,6);\n% \n% Tbi.Rbi.Rb1 = getRot(Tbi.gb"
-      "i.gb1);\n% Tbi.Rbi.Rb2 = getRot(Tbi.gbi.gb2);\n% Tbi.Rbi.Rb3 = getRot(Tbi.gbi.gb3);\n% Tbi.Rbi.Rb4 = getRot(Tbi."
-      "gbi.gb4);\n% Tbi.Rbi.Rb5 = getRot(Tbi.gbi.gb5);\n% Tbi.Rbi.Rb6 = getRot(Tbi.gbi.gb6);\n% \n% Tbi.pbi.pb1 = getPo"
-      "s(Tbi.gbi.gb1);\n% Tbi.pbi.pb2 = getPos(Tbi.gbi.gb2);\n% Tbi.pbi.pb3 = getPos(Tbi.gbi.gb3);\n% Tbi.pbi.pb4 = get"
-      "Pos(Tbi.gbi.gb4);\n% Tbi.pbi.pb5 = getPos(Tbi.gbi.gb5);\n% Tbi.pbi.pb6 = getPos(Tbi.gbi.gb6);\n% \n% Tbi.Adgbi.A"
-      "dgb1 = getAdg(Tbi.Rbi.Rb1,Tbi.pbi.pb1);\n% Tbi.Adgbi.Adgb2 = getAdg(Tbi.Rbi.Rb2,Tbi.pbi.pb2);\n% Tbi.Adgbi.Adgb3"
-      " = getAdg(Tbi.Rbi.Rb3,Tbi.pbi.pb3);\n% Tbi.Adgbi.Adgb4 = getAdg(Tbi.Rbi.Rb4,Tbi.pbi.pb4);\n% Tbi.Adgbi.Adgb5 = g"
-      "etAdg(Tbi.Rbi.Rb5,Tbi.pbi.pb5);\n% Tbi.Adgbi.Adgb6 = getAdg(Tbi.Rbi.Rb6,Tbi.pbi.pb6);\n\n\n\ndisp(Tbi.Adgbi(:,:,"
-      "6));\n\n\nend\n\n\n\n% homogenous transformation matrix - DH convention\n% mat=Rot_z(theta)Trans_z(d)Trans_x(a)R"
-      "ot_x(alpha)\nfunction mat=getHom(q,DH,i)\n    alpha=DH.alpha(i);\n    a=DH.a(i);\n    d=DH.d(i);\n    theta=q(i)"
-      ";\n    mat=eye(4);\n    mat=[cos(theta), -sin(theta)*cos(alpha), sin(theta)*sin(alpha), a*cos(theta);\n         "
-      "sin(theta), cos(theta)*cos(alpha), -cos(theta)*sin(alpha), a*sin(theta);\n         0, sin(alpha), cos(alpha), d;"
-      "\n         0,0,0,1\n    ];\n\nend\n\n% extract position from homogenous \n% matrix\nfunction vec = getPos(g)\n  "
-      "  vec=g(1:3,4);\n\nend\n\n% extract rotation matrix-part out of\n% homogenous matrix\nfunction mat = getRot(g)\n"
-      "    mat=g(1:3,1:3);\nend\n\n\nfunction mat = getAdgbi(R,p)\n    mat = zeros(6,6);\n    ps=skew(p);\n    mat=[R ,"
-      " ps*R ; zeros(3,3), R ];\nend\n\n% return the skew symmetric matrix representation\n% of vector\nfunction mat = "
-      "skew(vec)\n    mat=[0, -vec(3), vec(2) ; vec(3), 0,vec(1); -vec(2), vec(1), 0];\nend\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-      "\n\n\n\n"
+      script		      "function Ti = getTransformations(q,g0b,DH)\n%#codegen\n% Return transformations, rotations, posit"
+      "ions and adjoint matrices for\n% robot links\n% Tbi.gbi(:,:,i) is the transformation from b to i etc\n    n=6;  "
+      "  % number of links\n    Ti = struct('g0b',zeros(3,3),'g0i',zeros(4,4,n),'R0i', zeros(3,3,n),'p0i', zeros(3,1,n)"
+      ",  'Adg0i',zeros(6,6,n),'Adg0i_inv',zeros(6,6,n),   ...\n    'gbi',zeros(4,4,n),'Rbi', zeros(3,3,n),'pbi', zeros"
+      "(3,1,n),'Adgbi',zeros(6,6,n),'Adgbi_inv',zeros(6,6,n),...\n    'g6e',eye(4) ,'g0e',zeros(4,4),'R0e', zeros(3,3),"
+      "'p0e', zeros(3,1),  'Adg0e',zeros(6,6),'Adg0e_inv',zeros(6,6),   ...\n    'gbe',zeros(4,4),'Rbe', zeros(3,3),'pb"
+      "e', zeros(3,1),'Adgbe',zeros(6,6),'Adgbe_inv',zeros(6,6) ...\n    );\n\n    % initial matrices \n    g=eye(4);\n"
+      "    g0=g0b;\n    \n    % transformation from 0 and b to frame i\n    for i=1:n\n       Ti.gbi(:,:,i) = g*getHom("
+      "q,DH,i);\n       Ti.Rbi(:,:,i) = getRot(Ti.gbi(:,:,i));\n       Ti.pbi(:,:,i) = getPos(Ti.gbi(:,:,i));\n       T"
+      "i.Adgbi(:,:,i) = getAdgbi(Ti.Rbi(:,:,i), Ti.pbi(:,:,i) );\n       Ti.Adgbi_inv(:,:,i) = getAdgbi_inv(Ti.Rbi(:,:,"
+      "i), Ti.pbi(:,:,i) );\n       g=Ti.gbi(:,:,i);\n       \n       Ti.g0i(:,:,i) = g0*getHom(q,DH,i);\n       Ti.R0i"
+      "(:,:,i) = getRot(Ti.g0i(:,:,i));\n       Ti.p0i(:,:,i) = getPos(Ti.g0i(:,:,i));\n       Ti.Adg0i(:,:,i) = getAdg"
+      "bi(Ti.R0i(:,:,i), Ti.p0i(:,:,i) );\n       Ti.Adg0i_inv(:,:,i) = getAdgbi_inv(Ti.R0i(:,:,i), Ti.p0i(:,:,i) );\n "
+      "      g0=Ti.g0i(:,:,i);\n    end\n    \n    % transformation from frame 0 to ee\n    g0e = Ti.g0i(:,:,6)*Ti.g6e;"
+      "\n    Ti.g0e(:,:,i) = g0e;\n    Ti.R0e(:,:,i) = getRot(g0e);\n    Ti.p0e(:,:,i) = getPos(g0e);\n    Ti.Adg0e(:,:"
+      ",i) = getAdgbi(Ti.R0e(:,:,i), Ti.p0e(:,:,i) );\n    Ti.Adg0e_inv(:,:,i) = getAdgbi_inv(Ti.R0e(:,:,i), Ti.p0e(:,:"
+      ",i) );\n    \n    % transformation from frame b to ee\n    gbe = Ti.gbi(:,:,6)*Ti.g6e;\n    Ti.gbe(:,:,i) = gbe;"
+      "\n    Ti.Rbe(:,:,i) = getRot(gbe);\n    Ti.pbe(:,:,i) = getPos(gbe);\n    Ti.Adgbe(:,:,i) = getAdgbi(Ti.Rbe(:,:,"
+      "i), Ti.pbe(:,:,i) );\n    Ti.Adgbe_inv(:,:,i) = getAdgbi_inv(Ti.Rbe(:,:,i), Ti.pbe(:,:,i) );\n    \n    \n    \n"
+      "\nend\n\n\n\n% homogenous transformation matrix - DH convention\n% mat=Rot_z(theta)Trans_z(d)Trans_x(a)Rot_x(alp"
+      "ha)\nfunction mat=getHom(q,DH,i)\n    alpha=DH.alpha(i);\n    a=DH.a(i);\n    d=DH.d(i);\n    theta=q(i);\n    m"
+      "at=eye(4);\n    mat=[cos(theta), -sin(theta)*cos(alpha), sin(theta)*sin(alpha), a*cos(theta);\n         sin(thet"
+      "a), cos(theta)*cos(alpha), -cos(theta)*sin(alpha), a*sin(theta);\n         0, sin(alpha), cos(alpha), d;\n      "
+      "   0,0,0,1\n    ];\n\nend\n\n% extract position from homogenous \n% matrix\nfunction vec = getPos(g)\n    vec=g("
+      "1:3,4);\n\nend\n\n% extract rotation matrix-part out of\n% homogenous matrix\nfunction mat = getRot(g)\n    mat="
+      "g(1:3,1:3);\nend\n\n\nfunction mat = getAdgbi(R,p)\n    mat = zeros(6,6);\n    ps=skew(p);\n    mat=[R , ps*R ; "
+      "zeros(3,3), R ];\nend\n\nfunction mat = getAdgbi_inv(R,p)\n    mat = zeros(6,6);\n    Rt=transpose(R);\n    ps=s"
+      "kew(p);\n    mat=[Rt , -Rt*ps ; zeros(3,3), Rt ];\nend\n\n% return the skew symmetric matrix representation\n% o"
+      "f vector\nfunction mat = skew(vec)\n    mat=[0, -vec(3), vec(2) ; vec(3), 0,vec(1); -vec(2), vec(1), 0];\nend\n\n"
+      "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -1313,9 +1363,31 @@ Stateflow {
   }
   data {
     id			    14
+    ssIdNumber		    9
+    name		    "g0b"
+    linkNode		    [9 13 15]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    15
     ssIdNumber		    4
     name		    "DH"
-    linkNode		    [9 13 15]
+    linkNode		    [9 14 16]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -1331,10 +1403,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    15
+    id			    16
     ssIdNumber		    6
-    name		    "Tbi"
-    linkNode		    [9 14 0]
+    name		    "Ti"
+    linkNode		    [9 15 0]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -1354,13 +1426,13 @@ Stateflow {
     dataType		    "Bus: slBus2"
   }
   instance {
-    id			    16
+    id			    17
     name		    "Transformations"
     machine		    1
     chart		    9
   }
   target {
-    id			    17
+    id			    18
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1
