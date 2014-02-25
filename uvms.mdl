@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.529"
+    ComputedModelVersion    "1.564"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Feb 25 14:57:59 2014"
-  RTWModifiedTimeStamp	  315237199
-  ModelVersionFormat	  "1.%<AutoIncrement:529>"
+  LastModifiedDate	  "Tue Feb 25 16:01:19 2014"
+  RTWModifiedTimeStamp	  315241631
+  ModelVersionFormat	  "1.%<AutoIncrement:564>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  on
@@ -67,6 +67,7 @@ Model {
     $ObjectID		    1
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
     model_		    "uvms"
+    signals_		    []
     overrideMode_	    [0.0]
     Array {
       Type		      "Cell"
@@ -655,10 +656,6 @@ Model {
   }
   BlockParameterDefaults {
     Block {
-      BlockType		      BusSelector
-      OutputAsBus	      off
-    }
-    Block {
       BlockType		      Constant
       Value		      "1"
       VectorParams1D	      on
@@ -810,30 +807,13 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "125"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "150"
-    Block {
-      BlockType		      BusSelector
-      Name		      "Bus\nSelector"
-      SID		      "101"
-      Ports		      [1, 1]
-      Position		      [820, 236, 825, 274]
-      ZOrder		      -3
-      ShowName		      off
-      OutputSignals	      "Je"
-      Port {
-	PortNumber		1
-	Name			"<Je>"
-	RTWStorageClass		"Auto"
-	DataLoggingNameMode	"SignalName"
-      }
-    }
+    SIDHighWatermark	    "176"
     Block {
       BlockType		      SubSystem
-      Name		      "Kinematic Transformations"
-      SID		      "85"
-      Ports		      [1, 2]
-      Position		      [495, 229, 680, 336]
-      BackgroundColor	      "cyan"
+      Name		      "Dynamics"
+      SID		      "153"
+      Ports		      [1, 1]
+      Position		      [930, 244, 1040, 326]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -842,9 +822,9 @@ Model {
       RequestExecContextInheritance off
       MaskHideContents	      off
       System {
-	Name			"Kinematic Transformations"
-	Location		[291, 714, 1616, 1074]
-	Open			on
+	Name			"Dynamics"
+	Location		[1, 714, 1921, 1692]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -855,7 +835,217 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"100"
+	ZoomFactor		"125"
+	Block {
+	  BlockType		  Inport
+	  Name			  "Kinematics"
+	  SID			  "155"
+	  Position		  [625, 343, 655, 357]
+	  ZOrder		  -1
+	  NamePlacement		  "alternate"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant"
+	  SID			  "151"
+	  Position		  [580, 387, 710, 433]
+	  ZOrder		  -5
+	  Value			  "dynamic_parameters"
+	  OutDataTypeStr	  "Bus: dyn_bus"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "M(q)"
+	  SID			  "152"
+	  Ports			  [2, 1]
+	  Position		  [815, 317, 970, 443]
+	  ZOrder		  -4
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  MinAlgLoopOccurrences	  off
+	  PropExecContextOutsideSubsystem off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  Opaque		  off
+	  RequestExecContextInheritance	off
+	  MaskHideContents	  off
+	  SFBlockType		  "MATLAB Function"
+	  MaskType		  "Stateflow"
+	  MaskDescription	  "Embedded MATLAB block"
+	  MaskSelfModifiable	  on
+	  MaskDisplay		  "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('private/"
+	  "eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'fcn']);"
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  off
+	  MaskIconRotate	  "none"
+	  MaskPortRotate	  "default"
+	  MaskIconUnits		  "normalized"
+	  System {
+	    Name		    "M(q)"
+	    Location		    [257, 457, 812, 717]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "23"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "Kinematics"
+	      SID		      "152::1"
+	      Position		      [20, 101, 40, 119]
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "Dyn_parameters"
+	      SID		      "152::23"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      9
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "152::20"
+	      Ports		      [1, 1]
+	      Position		      [270, 160, 320, 200]
+	      ZOrder		      6
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "152::19"
+	      Tag		      "Stateflow S-Function uvms 4"
+	      Ports		      [2, 2]
+	      Position		      [180, 100, 230, 160]
+	      ZOrder		      5
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[2 2]"
+	      EnableBusSupport	      on
+	      Port {
+		PortNumber		2
+		Name			"M"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "152::22"
+	      Position		      [460, 171, 480, 189]
+	      ZOrder		      8
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "M"
+	      SID		      "152::5"
+	      Position		      [460, 101, 480, 119]
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "Kinematics"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Dyn_parameters"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      Name		      "M"
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "M"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "M"
+	  SID			  "154"
+	  Position		  [1030, 373, 1060, 387]
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  SrcBlock		  "M(q)"
+	  SrcPort		  1
+	  DstBlock		  "M"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Kinematics"
+	  SrcPort		  1
+	  DstBlock		  "M(q)"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Constant"
+	  SrcPort		  1
+	  DstBlock		  "M(q)"
+	  DstPort		  2
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "Kinematic Transformations"
+      SID		      "85"
+      Ports		      [1, 1]
+      Position		      [495, 231, 680, 339]
+      BackgroundColor	      "cyan"
+      MinAlgLoopOccurrences   off
+      PropExecContextOutsideSubsystem off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      Opaque		      off
+      RequestExecContextInheritance off
+      MaskHideContents	      off
+      System {
+	Name			"Kinematic Transformations"
+	Location		[1, 714, 1921, 1692]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"125"
 	Block {
 	  BlockType		  Inport
 	  Name			  "Xi"
@@ -884,7 +1074,7 @@ Model {
 	  Name			  "Jacobians"
 	  SID			  "19"
 	  Ports			  [1, 1]
-	  Position		  [650, 51, 815, 159]
+	  Position		  [650, 55, 815, 165]
 	  ZOrder		  -4
 	  LibraryVersion	  "1.32"
 	  ErrorFcn		  "Stateflow.Translate.translate"
@@ -914,7 +1104,7 @@ Model {
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "25"
+	    SIDHighWatermark	    "27"
 	    Block {
 	      BlockType		      Inport
 	      Name		      "Ti"
@@ -928,7 +1118,7 @@ Model {
 	      Name		      " Demux "
 	      SID		      "19::24"
 	      Ports		      [1, 1]
-	      Position		      [270, 230, 320, 270]
+	      Position		      [270, 160, 320, 200]
 	      ZOrder		      10
 	      Outputs		      "1"
 	    }
@@ -945,7 +1135,7 @@ Model {
 	      EnableBusSupport	      on
 	      Port {
 		PortNumber		2
-		Name			"Ji"
+		Name			"Kinematics"
 		RTWStorageClass		"Auto"
 		DataLoggingNameMode	"SignalName"
 	      }
@@ -954,15 +1144,15 @@ Model {
 	      BlockType		      Terminator
 	      Name		      " Terminator "
 	      SID		      "19::25"
-	      Position		      [460, 241, 480, 259]
+	      Position		      [460, 171, 480, 189]
 	      ZOrder		      11
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "Ji"
-	      SID		      "19::5"
+	      Name		      "Kinematics"
+	      SID		      "19::27"
 	      Position		      [460, 101, 480, 119]
-	      ZOrder		      -5
+	      ZOrder		      13
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
@@ -972,11 +1162,11 @@ Model {
 	      DstPort		      1
 	    }
 	    Line {
-	      Name		      "Ji"
+	      Name		      "Kinematics"
 	      Labels		      [0, 0]
 	      SrcBlock		      " SFunction "
 	      SrcPort		      2
-	      DstBlock		      "Ji"
+	      DstBlock		      "Kinematics"
 	      DstPort		      1
 	    }
 	    Line {
@@ -1124,19 +1314,10 @@ Model {
 	}
 	Block {
 	  BlockType		  Outport
-	  Name			  "jacobians"
-	  SID			  "87"
-	  Position		  [975, 98, 1005, 112]
+	  Name			  "Kinematics"
+	  SID			  "172"
+	  Position		  [960, 103, 990, 117]
 	  ZOrder		  -23
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "transformations"
-	  SID			  "88"
-	  Position		  [1005, 248, 1035, 262]
-	  ZOrder		  -23
-	  Port			  "2"
 	  IconDisplay		  "Port number"
 	}
 	Line {
@@ -1150,16 +1331,9 @@ Model {
 	Line {
 	  SrcBlock		  "Transformations"
 	  SrcPort		  1
-	  Points		  [120, 0]
-	  Branch {
-	    DstBlock		    "Jacobians"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, 150]
-	    DstBlock		    "transformations"
-	    DstPort		    1
-	  }
+	  Points		  [270, 0]
+	  DstBlock		  "Jacobians"
+	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "Xi"
@@ -1170,7 +1344,7 @@ Model {
 	Line {
 	  SrcBlock		  "Jacobians"
 	  SrcPort		  1
-	  DstBlock		  "jacobians"
+	  DstBlock		  "Kinematics"
 	  DstPort		  1
 	}
       }
@@ -1192,8 +1366,8 @@ Model {
     Block {
       BlockType		      Terminator
       Name		      "Terminator"
-      SID		      "106"
-      Position		      [755, 300, 775, 320]
+      SID		      "176"
+      Position		      [1115, 275, 1135, 295]
       ZOrder		      -20
     }
     Block {
@@ -1323,8 +1497,8 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "twist2pose"
-	    Location		    [0, 686, 1918, 1663]
-	    Open		    on
+	    Location		    [1, 714, 1919, 1691]
+	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -1953,27 +2127,6 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Kinematic Transformations"
-      SrcPort		      1
-      DstBlock		      "Bus\nSelector"
-      DstPort		      1
-    }
-    Line {
-      Name		      "<Je>"
-      Labels		      [0, 0]
-      SrcBlock		      "Bus\nSelector"
-      SrcPort		      1
-      Points		      [0, 265]
-      DstBlock		      "Product"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Kinematic Transformations"
-      SrcPort		      2
-      DstBlock		      "Terminator"
-      DstPort		      1
-    }
-    Line {
       SrcBlock		      "Xi"
       SrcPort		      2
       Points		      [100, 0; 0, 160; 160, 0; 0, 40]
@@ -1992,6 +2145,18 @@ Model {
       DstBlock		      "To Workspace"
       DstPort		      1
     }
+    Line {
+      SrcBlock		      "Kinematic Transformations"
+      SrcPort		      1
+      DstBlock		      "Dynamics"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Dynamics"
+      SrcPort		      1
+      DstBlock		      "Terminator"
+      DstPort		      1
+    }
   }
 }
 # Finite State Machines
@@ -2007,9 +2172,7 @@ Stateflow {
     name		    "uvms"
     created		    "19-Feb-2014 09:50:42"
     isLibrary		    0
-    firstTarget		    33
-    debug {
-    }
+    firstTarget		    41
     sfVersion		    76014001.00040001
   }
   chart {
@@ -2023,7 +2186,7 @@ Stateflow {
     firstJunction	    4
     viewObj		    2
     machine		    1
-    ssIdHighWaterMark	    5
+    ssIdHighWaterMark	    6
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    6
@@ -2047,14 +2210,15 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Ji = getJacobians(Ti)\n%#codegen\n    n=6;\n    Ji = struct('Ji',zeros(n,n+6,n),'Je',zer"
-      "os(n,n+6));\n    ji=zeros(6,6);\n    for i=1:n\n        ji=getji(Ti,i);\n    \n        Ji.Ji(:,:,i) = [Ti.Adgbi_"
-      "inv(:,:,i), Ti.Adgbi_inv(:,:,i)*ji];\n    end\n    j6=getje(Ti);\n    Ji.Je=[Ti.Adgbe_inv, Ti.Adgbe_inv*j6];   \n"
-      "end\n\n\n\n\n% return matrix Ji (see report)\nfunction mat = getji(Ti,i)\n    n=6;\n    mat=zeros(6,6);\n    Xii"
-      "=[0,0,0,0,0,1]';\n    mat(:,1)=eye(6)*Xii;\n    for j=2:n\n        if j<=i\n            mat(:,j) = Ti.Adgbi(:,:,"
-      "j-1)*Xii;\n        end\n    end\n\nend\n\n% return matrix Ji (see report)\nfunction mat = getje(Ti)\n    n=6;\n "
-      "   mat=zeros(6,6);\n    Xii=[0,0,0,0,0,1]';\n    mat(:,1)=eye(6)*Xii;\n    for i=2:(n-1)\n        mat(:,i) = Ti."
-      "Adgbi(:,:,i-1)*Xii;\n    end\n    mat(:,6) = Ti.Adgbe*Xii;\n\nend"
+      script		      "function Kinematics  = getJacobians(Ti)\n%#codegen\n    n=6;\n    Ji = struct('Ji',zeros(n,n+6,n)"
+      ",'Je',zeros(n,n+6));\n    Kinematics = struct('Ti', Ti, 'Ji',Ji);\n    ji=zeros(6,6);\n    for i=1:n\n        ji"
+      "=getji(Ti,i);\n    \n        Ji.Ji(:,:,i) = [Ti.Adgbi_inv(:,:,i), Ti.Adgbi_inv(:,:,i)*ji];\n    end\n    j6=getj"
+      "e(Ti);\n    Ji.Je=[Ti.Adgbe_inv, Ti.Adgbe_inv*j6];\n    Kinematics.Ji=Ji;\n    Kinematics.Ti=Ti;\nend\n\n\n\n\n%"
+      " return matrix Ji (see report)\nfunction mat = getji(Ti,i)\n    n=6;\n    mat=zeros(6,6);\n    Xii=[0,0,0,0,0,1]"
+      "';\n    mat(:,1)=eye(6)*Xii;\n    for j=2:n\n        if j<=i\n            mat(:,j) = Ti.Adgbi(:,:,j-1)*Xii;\n   "
+      "     end\n    end\n\nend\n\n% return matrix Ji (see report)\nfunction mat = getje(Ti)\n    n=6;\n    mat=zeros(6"
+      ",6);\n    Xii=[0,0,0,0,0,1]';\n    mat(:,1)=eye(6)*Xii;\n    for i=2:(n-1)\n        mat(:,i) = Ti.Adgbi(:,:,i-1)"
+      "*Xii;\n    end\n    mat(:,6) = Ti.Adgbe*Xii;\n\nend"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -2103,17 +2267,18 @@ Stateflow {
 	size			"-1"
       }
       type {
-	method			SF_INHERITED_TYPE
+	method			SF_SIMULINK_OBJECT_TYPE
 	primitive		SF_DOUBLE_TYPE
+	busObject		"Ti_bus"
       }
       complexity	      SF_COMPLEX_INHERITED
     }
-    dataType		    "Inherit: Same as Simulink"
+    dataType		    "Bus: Ti_bus"
   }
   data {
     id			    7
-    ssIdNumber		    5
-    name		    "Ji"
+    ssIdNumber		    6
+    name		    "Kinematics"
     linkNode		    [2 6 0]
     scope		    OUTPUT_DATA
     machine		    1
@@ -2124,12 +2289,14 @@ Stateflow {
       type {
 	method			SF_SIMULINK_OBJECT_TYPE
 	primitive		SF_DOUBLE_TYPE
-	busObject		"slBus3"
+	busObject		"kin_bus"
+	isSigned		1
+	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
       frame		      SF_FRAME_NO
     }
-    dataType		    "Bus: slBus3"
+    dataType		    "Bus: kin_bus"
   }
   instance {
     id			    8
@@ -2280,12 +2447,13 @@ Stateflow {
 	size			"-1"
       }
       type {
-	method			SF_INHERITED_TYPE
+	method			SF_SIMULINK_OBJECT_TYPE
 	primitive		SF_DOUBLE_TYPE
+	busObject		"DH_bus"
       }
       complexity	      SF_COMPLEX_INHERITED
     }
-    dataType		    "Inherit: Same as Simulink"
+    dataType		    "Bus: DH_bus"
   }
   data {
     id			    15
@@ -2301,14 +2469,14 @@ Stateflow {
       type {
 	method			SF_SIMULINK_OBJECT_TYPE
 	primitive		SF_DOUBLE_TYPE
-	busObject		"slBus2"
+	busObject		"Ti_bus"
 	isSigned		1
 	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
       frame		      SF_FRAME_NO
     }
-    dataType		    "Bus: slBus2"
+    dataType		    "Bus: Ti_bus"
   }
   instance {
     id			    16
@@ -2327,8 +2495,6 @@ Stateflow {
     firstJunction	    19
     viewObj		    17
     machine		    1
-    subviewS {
-    }
     ssIdHighWaterMark	    6
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -2465,8 +2631,8 @@ Stateflow {
   }
   chart {
     id			    25
-    name		    "Xi/twist2pose/body2eulervel"
-    windowPosition	    [435.75 143.25 200.25 189.75]
+    name		    "Dynamics/M(q)"
+    windowPosition	    [375.75 203.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
     treeNode		    [0 26 0 0]
@@ -2474,13 +2640,14 @@ Stateflow {
     firstJunction	    27
     viewObj		    25
     machine		    1
+    toolbarMode		    LIBRARY_TOOLBAR
     subviewS {
     }
     ssIdHighWaterMark	    6
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    29
-    chartFileNumber	    7
+    chartFileNumber	    4
     disableImplicitCasting  1
     eml {
       name		      "fcn"
@@ -2500,16 +2667,7 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function ee_rates = fcn(ee_velocity_twist, euler_angles_ee)                       \n    %#codegen"
-      "\n       \n    phi=euler_angles_ee(1);\n    theta=euler_angles_ee(2);\n    psi=euler_angles_ee(3);\n    \n    \n"
-      "    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(theta);\n    sth  = sin(theta);\n \n    J1 = Rzyx(phi"
-      ",theta,psi);\n \n    if cth==0, error('J2 is singular for theta = +-90 degrees'); end\n \n    J2 = [...\n      1"
-      "  sphi*sth/cth  cphi*sth/cth;\n      0  cphi          -sphi;\n      0  sphi/cth      cphi/cth ];\n \n    J = [ J"
-      "1  zeros(3,3);\n      zeros(3,3) J2 ];\n        \n    ee_rates = zeros(6,1);\n    ee_rates=J*ee_velocity_twist;\n"
-      "end\n\n\n\nfunction R = Rzyx(phi,theta,psi)\n    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(theta);\n"
-      "    sth  = sin(theta);\n    cpsi = cos(psi);\n    spsi = sin(psi);\n\n    R = [...\n       cpsi*cth  -spsi*cphi+"
-      "cpsi*sth*sphi  spsi*sphi+cpsi*cphi*sth\n       spsi*cth  cpsi*cphi+sphi*sth*spsi   -cpsi*sphi+sth*spsi*cphi\n   "
-      "    -sth      cth*sphi                  cth*cphi ];\nend\n"
+      script		      "function M = fcn(Kinematics,Dyn_parameters)\n%#codegen\n\n    M = zeros(12,12);\n\nend"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -2546,8 +2704,155 @@ Stateflow {
   data {
     id			    29
     ssIdNumber		    4
-    name		    "ee_velocity_twist"
+    name		    "Kinematics"
     linkNode		    [25 0 30]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_SIMULINK_OBJECT_TYPE
+	primitive		SF_DOUBLE_TYPE
+	busObject		"kin_bus"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Bus: kin_bus"
+  }
+  data {
+    id			    30
+    ssIdNumber		    5
+    name		    "M"
+    linkNode		    [25 29 31]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    31
+    ssIdNumber		    6
+    name		    "Dyn_parameters"
+    linkNode		    [25 30 0]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_SIMULINK_OBJECT_TYPE
+	primitive		SF_DOUBLE_TYPE
+	busObject		"dyn_bus"
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Bus: dyn_bus"
+  }
+  instance {
+    id			    32
+    name		    "Dynamics/M(q)"
+    machine		    1
+    chart		    25
+  }
+  chart {
+    id			    33
+    name		    "Xi/twist2pose/body2eulervel"
+    windowPosition	    [435.75 143.25 200.25 189.75]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3120 1920 1.25]
+    treeNode		    [0 34 0 0]
+    firstTransition	    36
+    firstJunction	    35
+    viewObj		    33
+    machine		    1
+    ssIdHighWaterMark	    6
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    37
+    chartFileNumber	    7
+    disableImplicitCasting  1
+    eml {
+      name		      "fcn"
+    }
+  }
+  state {
+    id			    34
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    33
+    treeNode		    [33 0 0 0]
+    superState		    SUBCHART
+    subviewer		    33
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function ee_rates = fcn(ee_velocity_twist, euler_angles_ee)                       \n    %#codegen"
+      "\n       \n    phi=euler_angles_ee(1);\n    theta=euler_angles_ee(2);\n    psi=euler_angles_ee(3);\n    \n    \n"
+      "    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(theta);\n    sth  = sin(theta);\n \n    J1 = Rzyx(phi"
+      ",theta,psi);\n \n    if cth==0, error('J2 is singular for theta = +-90 degrees'); end\n \n    J2 = [...\n      1"
+      "  sphi*sth/cth  cphi*sth/cth;\n      0  cphi          -sphi;\n      0  sphi/cth      cphi/cth ];\n \n    J = [ J"
+      "1  zeros(3,3);\n      zeros(3,3) J2 ];\n        \n    ee_rates = zeros(6,1);\n    ee_rates=J*ee_velocity_twist;\n"
+      "end\n\n\n\nfunction R = Rzyx(phi,theta,psi)\n    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(theta);\n"
+      "    sth  = sin(theta);\n    cpsi = cos(psi);\n    spsi = sin(psi);\n\n    R = [...\n       cpsi*cth  -spsi*cphi+"
+      "cpsi*sth*sphi  spsi*sphi+cpsi*cphi*sth\n       spsi*cth  cpsi*cphi+sphi*sth*spsi   -cpsi*sphi+sth*spsi*cphi\n   "
+      "    -sth      cth*sphi                  cth*cphi ];\nend\n"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  junction {
+    id			    35
+    position		    [23.5747 49.5747 7]
+    chart		    33
+    linkNode		    [33 0 0]
+    subviewer		    33
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    36
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [32.125 19.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      35
+      intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    33
+    linkNode		    [33 0 0]
+    dataLimits		    [23.575 23.575 14.625 34.575]
+    subviewer		    33
+    drawStyle		    SMART
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  data {
+    id			    37
+    ssIdNumber		    4
+    name		    "ee_velocity_twist"
+    linkNode		    [33 0 38]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -2563,10 +2868,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    30
+    id			    38
     ssIdNumber		    5
     name		    "ee_rates"
-    linkNode		    [25 29 31]
+    linkNode		    [33 37 39]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -2583,10 +2888,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    31
+    id			    39
     ssIdNumber		    6
     name		    "euler_angles_ee"
-    linkNode		    [25 30 0]
+    linkNode		    [33 38 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -2605,13 +2910,13 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    32
+    id			    40
     name		    "Xi/twist2pose/body2eulervel"
     machine		    1
-    chart		    25
+    chart		    33
   }
   target {
-    id			    33
+    id			    41
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1

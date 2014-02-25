@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<demos>
+
+<name>Robotics Toolbox</name>
+<type>toolbox</type>
+<icon>$toolbox/matlab/icons/matlabicon.gif</icon>
+<description>Robotics Toolbox demonstrations of transform and quaternion primitives,
+Jacobians, animations, path planning, forward and inverse kinematics, and forward and inverse dynamics.
+</description>
+
+<website>
+<a href="http://www.petercorke.com"></a></website>
+
+<demosection>
+   <label>MATLAB Examples</label>
+    <icon>$toolbox/matlab/icons/matlabicon.gif</icon>
+   <demoitem>
+      <label>Representing rotation</label>
+      <callback>trans</callback>
+      <description>Ways to represent rotation in 3D</description>
+   </demoitem>
+   <demoitem>
+      <label>Representing pose</label>
+      <callback>trans</callback>
+      <description>Representing pose in 3D</description>
+   </demoitem>
+   <demoitem>
+      <label>Trajectories</label>
+      <callback>traj</callback>
+      <description>Representing sequences of poses</description>
+   </demoitem>
+   <demoitem>
+      <label>Creating a robot</label>
+      <callback>robot</callback>
+      <description>Links and serial-link manipulators</description>
+   </demoitem>
+   <demoitem>
+      <label>Forward kinematics</label>
+      <callback>fkine</callback>
+      <description>Manipulator forward kinematics: angles to pose</description>
+   </demoitem>
+   <demoitem>
+      <label>Inverse kinematics</label>
+      <callback>ikine</callback>
+      <description>Manipulator inverse kinematics: pose to angles</description>
+   </demoitem>
+   <demoitem>
+      <label>Animation</label>
+      <callback>animate</callback>
+      <description>Advanced use of plot and animation</description>
+   </demoitem>
+   <demoitem>
+      <label>Jacobians</label>
+      <callback>jacob</callback>
+      <description>Infinitissimal motion and manipulator Jacobians</description>
+   </demoitem>
+   <demoitem>
+      <label>Inverse dynamics</label>
+      <callback>idyn</callback>
+      <description>Inverse manipulator dynamics: joint rates to torque</description>
+   </demoitem>
+   <demoitem>
+      <label>Forward dynamics</label>
+      <callback>fdyn</callback>
+      <description>Forward manipulator dynamics: torque to joint rates</description>
+   </demoitem>
+      <demoitem>
+      <label>Symbolics and code generation</label>
+      <callback>rtsymcgendemo</callback>
+   </demoitem>
+</demosection>
+
+<demosection>
+    <icon>$toolbox/matlab/icons/simulinkicon.gif</icon>
+   <label>Simulink Examples</label>
+   <demoitem>
+      <label>Puma robot falling under gravity</label>
+      <type>model</type>
+      <source>demo1</source>
+      <dependency>Simulink</dependency>
+   </demoitem>
+</demosection>
+
+<demosection>
+    <icon>$toolbox/matlab/icons/matlabicon.gif</icon>
+   <label>Mobile robot Examples</label>
+   <demoitem>
+      <label>Forward dynamics</label>
+      <callback>fdyn</callback>
+      <description>Forward manipulator dynamics: torque to joint rates</description>
+   </demoitem>
+</demosection>
+
+</demos>

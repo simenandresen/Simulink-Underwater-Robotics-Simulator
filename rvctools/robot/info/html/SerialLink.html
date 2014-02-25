@@ -1,0 +1,1093 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="http://www.petercorke.com/RVC/common/toolboxhelp.css">
+    <title>M-File Help: SerialLink</title>
+  </head>
+  <body>
+  <table border="0" cellspacing="0" width="100%">
+    <tr class="subheader">
+      <td class="headertitle">M-File Help: SerialLink</td>
+      <td class="subheader-left"><a href="matlab:open SerialLink">View code for SerialLink</a></td>
+    </tr>
+  </table>
+<h1>SerialLink</h1><p><span class="helptopic">Serial-link robot class</span></p><p>
+A concrete class that represents a serial-link arm-type robot.  The
+mechanism is described using Denavit-Hartenberg parameters, one set
+per joint.
+
+</p>
+<h2>Methods</h2>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> plot</td> <td>display graphical representation of robot</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> teach</td> <td>drive the graphical robot</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> isspherical</td> <td>test if robot has spherical wrist</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> islimit</td> <td>test if robot at joint limit</td></tr>
+</table>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> fkine</td> <td>forward kinematics</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> ikine6s</td> <td>inverse kinematics for 6-axis spherical wrist revolute robot</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> ikine3</td> <td>inverse kinematics for 3-axis revolute robot</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> ikine</td> <td>inverse kinematics using iterative method</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> jacob0</td> <td>Jacobian matrix in world frame</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> jacobn</td> <td>Jacobian matrix in tool frame</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> maniplty</td> <td>manipulability</td></tr>
+</table>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> jtraj</td> <td>a joint space trajectory</td></tr>
+</table>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> accel</td> <td>joint acceleration</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> coriolis</td> <td>Coriolis joint force</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> dyn</td> <td>show dynamic properties of links</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> fdyn</td> <td>joint motion</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> friction</td> <td>friction force</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> gravload</td> <td>gravity joint force</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> inertia</td> <td>joint inertia matrix</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> nofriction</td> <td>set friction parameters to zero</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> rne</td> <td>joint torque/force</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> payload</td> <td>add a payload in end-effector frame</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> perturb</td> <td>randomly perturb link dynamic parameters</td></tr>
+</table>
+<h2>Properties (read/write)</h2>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> links</td> <td>vector of Link objects (1xN)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> gravity</td> <td>direction of gravity [gx gy gz]</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> base</td> <td>pose of robot's base (4x4 homog xform)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> tool</td> <td>robot's tool transform, T6 to tool tip (4x4 homog xform)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> qlim</td> <td>joint limits, [qmin qmax] (Nx2)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> offset</td> <td>kinematic joint coordinate offsets (Nx1)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> name</td> <td>name of robot, used for graphical display</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> manuf</td> <td>annotation, manufacturer's name</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> comment</td> <td>annotation, general comment</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> plotopt</td> <td>options for plot() method (cell array)</td></tr>
+</table>
+<h2>Object properties (read only)</h2>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> n </td> <td>number of joints</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> config</td> <td>joint configuration string, eg. 'RRRRRR'</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> mdh</td> <td>kinematic convention boolean (0=DH, 1=MDH)</td></tr>
+</table>
+<h2>Note</h2>
+<ul>
+  <li>SerialLink is a reference object.</li>
+  <li>SerialLink objects can be used in vectors and arrays</li>
+</ul>
+<h2>Reference</h2>
+<ul>
+  <li>Robotics, Vision & Control, Chaps 7-9,
+P. Corke, Springer 2011.</li>
+  <li>Robot, Modeling & Control,
+M.Spong, S. Hutchinson & M. Vidyasagar, Wiley 2006.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc Link">Link</a>, <a href="matlab:doc DHFactor">DHFactor</a></p>
+<hr>
+<a name="SerialLink"><h1>SerialLink.SerialLink</h1></a>
+<p><span class="helptopic">Create a SerialLink robot object</span></p><p>
+<strong>R</strong> = <span style="color:red">SerialLink</span>(<strong>links</strong>, <strong>options</strong>) is a robot object defined by a vector
+of Link objects.
+
+</p>
+<p>
+<strong>R</strong> = <span style="color:red">SerialLink</span>(<strong>dh</strong>, <strong>options</strong>) is a robot object with kinematics defined
+by the matrix <strong>dh</strong> which has one row per joint and each row is
+[theta d a alpha] and joints are assumed revolute.  An optional
+fifth column sigma indicate revolute (sigma=0, default) or
+prismatic (sigma=1).
+
+</p>
+<p>
+<strong>R</strong> = <span style="color:red">SerialLink</span>(<strong>options</strong>) is a null robot object with no links.
+
+</p>
+<p>
+<strong>R</strong> = <span style="color:red">SerialLink</span>([R1 R2 ...], <strong>options</strong>) concatenate robots, the base of
+R2 is attached to the tip of R1.
+
+</p>
+<p>
+<strong>R</strong> = <span style="color:red">SerialLink</span>(<strong>R1</strong>, <strong>options</strong>) is a deep copy of the robot object <strong>R1</strong>,
+with all the same properties.
+
+</p>
+<h2>Options</h2>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1">'name',  name</td> <td>set robot name property</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'comment',  comment</td> <td>set robot comment property</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'manufacturer',  manuf</td> <td>set robot manufacturer property</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'base',  base</td> <td>set base transformation matrix property</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'tool',  tool</td> <td>set tool transformation matrix property</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'gravity',  g</td> <td>set gravity vector property</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'plotopt',  po</td> <td>set plotting options property</td></tr>
+</table>
+<h2>Examples</h2>
+<p>
+Create a 2-link robot
+
+</p>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> L(1) = Link([ 0</td> <td>0   a1  0], 'standard');</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> L(2) = Link([ 0</td> <td>0   a2  0], 'standard');</td></tr>
+</table>
+<pre style="width: 90%%;" class="examples">
+twolink&nbsp;=&nbsp;SerialLink(L,&nbsp;'name',&nbsp;'two&nbsp;link');
+</pre>
+<p>
+Robot objects can be concatenated in two ways
+
+</p>
+<pre style="width: 90%%;" class="examples">
+R&nbsp;=&nbsp;R1&nbsp;*&nbsp;R2;
+R&nbsp;=&nbsp;SerialLink([R1&nbsp;R2]);
+</pre>
+<h2>Note</h2>
+<ul>
+  <li>SerialLink is a reference object, a subclass of Handle object.</li>
+  <li>SerialLink objects can be used in vectors and arrays</li>
+  <li>When robots are concatenated (either syntax) the intermediate base and
+tool transforms are removed since general constant transforms cannot
+be represented in Denavit-Hartenberg notation.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc Link">Link</a>, <a href="matlab:doc SerialLink.plot">SerialLink.plot</a></p>
+<hr>
+<a name="accel"><h1>SerialLink.accel</h1></a>
+<p><span class="helptopic">Manipulator forward dynamics</span></p><p>
+<strong>qdd</strong> = R.<span style="color:red">accel</span>(<strong>q</strong>, <strong>qd</strong>, <strong>torque</strong>) is a vector (Nx1) of joint accelerations that result
+from applying the actuator force/torque to the manipulator robot in state <strong>q</strong> and <strong>qd</strong>.
+If <strong>q</strong>, <strong>qd</strong>, <strong>torque</strong> are matrices (KxN) then <strong>qdd</strong> is a matrix (KxN) where each row
+is the acceleration corresponding to the equivalent rows of <strong>q</strong>, <strong>qd</strong>, <strong>torque</strong>.
+
+</p>
+<p>
+<strong>qdd</strong> = R.<span style="color:red">accel</span>(<strong>x</strong>) as above but <strong>x</strong>=[<strong>q</strong>,<strong>qd</strong>,<strong>torque</strong>].
+
+</p>
+<h2>Note</h2>
+<ul>
+  <li>Uses the method 1 of Walker and Orin to compute the forward dynamics.</li>
+  <li>This form is useful for simulation of manipulator dynamics, in
+conjunction with a numerical integration function.</li>
+</ul>
+<h2>References</h2>
+<ul>
+  <li>Efficient dynamic computer simulation of robotic mechanisms,
+M. W. Walker and D. E. Orin,
+ASME Journa of Dynamic Systems, Measurement and Control, vol. 104, no. 3, pp. 205-211, 1982.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.rne">SerialLink.rne</a>, <a href="matlab:doc SerialLink">SerialLink</a>, <a href="matlab:doc ode45">ode45</a></p>
+<hr>
+<a name="animate"><h1>SerialLink.animate</h1></a>
+<p><span class="helptopic">Update a robot animation</span></p><p>
+R.<span style="color:red">animate</span>(<strong>q</strong>) updates an existing animation for the robot R.  This will have
+been created using R.plot().
+
+</p>
+<p>
+Updates graphical instances of this robot in all figures.
+
+</p>
+<h2>Notes</h2>
+<ul>
+  <li>Not a general purpose method, used for Simulink robot animation.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.plot">SerialLink.plot</a></p>
+<hr>
+<a name="char"><h1>SerialLink.char</h1></a>
+<p><span class="helptopic">Convert to string</span></p><p>
+<strong>s</strong> = R.<span style="color:red">char</span>() is a string representation of the robot's kinematic parameters,
+showing DH parameters, joint structure, comments, gravity vector, base and
+tool transform.
+
+</p>
+<hr>
+<a name="cinertia"><h1>SerialLink.cinertia</h1></a>
+<p><span class="helptopic">Cartesian inertia matrix</span></p><p>
+<strong>m</strong> = R.<span style="color:red">cinertia</span>(<strong>q</strong>) is the NxN Cartesian (operational space) inertia matrix which relates
+Cartesian force/torque to Cartesian acceleration at the joint configuration <strong>q</strong>, and N
+is the number of robot joints.
+
+</p>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.inertia">SerialLink.inertia</a>, <a href="matlab:doc SerialLink.rne">SerialLink.rne</a></p>
+<hr>
+<a name="coriolis"><h1>SerialLink.coriolis</h1></a>
+<p><span class="helptopic">Coriolis matrix</span></p><p>
+<strong>C</strong> = R.<span style="color:red">coriolis</span>(<strong>q</strong>, <strong>qd</strong>) is the Coriolis/centripetal matrix (NxN) for
+the robot in configuration <strong>q</strong> and velocity <strong>qd</strong>, where N is the number of
+joints.  The product <strong>C</strong>*<strong>qd</strong> is the vector of joint force/torque due to velocity
+coupling.  The diagonal elements are due to centripetal effects and the
+off-diagonal elements are due to Coriolis effects.  This matrix is also
+known as the velocity coupling matrix, since gives the disturbance forces
+on all joints due to velocity of any joint.
+
+</p>
+<p>
+If <strong>q</strong> and <strong>qd</strong> are matrices (KxN), each row is interpretted as a joint state
+vector, and the result (NxNxK) is a 3d-matrix where each plane corresponds
+to a row of <strong>q</strong> and <strong>qd</strong>.
+
+</p>
+<p>
+<strong>C</strong> = R.<span style="color:red">coriolis</span>( <strong>qqd</strong>) as above but the matrix <strong>qqd</strong> (1x2N) is [<strong>q</strong> <strong>qd</strong>].
+
+</p>
+<h2>Notes</h2>
+<ul>
+  <li>Joint friction is also a joint force proportional to velocity but it is
+eliminated in the computation of this value.</li>
+  <li>Computationally slow, involves N^2/2 invocations of RNE.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.rne">SerialLink.rne</a></p>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<a name="display"><h1>SerialLink.display</h1></a>
+<p><span class="helptopic">Display parameters</span></p><p>
+R.<span style="color:red">display</span>() displays the robot parameters in human-readable form.
+
+</p>
+<h2>Notes</h2>
+<ul>
+  <li>This method is invoked implicitly at the command line when the result
+of an expression is a SerialLink object and the command has no trailing
+semicolon.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.char">SerialLink.char</a>, <a href="matlab:doc SerialLink.dyn">SerialLink.dyn</a></p>
+<hr>
+<a name="dyn"><h1>SerialLink.dyn</h1></a>
+<p><span class="helptopic">Display inertial properties</span></p><p>
+R.<span style="color:red">dyn</span>() displays the inertial properties of the <span style="color:red">SerialLink</span> object in a multi-line
+format.  The properties shown are mass, centre of mass, inertia, gear ratio,
+motor inertia and motor friction.
+
+</p>
+<p>
+R.<span style="color:red">dyn</span>(<strong>J</strong>) as above but display parameters for joint <strong>J</strong> only.
+
+</p>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc Link.dyn">Link.dyn</a></p>
+<hr>
+<a name="fdyn"><h1>SerialLink.fdyn</h1></a>
+<p><span class="helptopic">Integrate forward dynamics</span></p><p>
+[<strong>T</strong>,<strong>q</strong>,<strong>qd</strong>] = R.<span style="color:red">fdyn</span>(<strong>T1</strong>, <strong>torqfun</strong>) integrates the dynamics of the robot over
+the time  interval 0 to <strong>T</strong> and returns vectors of time TI, joint position <strong>q</strong>
+and joint velocity <strong>qd</strong>.  The initial joint position and velocity are zero.
+The torque applied to the joints is computed by the user function <strong>torqfun</strong>:
+
+</p>
+<p>
+[<strong>ti</strong>,<strong>q</strong>,<strong>qd</strong>] = R.<span style="color:red">fdyn</span>(<strong>T</strong>, <strong>torqfun</strong>, <strong>q0</strong>, <strong>qd0</strong>) as above but allows the initial
+joint position and velocity to be specified.
+
+</p>
+<p>
+The control torque is computed by a user defined function
+
+</p>
+<pre style="width: 90%%;" class="examples">
+TAU&nbsp;=&nbsp;TORQFUN(T,&nbsp;Q,&nbsp;QD,&nbsp;ARG1,&nbsp;ARG2,&nbsp;...)
+</pre>
+<p>
+where <strong>q</strong> and <strong>qd</strong> are the manipulator joint coordinate and velocity state
+respectively, and <strong>T</strong> is the current time.
+
+</p>
+<p>
+[<strong>T</strong>,<strong>q</strong>,<strong>qd</strong>] = R.<span style="color:red">fdyn</span>(<strong>T1</strong>, <strong>torqfun</strong>, <strong>q0</strong>, <strong>qd0</strong>, ARG1, ARG2, ...) allows optional
+arguments to be passed through to the user function.
+
+</p>
+<h2>Note</h2>
+<ul>
+  <li>This function performs poorly with non-linear joint friction, such as
+Coulomb friction.  The R.nofriction() method can be used to set this
+friction to zero.</li>
+  <li>If TORQFUN is not specified, or is given as 0 or [],  then zero torque
+is applied to the manipulator joints.</li>
+  <li>The builtin integration function ode45() is used.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.accel">SerialLink.accel</a>, <a href="matlab:doc SerialLink.nofriction">SerialLink.nofriction</a>, <a href="matlab:doc SerialLink.rne">SerialLink.rne</a>, <a href="matlab:doc ode45">ode45</a></p>
+<hr>
+<a name="fkine"><h1>SerialLink.fkine</h1></a>
+<p><span class="helptopic"></span></p><p>
+evaluate fkine for each point on a trajectory of
+theta_i or q_i data
+
+</p>
+<hr>
+<a name="friction"><h1>SerialLink.friction</h1></a>
+<p><span class="helptopic">Friction force</span></p><p>
+<strong>tau</strong> = R.<span style="color:red">friction</span>(<strong>qd</strong>) is the vector of joint <span style="color:red">friction</span> forces/torques for the
+robot moving with joint velocities <strong>qd</strong>.
+
+</p>
+<p>
+The <span style="color:red">friction</span> model includes:
+
+</p>
+<ul>
+  <li>viscous friction which is linear with velocity;</li>
+  <li>Coulomb friction which is proportional to sign(QD).</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc Link.friction">Link.friction</a></p>
+<hr>
+<a name="gencoords"><h1>SerialLink.gencoords</h1></a>
+<p><span class="helptopic">Vector of symbolic generalized coordinates</span></p><p>
+Q = R.GENCOORDS is a vector (1xN) of symbols [q1 q2 ... qN].
+
+</p>
+<p>
+[Q,QD] = R.GENCOORDS as above but QD is a vector (1xN) of
+symbols [qd1 qd2 ... qdN].
+
+</p>
+<p>
+[Q,QD,QDD] = R.GENCOORDS as above but QDD is a vector (1xN) of
+symbols [qdd1 qdd2 ... qddN].
+
+</p>
+<hr>
+<hr>
+<a name="gravload"><h1>SerialLink.gravload</h1></a>
+<p><span class="helptopic">Gravity loading</span></p><p>
+<strong>taug</strong> = R.<span style="color:red">gravload</span>(<strong>q</strong>) is the joint gravity loading for the robot in the
+joint configuration <strong>q</strong>.  Gravitational acceleration is a property of the
+robot object.
+
+</p>
+<p>
+If <strong>q</strong> is a row vector, the result is a row vector of joint torques.  If
+<strong>q</strong> is a matrix, each row is interpreted as a joint configuration vector,
+and the result is a matrix each row being the corresponding joint torques.
+
+</p>
+<p>
+<strong>taug</strong> = R.<span style="color:red">gravload</span>(<strong>q</strong>, <strong>grav</strong>) is as above but the gravitational
+acceleration vector <strong>grav</strong> is given explicitly.
+
+</p>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.rne">SerialLink.rne</a>, <a href="matlab:doc SerialLink.itorque">SerialLink.itorque</a>, <a href="matlab:doc SerialLink.coriolis">SerialLink.coriolis</a></p>
+<hr>
+<a name="ikine"><h1>SerialLink.ikine</h1></a>
+<p><span class="helptopic">default parameters for solution</span></p><hr>
+<a name="ikine3"><h1>SerialLink.ikine3</h1></a>
+<p><span class="helptopic">Inverse kinematics for 3-axis robot with no wrist</span></p><p>
+<strong>q</strong> = R.<span style="color:red">ikine3</span>(<strong>T</strong>) is the joint coordinates corresponding to the robot
+end-effector pose <strong>T</strong> represented by the homogenenous transform.  This
+is a analytic solution for a 3-axis robot (such as the first three joints
+of a robot like the Puma 560).
+
+</p>
+<p>
+<strong>q</strong> = R.<span style="color:red">ikine3</span>(<strong>T</strong>, <strong>config</strong>) as above but specifies the configuration of the arm in
+the form of a string containing one or more of the configuration codes:
+
+</p>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> 'l'</td> <td>arm to the left (default)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'r'</td> <td>arm to the right</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'u'</td> <td>elbow up (default)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'd'</td> <td>elbow down</td></tr>
+</table>
+<h2>Notes</h2>
+<ul>
+  <li>The same as IKINE6S without the wrist.</li>
+  <li>The inverse kinematic solution is generally not unique, and
+depends on the configuration string.</li>
+  <li>Joint offsets, if defined, are added to the inverse kinematics to
+generate Q.</li>
+</ul>
+<h2>Reference</h2>
+<p>
+Inverse kinematics for a PUMA 560 based on the equations by Paul and Zhang
+From The International Journal of Robotics Research
+Vol. 5, No. 2, Summer 1986, p. 32-44
+
+</p>
+<h2>Author</h2>
+<p>
+Robert Biro with Gary Von McMurray,
+GTRI/ATRP/IIMB,
+Georgia Institute of Technology
+2/13/95
+
+</p>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.FKINE">SerialLink.FKINE</a>, <a href="matlab:doc SerialLink.IKINE">SerialLink.IKINE</a></p>
+<hr>
+<a name="ikine6s"><h1>SerialLink.ikine6s</h1></a>
+<p><span class="helptopic">Inverse kinematics for 6-axis robot with spherical wrist</span></p><p>
+<strong>q</strong> = R.<span style="color:red">ikine6s</span>(<strong>T</strong>) is the joint coordinates corresponding to the robot
+end-effector pose <strong>T</strong> represented by the homogenenous transform.  This
+is a analytic solution for a 6-axis robot with a spherical wrist (such as
+the Puma 560).
+
+</p>
+<p>
+<strong>q</strong> = R.<span style="color:red">IKINE6S</span>(<strong>T</strong>, <strong>config</strong>) as above but specifies the configuration of the arm in
+the form of a string containing one or more of the configuration codes:
+
+</p>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> 'l'</td> <td>arm to the left (default)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'r'</td> <td>arm to the right</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'u'</td> <td>elbow up (default)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'd'</td> <td>elbow down</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'n'</td> <td>wrist not flipped (default)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'f'</td> <td>wrist flipped (rotated by 180 deg)</td></tr>
+</table>
+<h2>Notes</h2>
+<ul>
+  <li>Only applicable for an all revolute 6-axis robot RRRRRR.</li>
+  <li>The inverse kinematic solution is generally not unique, and
+depends on the configuration string.</li>
+  <li>Joint offsets, if defined, are added to the inverse kinematics to
+generate Q.</li>
+</ul>
+<h2>Reference</h2>
+<ul>
+  <li>Inverse kinematics for a PUMA 560,
+Paul and Zhang,
+The International Journal of Robotics Research,
+Vol. 5, No. 2, Summer 1986, p. 32-44</li>
+</ul>
+<h2>Author</h2>
+<p>
+Robert Biro with Gary Von McMurray,
+GTRI/ATRP/IIMB,
+Georgia Institute of Technology
+2/13/95
+
+</p>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.FKINE">SerialLink.FKINE</a>, <a href="matlab:doc SerialLink.IKINE">SerialLink.IKINE</a></p>
+<hr>
+<a name="inertia"><h1>SerialLink.inertia</h1></a>
+<p><span class="helptopic">Manipulator inertia matrix</span></p><p>
+<strong>i</strong> = R.<span style="color:red">inertia</span>(<strong>q</strong>) is the symmetric joint <span style="color:red">inertia</span> matrix (NxN) which relates
+joint torque to joint acceleration for the robot at joint configuration <strong>q</strong>.
+
+</p>
+<p>
+If <strong>q</strong> is a matrix (KxN), each row is interpretted as a joint state
+vector, and the result is a 3d-matrix (NxNxK) where each plane corresponds
+to the <span style="color:red">inertia</span> for the corresponding row of <strong>q</strong>.
+
+</p>
+<h2>Notes</h2>
+<ul>
+  <li>The diagonal elements I(J,J) are the inertia seen by joint actuator J.</li>
+  <li>The off-diagonal elements I(J,K) are coupling inertias that relate
+acceleration on joint J to force/torque on joint K.</li>
+  <li>The diagonal terms include the motor inertia reflected through the gear
+ratio.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.RNE">SerialLink.RNE</a>, <a href="matlab:doc SerialLink.CINERTIA">SerialLink.CINERTIA</a>, <a href="matlab:doc SerialLink.ITORQUE">SerialLink.ITORQUE</a></p>
+<hr>
+<a name="islimit"><h1>SerialLink.islimit</h1></a>
+<p><span class="helptopic">Joint limit test</span></p><p>
+<strong>v</strong> = R.<span style="color:red">islimit</span>(<strong>q</strong>) is a vector of boolean values, one per joint,
+false (0) if <strong>q</strong>(i) is within the joint limits, else true (1).
+
+</p>
+<h2>Notes</h2>
+<ul>
+  <li>Joint limits are purely advisory and are not used in any
+other function.  Just seemed like a useful thing to include...</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc Link.islimit">Link.islimit</a></p>
+<hr>
+<a name="isspherical"><h1>SerialLink.isspherical</h1></a>
+<p><span class="helptopic">Test for spherical wrist</span></p><p>
+R.<span style="color:red">isspherical</span>() is true if the robot has a spherical wrist, that is, the
+last 3 axes are revolute and their axes intersect at a point.
+
+</p>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.ikine6s">SerialLink.ikine6s</a></p>
+<hr>
+<hr>
+<a name="itorque"><h1>SerialLink.itorque</h1></a>
+<p><span class="helptopic">Inertia torque</span></p><p>
+<strong>taui</strong> = R.<span style="color:red">itorque</span>(<strong>q</strong>, <strong>qdd</strong>) is the inertia force/torque vector (1xN) at the
+specified joint configuration <strong>q</strong> (1xN) and acceleration <strong>qdd</strong> (1xN), that is,
+<strong>taui</strong> = INERTIA(<strong>q</strong>)*<strong>qdd</strong>.
+
+</p>
+<p>
+If <strong>q</strong> and <strong>qdd</strong> are matrices (KxN), each row is interpretted as a joint state
+vector, and the result is a matrix (KxN) where each row is the corresponding
+joint torques.
+
+</p>
+<h2>Note</h2>
+<ul>
+  <li>If the robot model contains non-zero motor inertia then this will
+included in the result.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.rne">SerialLink.rne</a>, <a href="matlab:doc SerialLink.inertia">SerialLink.inertia</a></p>
+<hr>
+<a name="jacob0"><h1>SerialLink.jacob0</h1></a>
+<p><span class="helptopic">Jacobian in world coordinates</span></p><p>
+<strong>j0</strong> = R.<span style="color:red">jacob0</span>(<strong>q</strong>, <strong>options</strong>) is the Jacobian matrix (6xN) for the robot in
+pose <strong>q</strong> (1xN).  The manipulator Jacobian matrix maps joint velocity to
+end-effector spatial velocity V = <strong>j0</strong>*QD expressed in the world-coordinate
+frame.
+
+</p>
+<h2>Options</h2>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> 'rpy'</td> <td>Compute analytical Jacobian with rotation rate in terms of
+roll-pitch-yaw angles</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'eul'</td> <td>Compute analytical Jacobian with rotation rates in terms of
+Euler angles</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'trans'</td> <td>Return translational submatrix of Jacobian</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'rot'</td> <td>Return rotational submatrix of Jacobian</td></tr>
+</table>
+<h2>Note</h2>
+<ul>
+  <li>The Jacobian is computed in the world frame and transformed to the
+end-effector frame.</li>
+  <li>The default Jacobian returned is often referred to as the geometric
+Jacobian, as opposed to the analytical Jacobian.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.jacobn">SerialLink.jacobn</a>, <a href="matlab:doc jsingu">jsingu</a>, <a href="matlab:doc deltatr">deltatr</a>, <a href="matlab:doc tr2delta">tr2delta</a>, <a href="matlab:doc jsingu">jsingu</a></p>
+<hr>
+<a name="jacob_dot"><h1>SerialLink.jacob_dot</h1></a>
+<p><span class="helptopic">Derivative of Jacobian</span></p><p>
+<strong>jdq</strong> = R.<span style="color:red">jacob_dot</span>(<strong>q</strong>, <strong>qd</strong>) is the product (6x1) of the derivative of the
+Jacobian (in the world frame) and the joint rates.
+
+</p>
+<h2>Notes</h2>
+<ul>
+  <li>Useful for operational space control XDD = J(Q)QDD + JDOT(Q)QD</li>
+  <li>Written as per the text and not very efficient.</li>
+</ul>
+<h2>References</h2>
+<ul>
+  <li>Fundamentals of Robotics Mechanical Systems (2nd ed)
+J. Angleles, Springer 2003.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc : SerialLink.jacob0">: SerialLink.jacob0</a>, <a href="matlab:doc diff2tr">diff2tr</a>, <a href="matlab:doc tr2diff">tr2diff</a></p>
+<hr>
+<a name="jacobn"><h1>SerialLink.jacobn</h1></a>
+<p><span class="helptopic">Jacobian in end-effector frame</span></p><p>
+<strong>jn</strong> = R.<span style="color:red">jacobn</span>(<strong>q</strong>, <strong>options</strong>) is the Jacobian matrix (6xN) for the robot in
+pose <strong>q</strong>. The manipulator Jacobian matrix maps joint velocity to
+end-effector spatial velocity V = <strong>jn</strong>*QD in the end-effector frame.
+
+</p>
+<h2>Options</h2>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> 'trans'</td> <td>Return translational submatrix of Jacobian</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'rot'</td> <td>Return rotational submatrix of Jacobian</td></tr>
+</table>
+<h2>Notes</h2>
+<ul>
+  <li>This Jacobian is often referred to as the geometric Jacobian.</li>
+</ul>
+<h2>Reference</h2>
+<p>
+Differential Kinematic Control Equations for Simple Manipulators,
+Paul, Shimano, Mayer,
+IEEE SMC 11(6) 1981,
+pp. 456-460
+
+</p>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.jacob0">SerialLink.jacob0</a>, <a href="matlab:doc jsingu">jsingu</a>, <a href="matlab:doc delta2tr">delta2tr</a>, <a href="matlab:doc tr2delta">tr2delta</a></p>
+<hr>
+<a name="jtraj"><h1>SerialLink.jtraj</h1></a>
+<p><span class="helptopic">Joint space trajectory</span></p><p>
+<strong>q</strong> = R.<span style="color:red">jtraj</span>(<strong>T1</strong>, <strong>t2</strong>, <strong>k</strong>) is a joint space trajectory (KxN) where the joint
+coordinates reflect motion from end-effector pose <strong>T1</strong> to <strong>t2</strong> in <strong>k</strong> steps  with
+default zero boundary conditions for velocity and acceleration.
+The trajectory <strong>q</strong> has one row per time step, and one column per joint,
+where N is the number of robot joints.
+
+</p>
+<h2>Note</h2>
+<ul>
+  <li>Requires solution of inverse kinematics. R.ikine6s() is used if
+appropriate, else R.ikine().  Additional trailing arguments to R.jtraj()
+are passed as trailing arugments to these functions.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc jtraj">jtraj</a>, <a href="matlab:doc SerialLink.ikine">SerialLink.ikine</a>, <a href="matlab:doc SerialLink.ikine6s">SerialLink.ikine6s</a></p>
+<hr>
+<a name="maniplty"><h1>SerialLink.maniplty</h1></a>
+<p><span class="helptopic">Manipulability measure</span></p><p>
+<strong>m</strong> = R.<span style="color:red">maniplty</span>(<strong>q</strong>, <strong>options</strong>) is the manipulability index measure for the robot
+at the joint configuration <strong>q</strong>.  It indicates dexterity, that is, how isotropic
+the robot's motion is with respect to the 6 degrees of Cartesian motion.
+The measure is high when the manipulator is capable of equal motion in all
+directions and low when the manipulator is close to a singularity.
+
+</p>
+<p>
+If <strong>q</strong> is a matrix (MxN) then <strong>m</strong> (Mx1) is a vector of  manipulability
+indices for each pose specified by a row of <strong>q</strong>.
+
+</p>
+<p>
+[<strong>m</strong>,<strong>ci</strong>] = R.<span style="color:red">maniplty</span>(<strong>q</strong>, <strong>options</strong>) as above, but for the case of the Asada
+measure returns the Cartesian inertia matrix <strong>ci</strong>.
+
+</p>
+<p>
+Two measures can be selected:
+
+</p>
+<ul>
+  <li>Yoshikawa's manipulability measure is based on the shape of the velocity
+ellipsoid and depends only on kinematic parameters.</li>
+  <li>Asada's manipulability measure is based on the shape of the acceleration
+ellipsoid which in turn is a function of the Cartesian inertia matrix and
+the dynamic parameters.  The scalar measure computed here is the ratio of
+the smallest/largest ellipsoid axis.  Ideally the ellipsoid would be
+spherical, giving a ratio of 1, but in practice will be less than 1.</li>
+</ul>
+<h2>Options</h2>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> 'T'</td> <td>manipulability for transational motion only (default)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'R'</td> <td>manipulability for rotational motion only</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'all'</td> <td>manipulability for all motions</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'dof', D</td> <td>D is a vector (1x6) with non-zero elements if the
+corresponding DOF is to be included for manipulability</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'yoshikawa'</td> <td>use Yoshikawa algorithm (default)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'asada'</td> <td>use Asada algorithm</td></tr>
+</table>
+<h2>Notes</h2>
+<ul>
+  <li>By default the measure includes rotational and translational dexterity, but
+this involves adding different units.  It can be more useful to look at the
+translational and rotational manipulability separately.</li>
+</ul>
+<h2>References</h2>
+<ul>
+  <li>Analysis and control of robot manipulators with redundancy,
+T. Yoshikawa,
+Robotics Research: The First International Symposium (M. Brady and R. Paul, eds.),
+pp. 735-747, The MIT press, 1984.</li>
+  <li>A geometrical representation of manipulator dynamics and its application to
+arm design,
+H. Asada,
+Journal of Dynamic Systems, Measurement, and Control,
+vol. 105, p. 131, 1983.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.inertia">SerialLink.inertia</a>, <a href="matlab:doc SerialLink.jacob0">SerialLink.jacob0</a></p>
+<hr>
+<a name="mtimes"><h1>SerialLink.mtimes</h1></a>
+<p><span class="helptopic">Concatenate robots</span></p><p>
+R = R1 * R2 is a robot object that is equivalent to mechanically attaching
+robot R2 to the end of robot R1.
+
+</p>
+<h2>Notes</h2>
+<ul>
+  <li>If R1 has a tool transform or R2 has a base transform these are
+discarded since DH convention does not allow for arbitrary intermediate
+transformations.</li>
+</ul>
+<hr>
+<a name="nofriction"><h1>SerialLink.nofriction</h1></a>
+<p><span class="helptopic">Remove friction</span></p><p>
+<strong>rnf</strong> = R.<span style="color:red">nofriction</span>() is a robot object with the same parameters as R but
+with non-linear (Coulomb) friction coefficients set to zero.
+
+</p>
+<p>
+<strong>rnf</strong> = R.<span style="color:red">nofriction</span>('all') as above but all friction coefficients set to zero.
+
+</p>
+<p>
+<strong>rnf</strong> = R.<span style="color:red">nofriction</span>('viscous') as above but only viscous friction coefficients
+are set to zero.
+
+</p>
+<h2>Notes</h2>
+<ul>
+  <li>Non-linear (Coulomb) friction can cause numerical problems when integrating
+the equations of motion (R.fdyn).</li>
+  <li>The resulting robot object has its name string prefixed with 'NF/'.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.fdyn">SerialLink.fdyn</a>, <a href="matlab:doc Link.nofriction">Link.nofriction</a></p>
+<hr>
+<a name="payload"><h1>SerialLink.payload</h1></a>
+<p><span class="helptopic">Add payload mass</span></p><p>
+R.<span style="color:red">payload</span>(<strong>m</strong>, <strong>p</strong>) adds a <span style="color:red">payload</span> with point mass <strong>m</strong> at position <strong>p</strong>
+in the end-effector coordinate frame.
+
+</p>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.rne">SerialLink.rne</a>, <a href="matlab:doc SerialLink.gravload">SerialLink.gravload</a></p>
+<hr>
+<a name="perturb"><h1>SerialLink.perturb</h1></a>
+<p><span class="helptopic">Perturb robot parameters</span></p><p>
+<strong>rp</strong> = R.<span style="color:red">perturb</span>(<strong>p</strong>) is a new robot object in which the dynamic parameters (link
+mass and inertia) have been perturbed.  The perturbation is multiplicative so
+that values are multiplied by random numbers in the interval (1-<strong>p</strong>) to (1+<strong>p</strong>).
+The name string of the perturbed robot is prefixed by '<strong>p</strong>/'.
+
+</p>
+<p>
+Useful for investigating the robustness of various model-based control
+schemes. For example to vary parameters in the range +/- 10 percent is:
+
+</p>
+<pre style="width: 90%%;" class="examples">
+r2&nbsp;=&nbsp;p560.perturb(0.1);
+</pre>
+<hr>
+<a name="plot"><h1>SerialLink.plot</h1></a>
+<p><span class="helptopic">Graphical display and animation</span></p><p>
+R.<span style="color:red">plot</span>(<strong>q</strong>, <strong>options</strong>) displays a graphical animation of a robot based on
+the kinematic model.  A stick figure polyline joins the origins of
+the link coordinate frames. The robot is displayed at the joint angle <strong>q</strong> (1xN), or
+if a matrix (MxN) it is animated as the robot moves along the M-point trajectory.
+
+</p>
+<h2>Options</h2>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1">'workspace',  W</td> <td>size of robot 3D workspace, W = [xmn, xmx ymn ymx zmn zmx]</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'delay',  d</td> <td>delay betwen frames for animation (s)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'fps', fps</td> <td>set number of frames per second for display</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> '[no]loop'</td> <td>loop over the trajectory forever</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'mag',  scale</td> <td>annotation scale factor</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'cylinder',  C</td> <td>color for joint cylinders, C=[r g b]</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'ortho'</td> <td>orthogonal camera view (default)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'perspective'</td> <td>perspective camera view</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'xyz'</td> <td>wrist axis label is XYZ</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'noa'</td> <td>wrist axis label is NOA</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> '[no]raise'</td> <td>autoraise the figure (very slow).</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> '[no]render'</td> <td>controls shaded rendering after drawing</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> '[no]base'</td> <td>controls display of base 'pedestal'</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> '[no]wrist'</td> <td>controls display of wrist</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> '[no]shadow'</td> <td>controls display of shadow</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> '[no]name'</td> <td>display the robot's name</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> '[no]jaxes'</td> <td>control display of joint axes</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> '[no]joints'</td> <td>controls display of joints</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'movie', M</td> <td>save frames as files in the folder M</td></tr>
+</table>
+<p>
+The <strong>options</strong> come from 3 sources and are processed in order:
+
+</p>
+<ul>
+  <li>Cell array of options returned by the function PLOTBOTOPT (if it exists)</li>
+  <li>Cell array of options given by the 'plotopt' option when creating the
+SerialLink object.</li>
+  <li>List of arguments in the command line.</li>
+</ul>
+<p>
+Many boolean <strong>options</strong> can be enabled or disabled with the 'no' prefix.  The
+various option sources can toggle an option, the last value is taken.
+
+</p>
+<p>
+To save the effort of processing <strong>options</strong> on each call they can be preprocessed by
+
+</p>
+<pre style="width: 90%%;" class="examples">
+opts&nbsp;=&nbsp;robot.plot({'opt1',&nbsp;'opt2',&nbsp;...&nbsp;});
+</pre>
+<p>
+and the resulting object can be passed in to subsequent calls instead of text-based
+<strong>options</strong>, for example:
+
+</p>
+<pre style="width: 90%%;" class="examples">
+robot.plot(q,&nbsp;opts);
+</pre>
+<h2>Graphical annotations and options</h2>
+<p>
+The robot is displayed as a basic stick figure robot with annotations
+such as:
+
+</p>
+<ul>
+  <li>shadow on the floor</li>
+  <li>XYZ wrist axes and labels</li>
+  <li>joint cylinders and axes</li>
+</ul>
+<p>
+which are controlled by <strong>options</strong>.
+
+</p>
+<p>
+The size of the annotations is determined using a simple heuristic from
+the workspace dimensions.  This dimension can be changed by setting the
+multiplicative scale factor using the 'mag' option.
+
+</p>
+<h2>Figure behaviour</h2>
+<ul>
+  <li>If no figure exists one will be created and teh robot drawn in it.</li>
+  <li>If no robot of this name is currently displayed then a robot will
+be drawn in the current figure.  If hold is enabled (hold on) then the
+robot will be added to the current figure.</li>
+  <li>If the robot already exists then that graphical model will be found
+and moved.</li>
+</ul>
+<h2>Multiple views of the same robot</h2>
+<p>
+If one or more plots of this robot already exist then these will all
+be moved according to the argument <strong>q</strong>.  All robots in all windows with
+the same name will be moved.
+
+</p>
+<p>
+Create a robot in figure 1
+
+</p>
+<pre style="width: 90%%;" class="examples">
+figure(1)
+p560.plot(qz);
+</pre>
+<p>
+Create a robot in figure 2
+
+</p>
+<pre style="width: 90%%;" class="examples">
+figure(2)
+p560.plot(qz);
+</pre>
+<p>
+Now move both robots
+
+</p>
+<pre style="width: 90%%;" class="examples">
+p560.plot(qn)
+</pre>
+<h2>Multiple robots in the same figure</h2>
+<p>
+Multiple robots can be displayed in the same <span style="color:red">plot</span>, by using "hold on"
+before calls to robot.<span style="color:red">plot</span>().
+
+</p>
+<p>
+Create a robot in figure 1
+
+</p>
+<pre style="width: 90%%;" class="examples">
+figure(1)
+p560.plot(qz);
+</pre>
+<p>
+Make a clone of the robot named bob
+
+</p>
+<pre style="width: 90%%;" class="examples">
+bob&nbsp;=&nbsp;SerialLink(p560,&nbsp;'name',&nbsp;'bob');
+</pre>
+<p>
+Draw bob in this figure
+
+</p>
+<pre style="width: 90%%;" class="examples">
+hold&nbsp;on
+bob.plot(qn)
+</pre>
+<p>
+To animate both robots so they move together:
+
+</p>
+<pre style="width: 90%%;" class="examples">
+qtg&nbsp;=&nbsp;jtraj(qr,&nbsp;qz,&nbsp;100);
+for&nbsp;q=qtg'
+</pre>
+<pre style="width: 90%%;" class="examples">
+p560.plot(q');
+bob.plot(q');
+</pre>
+<pre style="width: 90%%;" class="examples">
+end
+</pre>
+<h2>Making an animation movie</h2>
+<ul>
+  <li>The 'movie' options saves frames as files NNNN.png.</li>
+  <li>When using 'movie' option ensure that the window is fully visible.</li>
+  <li>To convert frames to a movie use a command like:</li>
+</ul>
+<pre style="width: 90%%;" class="examples">
+ffmpeg&nbsp;-r&nbsp;10&nbsp;-i&nbsp;%04d.png&nbsp;out.avi
+</pre>
+<h2>Notes</h2>
+<ul>
+  <li>Delay betwen frames can be eliminated by setting option 'delay', 0 or
+'fps', Inf.</li>
+  <li>By default a quite detailed plot is generated, but turning off labels,
+axes, shadows etc. will speed things up.</li>
+  <li>Each graphical robot object is tagged by the robot's name and has UserData
+that holds graphical handles and the handle of the robot object.</li>
+  <li>The graphical state holds the last joint configuration which can be retrieved
+using q = robot.plot().</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc plotbotopt">plotbotopt</a>, <a href="matlab:doc SerialLink.animate">SerialLink.animate</a>, <a href="matlab:doc SerialLink.fkine">SerialLink.fkine</a></p>
+<hr>
+<a name="plot_options"><h1>SerialLink.plot_options</h1></a>
+<p><span class="helptopic">a cell array of options and return a struct</span></p><hr>
+<a name="rne"><h1>SerialLink.rne</h1></a>
+<p><span class="helptopic">Inverse dynamics</span></p><p>
+<strong>tau</strong> = R.<span style="color:red">rne</span>(<strong>q</strong>, <strong>qd</strong>, <strong>qdd</strong>) is the joint torque required for the robot R
+to achieve the specified joint position <strong>q</strong>, velocity <strong>qd</strong> and acceleration <strong>qdd</strong>.
+
+</p>
+<p>
+<strong>tau</strong> = R.<span style="color:red">rne</span>(<strong>q</strong>, <strong>qd</strong>, <strong>qdd</strong>, <strong>grav</strong>) as above but overriding the gravitational
+acceleration vector in the robot object R.
+
+</p>
+<p>
+<strong>tau</strong> = R.<span style="color:red">rne</span>(<strong>q</strong>, <strong>qd</strong>, <strong>qdd</strong>, <strong>grav</strong>, <strong>fext</strong>) as above but specifying a wrench
+acting on the end of the manipulator which is a 6-vector [Fx Fy Fz Mx My Mz].
+
+</p>
+<p>
+<strong>tau</strong> = R.<span style="color:red">rne</span>(<strong>x</strong>) as above where <strong>x</strong>=[<strong>q</strong>,<strong>qd</strong>,<strong>qdd</strong>].
+
+</p>
+<p>
+<strong>tau</strong> = R.<span style="color:red">rne</span>(<strong>x</strong>, <strong>grav</strong>) as above but overriding the gravitational
+acceleration vector in the robot object R.
+
+</p>
+<p>
+<strong>tau</strong> = R.<span style="color:red">rne</span>(<strong>x</strong>, <strong>grav</strong>, <strong>fext</strong>) as above but specifying a wrench
+acting on the end of the manipulator which is a 6-vector [Fx Fy Fz Mx My Mz].
+
+</p>
+<p>
+[<strong>tau</strong>,<strong>wbase</strong>] = R.<span style="color:red">rne</span>(<strong>x</strong>, <strong>grav</strong>, <strong>fext</strong>) as above but the extra output is the
+wrench on the base.
+
+</p>
+<p>
+If <strong>q</strong>,<strong>qd</strong> and <strong>qdd</strong> (MxN), or <strong>x</strong> (Mx3N) are matrices with M rows representing a
+trajectory then <strong>tau</strong> (MxN) is a matrix with rows corresponding to each trajectory
+step.
+
+</p>
+<h2>Notes</h2>
+<ul>
+  <li>The robot base transform is ignored.</li>
+  <li>The torque computed contains a contribution due to armature
+inertia and joint friction.</li>
+  <li>RNE can be either an M-file or a MEX-file.</li>
+  <li>See the README file in the mex folder for details on how to configure
+MEX-file operation.</li>
+  <li>The M-file is a wrapper which calls either RNE_DH or RNE_MDH depending on
+the kinematic conventions used by the robot object.</li>
+  <li>Currently the MEX-file version does not compute WBASE.</li>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.accel">SerialLink.accel</a>, <a href="matlab:doc SerialLink.gravload">SerialLink.gravload</a>, <a href="matlab:doc SerialLink.inertia">SerialLink.inertia</a></p>
+<hr>
+<hr>
+<hr>
+<hr>
+<a name="teach"><h1>SerialLink.teach</h1></a>
+<p><span class="helptopic">Graphical teach pendant</span></p><p>
+R.<span style="color:red">teach</span>(<strong>options</strong>) drive a graphical robot by means of a graphical slider panel.
+If no graphical robot exists one is created in a new window.  Otherwise
+all current instances of the graphical robot are driven.
+
+</p>
+<p>
+<strong>h</strong> = R.<span style="color:red">teach</span>(<strong>options</strong>) as above but returns a handle for the <span style="color:red">teach</span> window.  Can
+be used to programmatically delete the <span style="color:red">teach</span> window.
+
+</p>
+<h2>Options</h2>
+<table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> 'eul'</td> <td>Display tool orientation in Euler angles</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'rpy'</td> <td>Display tool orientation in roll/pitch/yaw angles</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'approach'</td> <td>Display tool orientation as approach vector (z-axis)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> 'degrees'</td> <td>Display angles in degrees (default radians)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1">'q0', q</td> <td>Set initial joint coordinates</td></tr>
+</table>
+<h2>GUI</h2>
+<ul>
+  <li>The record button adds the current joint coordinates as a row to the robot's
+qteach property.</li>
+  <li>The Quit button destroys the teach window.</li>
+</ul>
+<h2>Notes</h2>
+<ul>
+  <li>The slider limits are derived from the joint limit properties.  If not
+set then for</li>
+<ul>
+  <li>a revolute joint they are assumed to be [-pi, +pi]</li>
+  <li>a prismatic joint they are assumed unknown and an error occurs.</li>
+</ul>
+</ul>
+<h2>See also</h2>
+<p>
+<a href="matlab:doc SerialLink.plot">SerialLink.plot</a></p>
+<hr>
+<a name="teach_callback"><h1>SerialLink.teach_callback</h1></a>
+<p><span class="helptopic">on changes to a slider or to the edit box showing joint coordinate</span></p><table class="list">
+  <tr><td style="white-space: nowrap;" class="col1"> src</td> <td>the object that caused the event</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> name</td> <td>name of the robot</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> j </td> <td>the joint index concerned (1..N)</td></tr>
+  <tr><td style="white-space: nowrap;" class="col1"> slider</td> <td>true if the</td></tr>
+</table>
+<hr>
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+  <tr class="subheader" valign="top"><td>&nbsp;</td></tr></table>
+<p class="copy">&copy; 1990-2012 Peter Corke.</p>
+</body></html>
