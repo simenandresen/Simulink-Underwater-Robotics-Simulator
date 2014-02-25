@@ -3,7 +3,7 @@ Underwater Vehicle-Manipulator Simulator
 
 
 
-This simulator is for simulating the dynamics of a Underwater Vehicle-Manipulator system. 
+This simulator is for simulating the dynamics of an Underwater Vehicle-Manipulator System (UVMS). 
 The simulator is implemented in Matlab/Simulink and is tested for Matlab version 2011a.
 
 ### Content
@@ -24,14 +24,14 @@ The simulator is implemented in Matlab/Simulink and is tested for Matlab version
 >Includes matlab code for rigid body transformations
 
 
-
+~~~´\/`~~~´\/`~~~´\/`~~~´\/`~~~´\/`~~~´\/`~~~~
 ~~~´\/`~~~´\/`~~~´\/`~~~´\/`~~~´\/`~~~´\/`~~~~
 
 
    	>=X>						>o=>
   _____________
  |\            \         ____
- | \____________\       /    \	       ___
+ | \____________\       /    \	      ___
  | |            |      /      \ _ ___|
  \ |            |_____/              |___
   \|____________|				  

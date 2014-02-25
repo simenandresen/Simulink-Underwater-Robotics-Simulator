@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.564"
+    ComputedModelVersion    "1.596"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Feb 25 16:01:19 2014"
+  LastModifiedDate	  "Tue Feb 25 17:24:13 2014"
   RTWModifiedTimeStamp	  315241631
-  ModelVersionFormat	  "1.%<AutoIncrement:564>"
+  ModelVersionFormat	  "1.%<AutoIncrement:596>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  on
@@ -656,6 +656,10 @@ Model {
   }
   BlockParameterDefaults {
     Block {
+      BlockType		      BusSelector
+      OutputAsBus	      off
+    }
+    Block {
       BlockType		      Constant
       Value		      "1"
       VectorParams1D	      on
@@ -807,214 +811,24 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "125"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "176"
+    SIDHighWatermark	    "178"
     Block {
-      BlockType		      SubSystem
-      Name		      "Dynamics"
-      SID		      "153"
+      BlockType		      BusSelector
+      Name		      "Bus\nSelector"
+      SID		      "177"
       Ports		      [1, 1]
-      Position		      [930, 244, 1040, 326]
-      MinAlgLoopOccurrences   off
-      PropExecContextOutsideSubsystem off
-      RTWSystemCode	      "Auto"
-      FunctionWithSeparateData off
-      Opaque		      off
-      RequestExecContextInheritance off
-      MaskHideContents	      off
-      System {
-	Name			"Dynamics"
-	Location		[1, 714, 1921, 1692]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"usletter"
-	PaperUnits		"inches"
-	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"125"
-	Block {
-	  BlockType		  Inport
-	  Name			  "Kinematics"
-	  SID			  "155"
-	  Position		  [625, 343, 655, 357]
-	  ZOrder		  -1
-	  NamePlacement		  "alternate"
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant"
-	  SID			  "151"
-	  Position		  [580, 387, 710, 433]
-	  ZOrder		  -5
-	  Value			  "dynamic_parameters"
-	  OutDataTypeStr	  "Bus: dyn_bus"
-	}
-	Block {
-	  BlockType		  SubSystem
-	  Name			  "M(q)"
-	  SID			  "152"
-	  Ports			  [2, 1]
-	  Position		  [815, 317, 970, 443]
-	  ZOrder		  -4
-	  LibraryVersion	  "1.32"
-	  ErrorFcn		  "Stateflow.Translate.translate"
-	  PermitHierarchicalResolution "ExplicitOnly"
-	  TreatAsAtomicUnit	  on
-	  MinAlgLoopOccurrences	  off
-	  PropExecContextOutsideSubsystem off
-	  RTWSystemCode		  "Auto"
-	  FunctionWithSeparateData off
-	  Opaque		  off
-	  RequestExecContextInheritance	off
-	  MaskHideContents	  off
-	  SFBlockType		  "MATLAB Function"
-	  MaskType		  "Stateflow"
-	  MaskDescription	  "Embedded MATLAB block"
-	  MaskSelfModifiable	  on
-	  MaskDisplay		  "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('private/"
-	  "eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'fcn']);"
-	  MaskIconFrame		  on
-	  MaskIconOpaque	  off
-	  MaskIconRotate	  "none"
-	  MaskPortRotate	  "default"
-	  MaskIconUnits		  "normalized"
-	  System {
-	    Name		    "M(q)"
-	    Location		    [257, 457, 812, 717]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "23"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "Kinematics"
-	      SID		      "152::1"
-	      Position		      [20, 101, 40, 119]
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "Dyn_parameters"
-	      SID		      "152::23"
-	      Position		      [20, 136, 40, 154]
-	      ZOrder		      9
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Demux
-	      Name		      " Demux "
-	      SID		      "152::20"
-	      Ports		      [1, 1]
-	      Position		      [270, 160, 320, 200]
-	      ZOrder		      6
-	      Outputs		      "1"
-	    }
-	    Block {
-	      BlockType		      S-Function
-	      Name		      " SFunction "
-	      SID		      "152::19"
-	      Tag		      "Stateflow S-Function uvms 4"
-	      Ports		      [2, 2]
-	      Position		      [180, 100, 230, 160]
-	      ZOrder		      5
-	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[2 2]"
-	      EnableBusSupport	      on
-	      Port {
-		PortNumber		2
-		Name			"M"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
-	    }
-	    Block {
-	      BlockType		      Terminator
-	      Name		      " Terminator "
-	      SID		      "152::22"
-	      Position		      [460, 171, 480, 189]
-	      ZOrder		      8
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "M"
-	      SID		      "152::5"
-	      Position		      [460, 101, 480, 119]
-	      IconDisplay	      "Port number"
-	    }
-	    Line {
-	      SrcBlock		      "Kinematics"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Dyn_parameters"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      2
-	    }
-	    Line {
-	      Name		      "M"
-	      Labels		      [0, 0]
-	      SrcBlock		      " SFunction "
-	      SrcPort		      2
-	      DstBlock		      "M"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      " Demux "
-	      SrcPort		      1
-	      DstBlock		      " Terminator "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      " SFunction "
-	      SrcPort		      1
-	      DstBlock		      " Demux "
-	      DstPort		      1
-	    }
-	  }
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "M"
-	  SID			  "154"
-	  Position		  [1030, 373, 1060, 387]
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  SrcBlock		  "M(q)"
-	  SrcPort		  1
-	  DstBlock		  "M"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Kinematics"
-	  SrcPort		  1
-	  DstBlock		  "M(q)"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Constant"
-	  SrcPort		  1
-	  DstBlock		  "M(q)"
-	  DstPort		  2
-	}
+      Position		      [766, 360, 804, 365]
+      ZOrder		      -3
+      BlockRotation	      270
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      ShowName		      off
+      OutputSignals	      "Ji.Je"
+      Port {
+	PortNumber		1
+	Name			"<Je>"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
       }
     }
     Block {
@@ -1033,8 +847,8 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Kinematic Transformations"
-	Location		[1, 714, 1921, 1692]
-	Open			off
+	Location		[0, 686, 1920, 1664]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1061,7 +875,7 @@ Model {
 	  Position		  [95, 125, 125, 155]
 	  ZOrder		  -5
 	  Value			  "DH"
-	  OutDataTypeStr	  "Bus: slBus1"
+	  OutDataTypeStr	  "Bus: DH_bus"
 	  Port {
 	    PortNumber		    1
 	    Name		    "DH"
@@ -1346,6 +1160,214 @@ Model {
 	  SrcPort		  1
 	  DstBlock		  "Kinematics"
 	  DstPort		  1
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "Kinetics"
+      SID		      "153"
+      Ports		      [1, 1]
+      Position		      [930, 244, 1040, 326]
+      MinAlgLoopOccurrences   off
+      PropExecContextOutsideSubsystem off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      Opaque		      off
+      RequestExecContextInheritance off
+      MaskHideContents	      off
+      System {
+	Name			"Kinetics"
+	Location		[1, 714, 1921, 1692]
+	Open			on
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "Kinematics"
+	  SID			  "155"
+	  Position		  [460, 143, 490, 157]
+	  ZOrder		  -1
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant"
+	  SID			  "151"
+	  Position		  [230, 192, 360, 238]
+	  ZOrder		  -5
+	  Value			  "Kinetics_Parameters"
+	  OutDataTypeStr	  "Bus: kinetics_bus"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "M(q)"
+	  SID			  "152"
+	  Ports			  [2, 1]
+	  Position		  [650, 119, 805, 246]
+	  ZOrder		  -4
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  MinAlgLoopOccurrences	  off
+	  PropExecContextOutsideSubsystem off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  Opaque		  off
+	  RequestExecContextInheritance	off
+	  MaskHideContents	  off
+	  SFBlockType		  "MATLAB Function"
+	  MaskType		  "Stateflow"
+	  MaskDescription	  "Embedded MATLAB block"
+	  MaskSelfModifiable	  on
+	  MaskDisplay		  "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('private/"
+	  "eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'getInertiaMatrix']);"
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  off
+	  MaskIconRotate	  "none"
+	  MaskPortRotate	  "default"
+	  MaskIconUnits		  "normalized"
+	  System {
+	    Name		    "M(q)"
+	    Location		    [257, 457, 812, 717]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "24"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "Kinematics"
+	      SID		      "152::1"
+	      Position		      [20, 101, 40, 119]
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "Kinetics_Parameters"
+	      SID		      "152::24"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      10
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "152::20"
+	      Ports		      [1, 1]
+	      Position		      [270, 160, 320, 200]
+	      ZOrder		      6
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "152::19"
+	      Tag		      "Stateflow S-Function uvms 4"
+	      Ports		      [2, 2]
+	      Position		      [180, 100, 230, 160]
+	      ZOrder		      5
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[2 2]"
+	      EnableBusSupport	      on
+	      Port {
+		PortNumber		2
+		Name			"M"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "152::22"
+	      Position		      [460, 171, 480, 189]
+	      ZOrder		      8
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "M"
+	      SID		      "152::5"
+	      Position		      [460, 101, 480, 119]
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "Kinematics"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Kinetics_Parameters"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      Name		      "M"
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "M"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "M"
+	  SID			  "154"
+	  Position		  [925, 178, 955, 192]
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  SrcBlock		  "M(q)"
+	  SrcPort		  1
+	  DstBlock		  "M"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Kinematics"
+	  SrcPort		  1
+	  DstBlock		  "M(q)"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Constant"
+	  SrcPort		  1
+	  DstBlock		  "M(q)"
+	  DstPort		  2
 	}
       }
     }
@@ -2148,13 +2170,29 @@ Model {
     Line {
       SrcBlock		      "Kinematic Transformations"
       SrcPort		      1
-      DstBlock		      "Dynamics"
+      Points		      [100, 0]
+      Branch {
+	DstBlock		"Kinetics"
+	DstPort			1
+      }
+      Branch {
+	DstBlock		"Bus\nSelector"
+	DstPort			1
+      }
+    }
+    Line {
+      SrcBlock		      "Kinetics"
+      SrcPort		      1
+      DstBlock		      "Terminator"
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Dynamics"
+      Name		      "<Je>"
+      Labels		      [0, 0]
+      SrcBlock		      "Bus\nSelector"
       SrcPort		      1
-      DstBlock		      "Terminator"
+      Points		      [0, 150]
+      DstBlock		      "Product"
       DstPort		      1
     }
   }
@@ -2631,7 +2669,7 @@ Stateflow {
   }
   chart {
     id			    25
-    name		    "Dynamics/M(q)"
+    name		    "Kinetics/M(q)"
     windowPosition	    [375.75 203.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
@@ -2643,14 +2681,14 @@ Stateflow {
     toolbarMode		    LIBRARY_TOOLBAR
     subviewS {
     }
-    ssIdHighWaterMark	    6
+    ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    29
     chartFileNumber	    4
     disableImplicitCasting  1
     eml {
-      name		      "fcn"
+      name		      "getInertiaMatrix"
     }
   }
   state {
@@ -2667,7 +2705,10 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function M = fcn(Kinematics,Dyn_parameters)\n%#codegen\n\n    M = zeros(12,12);\n\nend"
+      script		      "function M = getInertiaMatrix(Kinematics, Kinetics_Parameters)\n%#codegen\n    n=6;\n    M = zero"
+      "s(12,12);\n    %%\n    Jgb = [eye(6), zeros(6,6)];\n    Ji=Jgb;\n    Ii=Kinetics_Parameters.Inertia(:,:,1);\n   "
+      " M=M+(Ji')*Ii*Ji;\n    for i=1:n\n        Ji = Kinematics.Ji.Ji(:,:,i);\n        Ii = Kinetics_Parameters.Inerti"
+      "a(:,:,i+1);\n        M =  (Ji')*Ii*Ji;\n    end\n    M\nend"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -2743,8 +2784,8 @@ Stateflow {
   }
   data {
     id			    31
-    ssIdNumber		    6
-    name		    "Dyn_parameters"
+    ssIdNumber		    7
+    name		    "Kinetics_Parameters"
     linkNode		    [25 30 0]
     scope		    INPUT_DATA
     machine		    1
@@ -2755,18 +2796,18 @@ Stateflow {
       type {
 	method			SF_SIMULINK_OBJECT_TYPE
 	primitive		SF_DOUBLE_TYPE
-	busObject		"dyn_bus"
+	busObject		"kinetics_bus"
 	isSigned		1
 	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
       frame		      SF_FRAME_INHERITED
     }
-    dataType		    "Bus: dyn_bus"
+    dataType		    "Bus: kinetics_bus"
   }
   instance {
     id			    32
-    name		    "Dynamics/M(q)"
+    name		    "Kinetics/M(q)"
     machine		    1
     chart		    25
   }

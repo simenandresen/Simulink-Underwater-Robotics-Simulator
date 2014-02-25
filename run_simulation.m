@@ -42,8 +42,8 @@ Jacobians_bus = Simulink.Bus.createObject(Ji);
 Ji_bus = slBus3;
 kinematics_bus = Simulink.Bus.createObject(Kinematics);
 kin_bus = slBus4;
-dynamics_bus = Simulink.Bus.createObject(Dynamics_Parameters);
-dyn_bus = slBus5;
+Kinetics_bus = Simulink.Bus.createObject(Kinetics_Parameters);
+kinetics_bus = slBus5;
 
 
 %%

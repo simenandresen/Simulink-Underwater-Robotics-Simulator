@@ -9,4 +9,4 @@ for i=1:(n+1)
    I(:,:,i) = eye(6); 
 end
 
-Dynamics_Parameters = struct('Inertia',I);
+Kinetics_Parameters = struct('Inertia',I);
