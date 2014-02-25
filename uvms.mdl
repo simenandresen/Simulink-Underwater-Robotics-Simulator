@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.214"
+    ComputedModelVersion    "1.529"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,12 +27,12 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Feb 19 16:24:46 2014"
-  RTWModifiedTimeStamp	  314721894
-  ModelVersionFormat	  "1.%<AutoIncrement:214>"
+  LastModifiedDate	  "Tue Feb 25 14:57:59 2014"
+  RTWModifiedTimeStamp	  315237199
+  ModelVersionFormat	  "1.%<AutoIncrement:529>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
-  SampleTimeAnnotations	  off
+  SampleTimeAnnotations	  on
   LibraryLinkDisplay	  "disabled"
   WideLines		  off
   ShowLineDimensions	  off
@@ -134,7 +134,7 @@ Model {
 	  StartTime		  "0.0"
 	  StopTime		  "10.0"
 	  AbsTol		  "auto"
-	  FixedStep		  "auto"
+	  FixedStep		  "dt"
 	  InitialStep		  "auto"
 	  MaxNumMinSteps	  "-1"
 	  MaxOrder		  5
@@ -150,8 +150,8 @@ Model {
 	  SolverMode		  "Auto"
 	  EnableConcurrentExecution off
 	  ConcurrentTasks	  off
-	  Solver		  "FixedStepDiscrete"
-	  SolverName		  "FixedStepDiscrete"
+	  Solver		  "ode3"
+	  SolverName		  "ode3"
 	  SolverJacobianMethodControl "auto"
 	  ShapePreserveControl	  "DisableAll"
 	  ZeroCrossControl	  "UseLocalSettings"
@@ -506,7 +506,7 @@ Model {
 	      IncDataTypeInIds	      off
 	      MangleLength	      1
 	      CustomSymbolStrGlobalVar "$R$N$M"
-	      CustomSymbolStrType     "$N$R$M"
+	      CustomSymbolStrType     "$N$R$M_T"
 	      CustomSymbolStrField    "$N$M"
 	      CustomSymbolStrFcn      "$R$N$M$F"
 	      CustomSymbolStrFcnArg   "rt$I$N$M"
@@ -541,13 +541,13 @@ Model {
 		Cell			"GenerateTestInterfaces"
 		Cell			"ModelStepFunctionPrototypeControlCompliant"
 		Cell			"CPPClassGenCompliant"
-		Cell			"MultiInstanceERTCode"
+		Cell			"PortableWordSizes"
 		Cell			"PurelyIntegerCode"
 		Cell			"SupportComplex"
 		Cell			"SupportAbsoluteTime"
 		Cell			"SupportContinuousTime"
 		Cell			"SupportNonInlinedSFcns"
-		Cell			"PortableWordSizes"
+		Cell			"GenerateAllocFcn"
 		PropName		"DisabledProps"
 	      }
 	      TargetFcnLib	      "ansi_tfl_table_tmw.mat"
@@ -613,7 +613,7 @@ Model {
       }
       Name		      "Configuration"
       CurrentDlgPage	      "Solver"
-      ConfigPrmDlgPosition     [ 308, 448, 1621, 1295 ] 
+      ConfigPrmDlgPosition     [ 248, 660, 1657, 1723 ] 
     }
     PropName		    "ConfigurationSets"
   }
@@ -655,6 +655,10 @@ Model {
   }
   BlockParameterDefaults {
     Block {
+      BlockType		      BusSelector
+      OutputAsBus	      off
+    }
+    Block {
       BlockType		      Constant
       Value		      "1"
       VectorParams1D	      on
@@ -692,6 +696,29 @@ Model {
       Interpolate	      on
     }
     Block {
+      BlockType		      Integrator
+      ExternalReset	      "none"
+      InitialConditionSource  "internal"
+      InitialCondition	      "0"
+      LimitOutput	      off
+      UpperSaturationLimit    "inf"
+      LowerSaturationLimit    "-inf"
+      ShowSaturationPort      off
+      ShowStatePort	      off
+      AbsoluteTolerance	      "auto"
+      IgnoreLimit	      off
+      ZeroCross		      on
+      ContinuousStateAttributes	"''"
+    }
+    Block {
+      BlockType		      Mux
+      Inputs		      "4"
+      DisplayOption	      "none"
+      UseBusObject	      off
+      BusObject		      "BusObject"
+      NonVirtualBus	      off
+    }
+    Block {
       BlockType		      Outport
       Port		      "1"
       OutMin		      "[]"
@@ -707,6 +734,21 @@ Model {
       SourceOfInitialOutputValue "Dialog"
       OutputWhenDisabled      "held"
       InitialOutput	      "[]"
+    }
+    Block {
+      BlockType		      Product
+      Inputs		      "2"
+      Multiplication	      "Element-wise(.*)"
+      CollapseMode	      "All dimensions"
+      CollapseDim	      "1"
+      InputSameDT	      on
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: Same as first input"
+      LockScale		      off
+      RndMeth		      "Zero"
+      SaturateOnIntegerOverflow	on
+      SampleTime	      "-1"
     }
     Block {
       BlockType		      S-Function
@@ -741,10 +783,20 @@ Model {
     Block {
       BlockType		      Terminator
     }
+    Block {
+      BlockType		      ToWorkspace
+      VariableName	      "simulink_output"
+      MaxDataPoints	      "1000"
+      Decimation	      "1"
+      SampleTime	      "0"
+      SaveFormat	      "Array"
+      FixptAsFi		      off
+      NumInputs		      "1"
+    }
   }
   System {
     Name		    "uvms"
-    Location		    [1, 481, 1921, 1459]
+    Location		    [1, 714, 1921, 1692]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -756,51 +808,32 @@ Model {
     TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "100"
+    ZoomFactor		    "125"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "32"
+    SIDHighWatermark	    "150"
     Block {
-      BlockType		      Constant
-      Name		      "Constant"
-      SID		      "9"
-      Position		      [350, 190, 380, 220]
-      ZOrder		      -5
-      Value		      "DH"
-      OutDataTypeStr	      "Bus: slBus1"
+      BlockType		      BusSelector
+      Name		      "Bus\nSelector"
+      SID		      "101"
+      Ports		      [1, 1]
+      Position		      [820, 236, 825, 274]
+      ZOrder		      -3
+      ShowName		      off
+      OutputSignals	      "Je"
       Port {
 	PortNumber		1
-	Name			"DH"
+	Name			"<Je>"
 	RTWStorageClass		"Auto"
 	DataLoggingNameMode	"SignalName"
       }
     }
     Block {
-      BlockType		      Constant
-      Name		      "Constant1"
-      SID		      "18"
-      Position		      [315, 100, 345, 130]
-      ZOrder		      -4
-      Value		      "aq"
-    }
-    Block {
-      BlockType		      Constant
-      Name		      "Constant2"
-      SID		      "32"
-      Position		      [200, 145, 230, 175]
-      ZOrder		      -4
-      Value		      "g0b"
-    }
-    Block {
       BlockType		      SubSystem
-      Name		      "Jacobians"
-      SID		      "19"
-      Ports		      [1, 1]
-      Position		      [1275, 106, 1440, 214]
-      ZOrder		      -4
-      LibraryVersion	      "1.32"
-      ErrorFcn		      "Stateflow.Translate.translate"
-      PermitHierarchicalResolution "ExplicitOnly"
-      TreatAsAtomicUnit	      on
+      Name		      "Kinematic Transformations"
+      SID		      "85"
+      Ports		      [1, 2]
+      Position		      [495, 229, 680, 336]
+      BackgroundColor	      "cyan"
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -808,21 +841,10 @@ Model {
       Opaque		      off
       RequestExecContextInheritance off
       MaskHideContents	      off
-      SFBlockType	      "MATLAB Function"
-      MaskType		      "Stateflow"
-      MaskDescription	      "Embedded MATLAB block"
-      MaskSelfModifiable      on
-      MaskDisplay	      "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('pr"
-      "ivate/eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'getJacobians']);"
-      MaskIconFrame	      on
-      MaskIconOpaque	      off
-      MaskIconRotate	      "none"
-      MaskPortRotate	      "default"
-      MaskIconUnits	      "normalized"
       System {
-	Name			"Jacobians"
-	Location		[257, 457, 812, 717]
-	Open			off
+	Name			"Kinematic Transformations"
+	Location		[291, 714, 1616, 1074]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -834,101 +856,366 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	"22"
 	Block {
 	  BlockType		  Inport
-	  Name			  "Ti"
-	  SID			  "19::1"
-	  Position		  [20, 101, 40, 119]
+	  Name			  "Xi"
+	  SID			  "86"
+	  Position		  [25, 58, 55, 72]
+	  ZOrder		  -1
 	  IconDisplay		  "Port number"
 	}
 	Block {
-	  BlockType		  Demux
-	  Name			  " Demux "
-	  SID			  "19::20"
-	  Ports			  [1, 1]
-	  Position		  [270, 160, 320, 200]
-	  ZOrder		  6
-	  Outputs		  "1"
-	}
-	Block {
-	  BlockType		  S-Function
-	  Name			  " SFunction "
-	  SID			  "19::19"
-	  Tag			  "Stateflow S-Function uvms 1"
-	  Ports			  [1, 2]
-	  Position		  [180, 100, 230, 160]
-	  ZOrder		  5
-	  FunctionName		  "sf_sfun"
-	  PortCounts		  "[1 2]"
-	  EnableBusSupport	  on
+	  BlockType		  Constant
+	  Name			  "Constant"
+	  SID			  "9"
+	  Position		  [95, 125, 125, 155]
+	  ZOrder		  -5
+	  Value			  "DH"
+	  OutDataTypeStr	  "Bus: slBus1"
 	  Port {
-	    PortNumber		    2
-	    Name		    "Ji"
+	    PortNumber		    1
+	    Name		    "DH"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
 	}
 	Block {
-	  BlockType		  Terminator
-	  Name			  " Terminator "
-	  SID			  "19::22"
-	  Position		  [460, 171, 480, 189]
-	  ZOrder		  8
+	  BlockType		  SubSystem
+	  Name			  "Jacobians"
+	  SID			  "19"
+	  Ports			  [1, 1]
+	  Position		  [650, 51, 815, 159]
+	  ZOrder		  -4
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  MinAlgLoopOccurrences	  off
+	  PropExecContextOutsideSubsystem off
+	  SystemSampleTime	  "dt"
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  Opaque		  off
+	  RequestExecContextInheritance	off
+	  MaskHideContents	  off
+	  SFBlockType		  "MATLAB Function"
+	  System {
+	    Name		    "Jacobians"
+	    Location		    [227, 345, 838, 789]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "25"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "Ti"
+	      SID		      "19::1"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      -1
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "19::24"
+	      Ports		      [1, 1]
+	      Position		      [270, 230, 320, 270]
+	      ZOrder		      10
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "19::23"
+	      Tag		      "Stateflow S-Function uvms 1"
+	      Ports		      [1, 2]
+	      Position		      [180, 100, 230, 160]
+	      ZOrder		      9
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[1 2]"
+	      EnableBusSupport	      on
+	      Port {
+		PortNumber		2
+		Name			"Ji"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "19::25"
+	      Position		      [460, 241, 480, 259]
+	      ZOrder		      11
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "Ji"
+	      SID		      "19::5"
+	      Position		      [460, 101, 480, 119]
+	      ZOrder		      -5
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "Ti"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      Name		      "Ji"
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "Ji"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "Transformations"
+	  SID			  "2"
+	  Ports			  [2, 1]
+	  Position		  [220, 26, 360, 179]
+	  ZOrder		  -4
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  MinAlgLoopOccurrences	  off
+	  PropExecContextOutsideSubsystem off
+	  SystemSampleTime	  "dt"
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  Opaque		  off
+	  RequestExecContextInheritance	off
+	  MaskHideContents	  off
+	  SFBlockType		  "MATLAB Function"
+	  System {
+	    Name		    "Transformations"
+	    Location		    [227, 345, 838, 789]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "39"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "Xi"
+	      SID		      "2::24"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      10
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "DH"
+	      SID		      "2::1"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      -3
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "2::36"
+	      Ports		      [1, 1]
+	      Position		      [270, 180, 320, 220]
+	      ZOrder		      13
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "2::35"
+	      Tag		      "Stateflow S-Function uvms 2"
+	      Ports		      [2, 2]
+	      Position		      [180, 100, 230, 180]
+	      ZOrder		      12
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[2 2]"
+	      EnableBusSupport	      on
+	      Port {
+		PortNumber		2
+		Name			"Ti"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "2::37"
+	      Position		      [460, 191, 480, 209]
+	      ZOrder		      14
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "Ti"
+	      SID		      "2::23"
+	      Position		      [460, 101, 480, 119]
+	      ZOrder		      9
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "Xi"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "DH"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      Name		      "Ti"
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "Ti"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
 	}
 	Block {
 	  BlockType		  Outport
-	  Name			  "Ji"
-	  SID			  "19::5"
-	  Position		  [460, 101, 480, 119]
+	  Name			  "jacobians"
+	  SID			  "87"
+	  Position		  [975, 98, 1005, 112]
+	  ZOrder		  -23
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "transformations"
+	  SID			  "88"
+	  Position		  [1005, 248, 1035, 262]
+	  ZOrder		  -23
+	  Port			  "2"
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  SrcBlock		  "Ti"
-	  SrcPort		  1
-	  DstBlock		  " SFunction "
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "Ji"
+	  Name			  "DH"
 	  Labels		  [0, 0]
-	  SrcBlock		  " SFunction "
-	  SrcPort		  2
-	  DstBlock		  "Ji"
+	  SrcBlock		  "Constant"
+	  SrcPort		  1
+	  DstBlock		  "Transformations"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Transformations"
+	  SrcPort		  1
+	  Points		  [120, 0]
+	  Branch {
+	    DstBlock		    "Jacobians"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, 150]
+	    DstBlock		    "transformations"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  SrcBlock		  "Xi"
+	  SrcPort		  1
+	  DstBlock		  "Transformations"
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  " Demux "
+	  SrcBlock		  "Jacobians"
 	  SrcPort		  1
-	  DstBlock		  " Terminator "
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  " SFunction "
-	  SrcPort		  1
-	  DstBlock		  " Demux "
+	  DstBlock		  "jacobians"
 	  DstPort		  1
 	}
       }
+    }
+    Block {
+      BlockType		      Product
+      Name		      "Product"
+      SID		      "104"
+      Ports		      [2, 1]
+      Position		      [525, 512, 555, 543]
+      ZOrder		      -13
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      Multiplication	      "Matrix(*)"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
     }
     Block {
       BlockType		      Terminator
       Name		      "Terminator"
-      SID		      "31"
-      Position		      [1550, 150, 1570, 170]
-      ZOrder		      -5
+      SID		      "106"
+      Position		      [755, 300, 775, 320]
+      ZOrder		      -20
+    }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "To Workspace"
+      SID		      "109"
+      Ports		      [1]
+      Position		      [75, 499, 185, 561]
+      ZOrder		      -7
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      VariableName	      "Ee_pose_log"
+      MaxDataPoints	      "inf"
+      SampleTime	      "dt"
+      SaveFormat	      "Timeseries"
     }
     Block {
       BlockType		      SubSystem
-      Name		      "Transformations"
-      SID		      "2"
-      Ports		      [3, 1]
-      Position		      [720, 90, 860, 230]
-      ZOrder		      -4
-      LibraryVersion	      "1.32"
-      ErrorFcn		      "Stateflow.Translate.translate"
-      PermitHierarchicalResolution "ExplicitOnly"
-      TreatAsAtomicUnit	      on
+      Name		      "Xi"
+      SID		      "95"
+      Ports		      [0, 2]
+      Position		      [175, 259, 310, 361]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -936,20 +1223,9 @@ Model {
       Opaque		      off
       RequestExecContextInheritance off
       MaskHideContents	      off
-      SFBlockType	      "MATLAB Function"
-      MaskType		      "Stateflow"
-      MaskDescription	      "Embedded MATLAB block"
-      MaskSelfModifiable      on
-      MaskDisplay	      "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('pr"
-      "ivate/eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'getTransformations']);"
-      MaskIconFrame	      on
-      MaskIconOpaque	      off
-      MaskIconRotate	      "none"
-      MaskPortRotate	      "default"
-      MaskIconUnits	      "normalized"
       System {
-	Name			"Transformations"
-	Location		[257, 457, 812, 717]
+	Name			"Xi"
+	Location		[1, 714, 1921, 1692]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -961,146 +1237,760 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	SIDHighWatermark	"27"
+	ZoomFactor		"125"
 	Block {
-	  BlockType		  Inport
-	  Name			  "q"
-	  SID			  "2::24"
-	  Position		  [20, 101, 40, 119]
-	  ZOrder		  10
+	  BlockType		  Constant
+	  Name			  "Constant"
+	  SID			  "90"
+	  Position		  [210, 230, 240, 260]
+	  ZOrder		  -4
+	  Value			  "q_dot"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant1"
+	  SID			  "92"
+	  Position		  [210, 155, 240, 185]
+	  ZOrder		  -4
+	  Value			  "vbb"
+	}
+	Block {
+	  BlockType		  Integrator
+	  Name			  "Integrator"
+	  SID			  "93"
+	  Ports			  [1, 1]
+	  Position		  [490, 230, 520, 260]
+	  ZOrder		  -10
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux"
+	  SID			  "94"
+	  Ports			  [2, 1]
+	  Position		  [695, 216, 700, 254]
+	  ZOrder		  -12
+	  ShowName		  off
+	  Inputs		  "2"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux1"
+	  SID			  "98"
+	  Ports			  [2, 1]
+	  Position		  [755, 421, 760, 459]
+	  ZOrder		  -12
+	  ShowName		  off
+	  Inputs		  "2"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace"
+	  SID			  "107"
+	  Ports			  [1]
+	  Position		  [815, 170, 875, 200]
+	  ZOrder		  -7
+	  VariableName		  "Xi_log"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	  SaveFormat		  "Timeseries"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace1"
+	  SID			  "108"
+	  Ports			  [1]
+	  Position		  [900, 340, 960, 370]
+	  ZOrder		  -7
+	  VariableName		  "Zeta_log"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	  SaveFormat		  "Timeseries"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "twist2pose"
+	  SID			  "129"
+	  Ports			  [1, 1]
+	  Position		  [470, 139, 540, 201]
+	  MinAlgLoopOccurrences	  off
+	  PropExecContextOutsideSubsystem off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  Opaque		  off
+	  RequestExecContextInheritance	off
+	  MaskHideContents	  off
+	  System {
+	    Name		    "twist2pose"
+	    Location		    [0, 686, 1918, 1663]
+	    Open		    on
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "125"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "v_ee"
+	      SID		      "130"
+	      Position		      [255, 158, 285, 172]
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      "Demux"
+	      SID		      "132"
+	      Ports		      [1, 2]
+	      Position		      [845, 166, 850, 204]
+	      ZOrder		      -6
+	      ShowName		      off
+	      Outputs		      "2"
+	      DisplayOption	      "bar"
+	      Port {
+		PortNumber		1
+		Name			"ee_pos"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	      Port {
+		PortNumber		2
+		Name			"ee_angle"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Integrator
+	      Name		      "Integrator"
+	      SID		      "133"
+	      Ports		      [1, 1]
+	      Position		      [760, 170, 790, 200]
+	      ZOrder		      -10
+	      InitialCondition	      "vpose_init"
+	    }
+	    Block {
+	      BlockType		      Mux
+	      Name		      "Mux"
+	      SID		      "136"
+	      Ports		      [2, 1]
+	      Position		      [1030, 166, 1035, 204]
+	      ZOrder		      -12
+	      ShowName		      off
+	      Inputs		      "2"
+	      DisplayOption	      "bar"
+	    }
+	    Block {
+	      BlockType		      SubSystem
+	      Name		      "body2eulervel"
+	      SID		      "134"
+	      Ports		      [2, 1]
+	      Position		      [485, 148, 700, 217]
+	      ZOrder		      -4
+	      LibraryVersion	      "1.32"
+	      ErrorFcn		      "Stateflow.Translate.translate"
+	      PermitHierarchicalResolution "ExplicitOnly"
+	      TreatAsAtomicUnit	      on
+	      MinAlgLoopOccurrences   off
+	      PropExecContextOutsideSubsystem off
+	      SystemSampleTime	      "dt"
+	      RTWSystemCode	      "Auto"
+	      FunctionWithSeparateData off
+	      Opaque		      off
+	      RequestExecContextInheritance off
+	      MaskHideContents	      off
+	      SFBlockType	      "MATLAB Function"
+	      MaskType		      "Stateflow"
+	      MaskDescription	      "Embedded MATLAB block"
+	      MaskSelfModifiable      on
+	      MaskDisplay	      "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('p"
+	      "rivate/eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'fcn']);"
+	      MaskIconFrame	      on
+	      MaskIconOpaque	      off
+	      MaskIconRotate	      "none"
+	      MaskPortRotate	      "default"
+	      MaskIconUnits	      "normalized"
+	      System {
+		Name			"body2eulervel"
+		Location		[257, 457, 812, 717]
+		Open			off
+		ModelBrowserVisibility	off
+		ModelBrowserWidth	200
+		ScreenColor		"white"
+		PaperOrientation	"landscape"
+		PaperPositionMode	"auto"
+		PaperType		"usletter"
+		PaperUnits		"inches"
+		TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+		TiledPageScale		1
+		ShowPageBoundaries	off
+		ZoomFactor		"100"
+		SIDHighWatermark	"23"
+		Block {
+		  BlockType		  Inport
+		  Name			  "ee_velocity_twist"
+		  SID			  "134::1"
+		  Position		  [20, 101, 40, 119]
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Inport
+		  Name			  "euler_angles_ee"
+		  SID			  "134::23"
+		  Position		  [20, 136, 40, 154]
+		  ZOrder		  9
+		  Port			  "2"
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Demux
+		  Name			  " Demux "
+		  SID			  "134::20"
+		  Ports			  [1, 1]
+		  Position		  [270, 160, 320, 200]
+		  ZOrder		  6
+		  Outputs		  "1"
+		}
+		Block {
+		  BlockType		  S-Function
+		  Name			  " SFunction "
+		  SID			  "134::19"
+		  Tag			  "Stateflow S-Function uvms 7"
+		  Ports			  [2, 2]
+		  Position		  [180, 100, 230, 160]
+		  ZOrder		  5
+		  FunctionName		  "sf_sfun"
+		  PortCounts		  "[2 2]"
+		  EnableBusSupport	  on
+		  Port {
+		    PortNumber		    2
+		    Name		    "ee_rates"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		  }
+		}
+		Block {
+		  BlockType		  Terminator
+		  Name			  " Terminator "
+		  SID			  "134::22"
+		  Position		  [460, 171, 480, 189]
+		  ZOrder		  8
+		}
+		Block {
+		  BlockType		  Outport
+		  Name			  "ee_rates"
+		  SID			  "134::5"
+		  Position		  [460, 101, 480, 119]
+		  IconDisplay		  "Port number"
+		}
+		Line {
+		  SrcBlock		  "ee_velocity_twist"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "euler_angles_ee"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  2
+		}
+		Line {
+		  Name			  "ee_rates"
+		  Labels		  [0, 0]
+		  SrcBlock		  " SFunction "
+		  SrcPort		  2
+		  DstBlock		  "ee_rates"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  " Demux "
+		  SrcPort		  1
+		  DstBlock		  " Terminator "
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  " SFunction "
+		  SrcPort		  1
+		  DstBlock		  " Demux "
+		  DstPort		  1
+		}
+	      }
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "ee_pose"
+	      SID		      "135"
+	      Position		      [1215, 178, 1245, 192]
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "v_ee"
+	      SrcPort		      1
+	      DstBlock		      "body2eulervel"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "body2eulervel"
+	      SrcPort		      1
+	      DstBlock		      "Integrator"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Integrator"
+	      SrcPort		      1
+	      DstBlock		      "Demux"
+	      DstPort		      1
+	    }
+	    Line {
+	      Name		      "ee_angle"
+	      Labels		      [0, 0]
+	      SrcBlock		      "Demux"
+	      SrcPort		      2
+	      Points		      [0, 5]
+	      Branch {
+		Points			[0, 51; -385, 0]
+		DstBlock		"body2eulervel"
+		DstPort			2
+	      }
+	      Branch {
+		Points			[0, -5]
+		DstBlock		"Mux"
+		DstPort			2
+	      }
+	    }
+	    Line {
+	      Name		      "ee_pos"
+	      Labels		      [0, 0]
+	      SrcBlock		      "Demux"
+	      SrcPort		      1
+	      DstBlock		      "Mux"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Mux"
+	      SrcPort		      1
+	      DstBlock		      "ee_pose"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "Xi"
+	  SID			  "96"
+	  Position		  [910, 228, 940, 242]
 	  IconDisplay		  "Port number"
 	}
 	Block {
-	  BlockType		  Inport
-	  Name			  "g0b"
-	  SID			  "2::26"
-	  Position		  [20, 136, 40, 154]
-	  ZOrder		  11
+	  BlockType		  Outport
+	  Name			  "Zeta"
+	  SID			  "100"
+	  Position		  [925, 433, 955, 447]
 	  Port			  "2"
 	  IconDisplay		  "Port number"
 	}
+	Line {
+	  SrcBlock		  "Constant1"
+	  SrcPort		  1
+	  Points		  [0, 1; 185, -1]
+	  Branch {
+	    Points		    [25, 1]
+	    DstBlock		    "twist2pose"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, 260]
+	    DstBlock		    "Mux1"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  SrcBlock		  "Constant"
+	  SrcPort		  1
+	  Points		  [125, 0]
+	  Branch {
+	    DstBlock		    "Integrator"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, 205]
+	    DstBlock		    "Mux1"
+	    DstPort		    2
+	  }
+	}
+	Line {
+	  SrcBlock		  "Mux"
+	  SrcPort		  1
+	  Points		  [75, 0]
+	  Branch {
+	    DstBlock		    "Xi"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, -50]
+	    DstBlock		    "To Workspace"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  SrcBlock		  "Mux1"
+	  SrcPort		  1
+	  Points		  [100, 0]
+	  Branch {
+	    DstBlock		    "Zeta"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, -85]
+	    DstBlock		    "To Workspace1"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  SrcBlock		  "twist2pose"
+	  SrcPort		  1
+	  Points		  [95, 0; 0, 55]
+	  DstBlock		  "Mux"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Integrator"
+	  SrcPort		  1
+	  DstBlock		  "Mux"
+	  DstPort		  2
+	}
+	Annotation {
+	  SID			  "60"
+	  Position		  [502, 391]
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "twist2pose"
+      SID		      "137"
+      Ports		      [1, 1]
+      Position		      [275, 499, 345, 561]
+      BlockMirror	      on
+      MinAlgLoopOccurrences   off
+      PropExecContextOutsideSubsystem off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      Opaque		      off
+      RequestExecContextInheritance off
+      MaskHideContents	      off
+      System {
+	Name			"twist2pose"
+	Location		[1, 714, 1921, 1692]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"125"
 	Block {
 	  BlockType		  Inport
-	  Name			  "DH"
-	  SID			  "2::1"
-	  Position		  [20, 171, 40, 189]
-	  Port			  "3"
+	  Name			  "v_ee"
+	  SID			  "138"
+	  Position		  [255, 158, 285, 172]
 	  IconDisplay		  "Port number"
 	}
 	Block {
 	  BlockType		  Demux
-	  Name			  " Demux "
-	  SID			  "2::20"
-	  Ports			  [1, 1]
-	  Position		  [270, 180, 320, 220]
-	  ZOrder		  6
-	  Outputs		  "1"
-	}
-	Block {
-	  BlockType		  S-Function
-	  Name			  " SFunction "
-	  SID			  "2::19"
-	  Tag			  "Stateflow S-Function uvms 2"
-	  Ports			  [3, 2]
-	  Position		  [180, 100, 230, 180]
-	  ZOrder		  5
-	  FunctionName		  "sf_sfun"
-	  PortCounts		  "[3 2]"
-	  EnableBusSupport	  on
+	  Name			  "Demux"
+	  SID			  "139"
+	  Ports			  [1, 2]
+	  Position		  [845, 166, 850, 204]
+	  ZOrder		  -6
+	  ShowName		  off
+	  Outputs		  "2"
+	  DisplayOption		  "bar"
+	  Port {
+	    PortNumber		    1
+	    Name		    "ee_pos"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
 	  Port {
 	    PortNumber		    2
-	    Name		    "Ti"
+	    Name		    "ee_angle"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
 	}
 	Block {
-	  BlockType		  Terminator
-	  Name			  " Terminator "
-	  SID			  "2::22"
-	  Position		  [460, 191, 480, 209]
-	  ZOrder		  8
+	  BlockType		  Integrator
+	  Name			  "Integrator"
+	  SID			  "140"
+	  Ports			  [1, 1]
+	  Position		  [760, 170, 790, 200]
+	  ZOrder		  -10
+	  InitialCondition	  "ee_pose_init"
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux"
+	  SID			  "141"
+	  Ports			  [2, 1]
+	  Position		  [1030, 166, 1035, 204]
+	  ZOrder		  -12
+	  ShowName		  off
+	  Inputs		  "2"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "body2eulervel"
+	  SID			  "142"
+	  Ports			  [2, 1]
+	  Position		  [485, 148, 700, 217]
+	  ZOrder		  -4
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  MinAlgLoopOccurrences	  off
+	  PropExecContextOutsideSubsystem off
+	  SystemSampleTime	  "dt"
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  Opaque		  off
+	  RequestExecContextInheritance	off
+	  MaskHideContents	  off
+	  SFBlockType		  "MATLAB Function"
+	  MaskType		  "Stateflow"
+	  MaskDescription	  "Embedded MATLAB block"
+	  MaskSelfModifiable	  on
+	  MaskDisplay		  "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('private/"
+	  "eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'fcn']);"
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  off
+	  MaskIconRotate	  "none"
+	  MaskPortRotate	  "default"
+	  MaskIconUnits		  "normalized"
+	  System {
+	    Name		    "body2eulervel"
+	    Location		    [257, 457, 812, 717]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "23"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "ee_velocity_twist"
+	      SID		      "142::1"
+	      Position		      [20, 101, 40, 119]
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "euler_angles_ee"
+	      SID		      "142::23"
+	      Position		      [20, 136, 40, 154]
+	      ZOrder		      9
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "142::20"
+	      Ports		      [1, 1]
+	      Position		      [270, 160, 320, 200]
+	      ZOrder		      6
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "142::19"
+	      Tag		      "Stateflow S-Function uvms 3"
+	      Ports		      [2, 2]
+	      Position		      [180, 100, 230, 160]
+	      ZOrder		      5
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[2 2]"
+	      EnableBusSupport	      on
+	      Port {
+		PortNumber		2
+		Name			"ee_rates"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "142::22"
+	      Position		      [460, 171, 480, 189]
+	      ZOrder		      8
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "ee_rates"
+	      SID		      "142::5"
+	      Position		      [460, 101, 480, 119]
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "ee_velocity_twist"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "euler_angles_ee"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      Name		      "ee_rates"
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "ee_rates"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
 	}
 	Block {
 	  BlockType		  Outport
-	  Name			  "Ti"
-	  SID			  "2::23"
-	  Position		  [460, 101, 480, 119]
-	  ZOrder		  9
+	  Name			  "ee_pose"
+	  SID			  "143"
+	  Position		  [1215, 178, 1245, 192]
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  SrcBlock		  "q"
+	  SrcBlock		  "v_ee"
 	  SrcPort		  1
-	  DstBlock		  " SFunction "
+	  DstBlock		  "body2eulervel"
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "g0b"
+	  SrcBlock		  "body2eulervel"
 	  SrcPort		  1
-	  DstBlock		  " SFunction "
-	  DstPort		  2
+	  DstBlock		  "Integrator"
+	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "DH"
+	  SrcBlock		  "Integrator"
 	  SrcPort		  1
-	  DstBlock		  " SFunction "
-	  DstPort		  3
+	  DstBlock		  "Demux"
+	  DstPort		  1
 	}
 	Line {
-	  Name			  "Ti"
+	  Name			  "ee_angle"
 	  Labels		  [0, 0]
-	  SrcBlock		  " SFunction "
+	  SrcBlock		  "Demux"
 	  SrcPort		  2
-	  DstBlock		  "Ti"
+	  Points		  [0, 5]
+	  Branch {
+	    Points		    [0, 51; -385, 0]
+	    DstBlock		    "body2eulervel"
+	    DstPort		    2
+	  }
+	  Branch {
+	    Points		    [0, -5]
+	    DstBlock		    "Mux"
+	    DstPort		    2
+	  }
+	}
+	Line {
+	  Name			  "ee_pos"
+	  Labels		  [0, 0]
+	  SrcBlock		  "Demux"
+	  SrcPort		  1
+	  DstBlock		  "Mux"
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  " Demux "
+	  SrcBlock		  "Mux"
 	  SrcPort		  1
-	  DstBlock		  " Terminator "
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  " SFunction "
-	  SrcPort		  1
-	  DstBlock		  " Demux "
+	  DstBlock		  "ee_pose"
 	  DstPort		  1
 	}
       }
     }
     Line {
-      Name		      "DH"
+      SrcBlock		      "Xi"
+      SrcPort		      1
+      DstBlock		      "Kinematic Transformations"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Kinematic Transformations"
+      SrcPort		      1
+      DstBlock		      "Bus\nSelector"
+      DstPort		      1
+    }
+    Line {
+      Name		      "<Je>"
       Labels		      [0, 0]
-      SrcBlock		      "Constant"
+      SrcBlock		      "Bus\nSelector"
       SrcPort		      1
-      DstBlock		      "Transformations"
-      DstPort		      3
-    }
-    Line {
-      SrcBlock		      "Constant1"
-      SrcPort		      1
-      DstBlock		      "Transformations"
+      Points		      [0, 265]
+      DstBlock		      "Product"
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Transformations"
-      SrcPort		      1
-      DstBlock		      "Jacobians"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Jacobians"
-      SrcPort		      1
+      SrcBlock		      "Kinematic Transformations"
+      SrcPort		      2
       DstBlock		      "Terminator"
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Constant2"
-      SrcPort		      1
-      DstBlock		      "Transformations"
+      SrcBlock		      "Xi"
+      SrcPort		      2
+      Points		      [100, 0; 0, 160; 160, 0; 0, 40]
+      DstBlock		      "Product"
       DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Product"
+      SrcPort		      1
+      DstBlock		      "twist2pose"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "twist2pose"
+      SrcPort		      1
+      DstBlock		      "To Workspace"
+      DstPort		      1
     }
   }
 }
@@ -1117,15 +2007,17 @@ Stateflow {
     name		    "uvms"
     created		    "19-Feb-2014 09:50:42"
     isLibrary		    0
-    firstTarget		    18
+    firstTarget		    33
+    debug {
+    }
     sfVersion		    76014001.00040001
   }
   chart {
     id			    2
-    name		    "Jacobians"
-    windowPosition	    [375.75 203.25 200.25 189.75]
+    name		    "Kinematic Transformations/Jacobians"
+    windowPosition	    [289.038 458.75 213 385]
     viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 3120 1920 1.25]
+    screen		    [1 1 1920 1200 1.333333333333333]
     treeNode		    [0 3 0 0]
     firstTransition	    5
     firstJunction	    4
@@ -1155,13 +2047,14 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Ji = getJacobians(Ti)\n%#codegen\n    \n    n=6;\n    Ji = struct('Ji',zeros(n,n+6));\n "
-      "   ji=zeros(6,6)\n    for i=1:n\n        ji=getji(Ti,i);\n        Ji.Ji(:,:,i) = [Ti.Adgbi_inv(:,:,i), Ti.Adgbi_"
-      "inv(:,:,i)*ji];\n    end\n    \n    j6=getje(Ti);\n    Ji.Je=[Ti.Adgbe_inv, Ti.Adgbe_inv*j6];\n    \nend\n\n\n\n"
-      "\n% return matrix Ji (see report)\nfunction mat = getji(Ti,i)\n    n=6;\n    mat=zeros(6,6);\n    Xii=[0,0,0,0,0"
-      ",1]';\n    for j=1:n\n        if j<=i\n            mat(:,j) = Ti.Adg0i(:,:,i)*Xii;\n        end\n    end\n\nend\n"
-      "\n% return matrix Ji (see report)\nfunction mat = getje(Ti)\n    n=6;\n    mat=zeros(6,6);\n    Xii=[0,0,0,0,0,1"
-      "]';\n    for i=1:(n-1)\n        mat(:,i) = Ti.Adg0i(:,:,i)*Xii;\n    end\n    mat(:,6) = Ti.Adg0e*Xii;\n\nend"
+      script		      "function Ji = getJacobians(Ti)\n%#codegen\n    n=6;\n    Ji = struct('Ji',zeros(n,n+6,n),'Je',zer"
+      "os(n,n+6));\n    ji=zeros(6,6);\n    for i=1:n\n        ji=getji(Ti,i);\n    \n        Ji.Ji(:,:,i) = [Ti.Adgbi_"
+      "inv(:,:,i), Ti.Adgbi_inv(:,:,i)*ji];\n    end\n    j6=getje(Ti);\n    Ji.Je=[Ti.Adgbe_inv, Ti.Adgbe_inv*j6];   \n"
+      "end\n\n\n\n\n% return matrix Ji (see report)\nfunction mat = getji(Ti,i)\n    n=6;\n    mat=zeros(6,6);\n    Xii"
+      "=[0,0,0,0,0,1]';\n    mat(:,1)=eye(6)*Xii;\n    for j=2:n\n        if j<=i\n            mat(:,j) = Ti.Adgbi(:,:,"
+      "j-1)*Xii;\n        end\n    end\n\nend\n\n% return matrix Ji (see report)\nfunction mat = getje(Ti)\n    n=6;\n "
+      "   mat=zeros(6,6);\n    Xii=[0,0,0,0,0,1]';\n    mat(:,1)=eye(6)*Xii;\n    for i=2:(n-1)\n        mat(:,i) = Ti."
+      "Adgbi(:,:,i-1)*Xii;\n    end\n    mat(:,6) = Ti.Adgbe*Xii;\n\nend"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -1184,7 +2077,7 @@ Stateflow {
     }
     dst {
       id		      4
-      intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
     chart		    2
@@ -1192,6 +2085,9 @@ Stateflow {
     dataLimits		    [23.575 23.575 14.625 34.575]
     subviewer		    2
     drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
     executionOrder	    1
     ssIdNumber		    2
   }
@@ -1237,22 +2133,22 @@ Stateflow {
   }
   instance {
     id			    8
-    name		    "Jacobians"
+    name		    "Kinematic Transformations/Jacobians"
     machine		    1
     chart		    2
   }
   chart {
     id			    9
-    name		    "Transformations"
-    windowPosition	    [375.75 203.25 200.25 189.75]
-    viewLimits		    [0 156.75 0 153.75]
+    name		    "Kinematic Transformations/Transformations"
+    windowPosition	    [288.8 346.4 624 496.8]
+    viewLimits		    [0 577.6 0 457.8]
     screen		    [1 1 3120 1920 1.25]
     treeNode		    [0 10 0 0]
     firstTransition	    12
     firstJunction	    11
     viewObj		    9
     machine		    1
-    ssIdHighWaterMark	    10
+    ssIdHighWaterMark	    17
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    13
@@ -1276,36 +2172,44 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Ti = getTransformations(q,g0b,DH)\n%#codegen\n% Return transformations, rotations, posit"
+      script		      "function Ti    = getTransformations(Xi,DH)\n%#codegen\n% Return transformations, rotations, posit"
       "ions and adjoint matrices for\n% robot links\n% Tbi.gbi(:,:,i) is the transformation from b to i etc\n    n=6;  "
-      "  % number of links\n    Ti = struct('g0b',zeros(3,3),'g0i',zeros(4,4,n),'R0i', zeros(3,3,n),'p0i', zeros(3,1,n)"
-      ",  'Adg0i',zeros(6,6,n),'Adg0i_inv',zeros(6,6,n),   ...\n    'gbi',zeros(4,4,n),'Rbi', zeros(3,3,n),'pbi', zeros"
-      "(3,1,n),'Adgbi',zeros(6,6,n),'Adgbi_inv',zeros(6,6,n),...\n    'g6e',eye(4) ,'g0e',zeros(4,4),'R0e', zeros(3,3),"
-      "'p0e', zeros(3,1),  'Adg0e',zeros(6,6),'Adg0e_inv',zeros(6,6),   ...\n    'gbe',zeros(4,4),'Rbe', zeros(3,3),'pb"
-      "e', zeros(3,1),'Adgbe',zeros(6,6),'Adgbe_inv',zeros(6,6) ...\n    );\n\n    % initial matrices \n    g=eye(4);\n"
-      "    g0=g0b;\n    \n    % transformation from 0 and b to frame i\n    for i=1:n\n       Ti.gbi(:,:,i) = g*getHom("
-      "q,DH,i);\n       Ti.Rbi(:,:,i) = getRot(Ti.gbi(:,:,i));\n       Ti.pbi(:,:,i) = getPos(Ti.gbi(:,:,i));\n       T"
-      "i.Adgbi(:,:,i) = getAdgbi(Ti.Rbi(:,:,i), Ti.pbi(:,:,i) );\n       Ti.Adgbi_inv(:,:,i) = getAdgbi_inv(Ti.Rbi(:,:,"
-      "i), Ti.pbi(:,:,i) );\n       g=Ti.gbi(:,:,i);\n       \n       Ti.g0i(:,:,i) = g0*getHom(q,DH,i);\n       Ti.R0i"
-      "(:,:,i) = getRot(Ti.g0i(:,:,i));\n       Ti.p0i(:,:,i) = getPos(Ti.g0i(:,:,i));\n       Ti.Adg0i(:,:,i) = getAdg"
-      "bi(Ti.R0i(:,:,i), Ti.p0i(:,:,i) );\n       Ti.Adg0i_inv(:,:,i) = getAdgbi_inv(Ti.R0i(:,:,i), Ti.p0i(:,:,i) );\n "
-      "      g0=Ti.g0i(:,:,i);\n    end\n    \n    % transformation from frame 0 to ee\n    g0e = Ti.g0i(:,:,6)*Ti.g6e;"
-      "\n    Ti.g0e(:,:,i) = g0e;\n    Ti.R0e(:,:,i) = getRot(g0e);\n    Ti.p0e(:,:,i) = getPos(g0e);\n    Ti.Adg0e(:,:"
-      ",i) = getAdgbi(Ti.R0e(:,:,i), Ti.p0e(:,:,i) );\n    Ti.Adg0e_inv(:,:,i) = getAdgbi_inv(Ti.R0e(:,:,i), Ti.p0e(:,:"
-      ",i) );\n    \n    % transformation from frame b to ee\n    gbe = Ti.gbi(:,:,6)*Ti.g6e;\n    Ti.gbe(:,:,i) = gbe;"
-      "\n    Ti.Rbe(:,:,i) = getRot(gbe);\n    Ti.pbe(:,:,i) = getPos(gbe);\n    Ti.Adgbe(:,:,i) = getAdgbi(Ti.Rbe(:,:,"
-      "i), Ti.pbe(:,:,i) );\n    Ti.Adgbe_inv(:,:,i) = getAdgbi_inv(Ti.Rbe(:,:,i), Ti.pbe(:,:,i) );\n    \n    \n    \n"
-      "\nend\n\n\n\n% homogenous transformation matrix - DH convention\n% mat=Rot_z(theta)Trans_z(d)Trans_x(a)Rot_x(alp"
-      "ha)\nfunction mat=getHom(q,DH,i)\n    alpha=DH.alpha(i);\n    a=DH.a(i);\n    d=DH.d(i);\n    theta=q(i);\n    m"
-      "at=eye(4);\n    mat=[cos(theta), -sin(theta)*cos(alpha), sin(theta)*sin(alpha), a*cos(theta);\n         sin(thet"
-      "a), cos(theta)*cos(alpha), -cos(theta)*sin(alpha), a*sin(theta);\n         0, sin(alpha), cos(alpha), d;\n      "
-      "   0,0,0,1\n    ];\n\nend\n\n% extract position from homogenous \n% matrix\nfunction vec = getPos(g)\n    vec=g("
-      "1:3,4);\n\nend\n\n% extract rotation matrix-part out of\n% homogenous matrix\nfunction mat = getRot(g)\n    mat="
-      "g(1:3,1:3);\nend\n\n\nfunction mat = getAdgbi(R,p)\n    mat = zeros(6,6);\n    ps=skew(p);\n    mat=[R , ps*R ; "
-      "zeros(3,3), R ];\nend\n\nfunction mat = getAdgbi_inv(R,p)\n    mat = zeros(6,6);\n    Rt=transpose(R);\n    ps=s"
-      "kew(p);\n    mat=[Rt , -Rt*ps ; zeros(3,3), Rt ];\nend\n\n% return the skew symmetric matrix representation\n% o"
-      "f vector\nfunction mat = skew(vec)\n    mat=[0, -vec(3), vec(2) ; vec(3), 0,vec(1); -vec(2), vec(1), 0];\nend\n\n"
-      "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+      "  % number of links\n    q=Xi(7:12);\n    eta=Xi(1:6);\n    g0b=eta2g0b(eta);\n        \n    Ti = struct('g0b',z"
+      "eros(3,3),'g0i',zeros(4,4,n),'R0i', zeros(3,3,n),'p0i', zeros(3,1,n),  'Adg0i',zeros(6,6,n),'Adg0i_inv',zeros(6,"
+      "6,n),   ...\n    'gbi',zeros(4,4,n),'Rbi', zeros(3,3,n),'pbi', zeros(3,1,n),'Adgbi',zeros(6,6,n),'Adgbi_inv',zer"
+      "os(6,6,n),...\n    'g6e',eye(4) ,'g0e',zeros(4,4),'R0e', zeros(3,3),'p0e', zeros(3,1),  'Adg0e',zeros(6,6),'Adg0"
+      "e_inv',zeros(6,6),   ...\n    'gbe',zeros(4,4),'Rbe', zeros(3,3),'pbe', zeros(3,1),'Adgbe',zeros(6,6),'Adgbe_inv"
+      "',zeros(6,6) ...\n    );\n\n    % initial matrices \n    g=eye(4);\n    g0=g0b;\n        \n    for i=1:n\n      "
+      " % transformations from frame b to frame i\n       Ti.gbi(:,:,i) = g*getHom(q,DH,i);\n       Ti.Rbi(:,:,i) = get"
+      "Rot(Ti.gbi(:,:,i));\n       Ti.pbi(:,:,i) = getPos(Ti.gbi(:,:,i));\n       Ti.Adgbi(:,:,i) = getAdgbi(Ti.Rbi(:,:"
+      ",i), Ti.pbi(:,:,i) );\n       Ti.Adgbi_inv(:,:,i) = getAdgbi_inv(Ti.Rbi(:,:,i), Ti.pbi(:,:,i) );\n       g=Ti.gb"
+      "i(:,:,i);\n       % transformations from frame 0 to frame i\n       Ti.g0i(:,:,i) = g0*getHom(q,DH,i);\n       T"
+      "i.R0i(:,:,i) = getRot(Ti.g0i(:,:,i));\n       Ti.p0i(:,:,i) = getPos(Ti.g0i(:,:,i));\n       Ti.Adg0i(:,:,i) = g"
+      "etAdgbi(Ti.R0i(:,:,i), Ti.p0i(:,:,i) );\n       Ti.Adg0i_inv(:,:,i) = getAdgbi_inv(Ti.R0i(:,:,i), Ti.p0i(:,:,i) "
+      ");\n       g0=Ti.g0i(:,:,i);\n    end\n    \n    % transformation from frame 0 to ee\n    g0e = Ti.g0i(:,:,6)*Ti"
+      ".g6e;\n    Ti.g0e = g0e;\n    Ti.R0e = getRot(g0e);\n    Ti.p0e = getPos(g0e);\n    Ti.Adg0e = getAdgbi(Ti.R0e, "
+      "Ti.p0e );\n    Ti.Adg0e_inv = getAdgbi_inv(Ti.R0e, Ti.p0e);\n        \n    % transformation from frame b to ee\n"
+      "    gbe = Ti.gbi(:,:,6)*Ti.g6e;\n    Ti.gbe = gbe;\n    Ti.Rbe = getRot(gbe);\n    Ti.pbe = getPos(gbe);\n    Ti"
+      ".Adgbe = getAdgbi(Ti.Rbe , Ti.pbe );\n    Ti.Adgbe_inv = getAdgbi_inv(Ti.Rbe , Ti.pbe );\n    \n    % DEBUG\n   "
+      " coder.extrinsic('disp');\n    coder.extrinsic('num2str');\n    %if counter == 12        \n%         disp(['----"
+      "--iteration: ' num2str(counter)]);\n%         q';\n%         [phi, theta,psi]=myR2euler(Ti.R0i(:,:,1))\n%       "
+      "  Ti.g0i(:,:,1)\n       %Ti.Adgbi(:,:,1)\n       %Ti.Adgbi_inv(:,:,1)\n       %Ti.pbi(:,1)\n       %Ti.p0i(:,1)\n"
+      "       \n    %end\n    \n end\n\n\n\n\n% homogenous transformation matrix - DH convention\n% mat=Rot_z(theta)Tra"
+      "ns_z(d)Trans_x(a)Rot_x(alpha)\nfunction mat=getHom(q,DH,i)\n    alpha=DH.alpha(i);\n    a=DH.a(i);\n    d=DH.d(i"
+      ");\n    theta=q(i);\n    mat=eye(4);\n    mat=[cos(theta), -sin(theta)*cos(alpha), sin(theta)*sin(alpha), a*cos("
+      "theta);\n         sin(theta), cos(theta)*cos(alpha), -cos(theta)*sin(alpha), a*sin(theta);\n         0, sin(alph"
+      "a), cos(alpha), d;\n         0,0,0,1\n    ];\n\nend\n\n% extract position from homogenous \n% matrix\nfunction v"
+      "ec = getPos(g)\n    vec=g(1:3,4);\nend\n\n% extract rotation matrix-part out of\n% homogenous matrix\nfunction m"
+      "at = getRot(g)\n    mat=g(1:3,1:3);\nend\n\nfunction mat = getAdgbi(R,p)\n    mat = zeros(6,6);\n    ps=skew(p);"
+      "\n    mat=[R , ps*R ; zeros(3,3), R ];\nend\n\nfunction mat = getAdgbi_inv(R,p)\n    mat = zeros(6,6);\n    Rt=t"
+      "ranspose(R);\n    ps=skew(p);\n    mat=[Rt , -Rt*ps ; zeros(3,3), Rt ];\nend\n\nfunction [phi,theta,psi] = myR2e"
+      "uler(R)\n    phi   = atan2(R(3,2),R(3,3));\n    theta = -asin(R(3,1));\n    psi   = atan2(R(2,1),R(1,1));\nend\n"
+      "\nfunction mat = eta2g0b(eta)\n    mat = zeros(4,4);\n    R=Rzyx(eta(4),eta(5),eta(6));\n    pos=[eta(1); eta(2)"
+      "; eta(3)];\n    mat = [R,pos;0,0,0,1];\nend\n\nfunction R = Rzyx(phi,theta,psi)\n    cphi = cos(phi);\n    sphi "
+      "= sin(phi);\n    cth  = cos(theta);\n    sth  = sin(theta);\n    cpsi = cos(psi);\n    spsi = sin(psi);\n    R ="
+      " [...\n       cpsi*cth  -spsi*cphi+cpsi*sth*sphi  spsi*sphi+cpsi*cphi*sth\n       spsi*cth  cpsi*cphi+sphi*sth*s"
+      "psi   -cpsi*sphi+sth*spsi*cphi\n       -sth      cth*sphi                  cth*cphi ];\nend\n\n\n\n\n\n\n\n\n\n\n"
+      "\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -1321,28 +2225,31 @@ Stateflow {
   transition {
     id			    12
     labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [32.125 19.875 102.544 14.964]
+    labelPosition	    [32.125 19.875 113.6 20.855]
     fontSize		    12
     src {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
       id		      11
-      intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
+      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
     chart		    9
     linkNode		    [9 0 0]
-    dataLimits		    [23.575 23.575 14.625 34.575]
+    dataLimits		    [21.175 25.975 14.625 42.575]
     subviewer		    9
     drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
     id			    13
     ssIdNumber		    7
-    name		    "q"
+    name		    "Xi"
     linkNode		    [9 0 14]
     scope		    INPUT_DATA
     machine		    1
@@ -1363,8 +2270,8 @@ Stateflow {
   }
   data {
     id			    14
-    ssIdNumber		    9
-    name		    "g0b"
+    ssIdNumber		    4
+    name		    "DH"
     linkNode		    [9 13 15]
     scope		    INPUT_DATA
     machine		    1
@@ -1375,38 +2282,16 @@ Stateflow {
       type {
 	method			SF_INHERITED_TYPE
 	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
     }
     dataType		    "Inherit: Same as Simulink"
   }
   data {
     id			    15
-    ssIdNumber		    4
-    name		    "DH"
-    linkNode		    [9 14 16]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    16
     ssIdNumber		    6
     name		    "Ti"
-    linkNode		    [9 15 0]
+    linkNode		    [9 14 0]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -1426,13 +2311,307 @@ Stateflow {
     dataType		    "Bus: slBus2"
   }
   instance {
-    id			    17
-    name		    "Transformations"
+    id			    16
+    name		    "Kinematic Transformations/Transformations"
     machine		    1
     chart		    9
   }
-  target {
+  chart {
+    id			    17
+    name		    "twist2pose/body2eulervel"
+    windowPosition	    [450.75 128.25 200.25 189.75]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3120 1920 1.25]
+    treeNode		    [0 18 0 0]
+    firstTransition	    20
+    firstJunction	    19
+    viewObj		    17
+    machine		    1
+    subviewS {
+    }
+    ssIdHighWaterMark	    6
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    21
+    chartFileNumber	    3
+    disableImplicitCasting  1
+    eml {
+      name		      "fcn"
+    }
+  }
+  state {
     id			    18
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    17
+    treeNode		    [17 0 0 0]
+    superState		    SUBCHART
+    subviewer		    17
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function ee_rates = fcn(ee_velocity_twist, euler_angles_ee)                       \n    %#codegen"
+      "\n       \n    phi=euler_angles_ee(1);\n    theta=euler_angles_ee(2);\n    psi=euler_angles_ee(3);\n    \n    \n"
+      "    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(theta);\n    sth  = sin(theta);\n \n    J1 = Rzyx(phi"
+      ",theta,psi);\n \n    if cth==0, error('J2 is singular for theta = +-90 degrees'); end\n \n    J2 = [...\n      1"
+      "  sphi*sth/cth  cphi*sth/cth;\n      0  cphi          -sphi;\n      0  sphi/cth      cphi/cth ];\n \n    J = [ J"
+      "1  zeros(3,3);\n      zeros(3,3) J2 ];\n        \n    ee_rates = zeros(6,1);\n    ee_rates=J*ee_velocity_twist;\n"
+      "end\n\n\n\nfunction R = Rzyx(phi,theta,psi)\n    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(theta);\n"
+      "    sth  = sin(theta);\n    cpsi = cos(psi);\n    spsi = sin(psi);\n\n    R = [...\n       cpsi*cth  -spsi*cphi+"
+      "cpsi*sth*sphi  spsi*sphi+cpsi*cphi*sth\n       spsi*cth  cpsi*cphi+sphi*sth*spsi   -cpsi*sphi+sth*spsi*cphi\n   "
+      "    -sth      cth*sphi                  cth*cphi ];\nend\n"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  junction {
+    id			    19
+    position		    [23.5747 49.5747 7]
+    chart		    17
+    linkNode		    [17 0 0]
+    subviewer		    17
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    20
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [32.125 19.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      19
+      intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    17
+    linkNode		    [17 0 0]
+    dataLimits		    [23.575 23.575 14.625 34.575]
+    subviewer		    17
+    drawStyle		    SMART
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  data {
+    id			    21
+    ssIdNumber		    4
+    name		    "ee_velocity_twist"
+    linkNode		    [17 0 22]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"6"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    22
+    ssIdNumber		    5
+    name		    "ee_rates"
+    linkNode		    [17 21 23]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"6"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    23
+    ssIdNumber		    6
+    name		    "euler_angles_ee"
+    linkNode		    [17 22 0]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"3"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  instance {
+    id			    24
+    name		    "twist2pose/body2eulervel"
+    machine		    1
+    chart		    17
+  }
+  chart {
+    id			    25
+    name		    "Xi/twist2pose/body2eulervel"
+    windowPosition	    [435.75 143.25 200.25 189.75]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3120 1920 1.25]
+    treeNode		    [0 26 0 0]
+    firstTransition	    28
+    firstJunction	    27
+    viewObj		    25
+    machine		    1
+    subviewS {
+    }
+    ssIdHighWaterMark	    6
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    29
+    chartFileNumber	    7
+    disableImplicitCasting  1
+    eml {
+      name		      "fcn"
+    }
+  }
+  state {
+    id			    26
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    25
+    treeNode		    [25 0 0 0]
+    superState		    SUBCHART
+    subviewer		    25
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function ee_rates = fcn(ee_velocity_twist, euler_angles_ee)                       \n    %#codegen"
+      "\n       \n    phi=euler_angles_ee(1);\n    theta=euler_angles_ee(2);\n    psi=euler_angles_ee(3);\n    \n    \n"
+      "    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(theta);\n    sth  = sin(theta);\n \n    J1 = Rzyx(phi"
+      ",theta,psi);\n \n    if cth==0, error('J2 is singular for theta = +-90 degrees'); end\n \n    J2 = [...\n      1"
+      "  sphi*sth/cth  cphi*sth/cth;\n      0  cphi          -sphi;\n      0  sphi/cth      cphi/cth ];\n \n    J = [ J"
+      "1  zeros(3,3);\n      zeros(3,3) J2 ];\n        \n    ee_rates = zeros(6,1);\n    ee_rates=J*ee_velocity_twist;\n"
+      "end\n\n\n\nfunction R = Rzyx(phi,theta,psi)\n    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(theta);\n"
+      "    sth  = sin(theta);\n    cpsi = cos(psi);\n    spsi = sin(psi);\n\n    R = [...\n       cpsi*cth  -spsi*cphi+"
+      "cpsi*sth*sphi  spsi*sphi+cpsi*cphi*sth\n       spsi*cth  cpsi*cphi+sphi*sth*spsi   -cpsi*sphi+sth*spsi*cphi\n   "
+      "    -sth      cth*sphi                  cth*cphi ];\nend\n"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  junction {
+    id			    27
+    position		    [23.5747 49.5747 7]
+    chart		    25
+    linkNode		    [25 0 0]
+    subviewer		    25
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    28
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [32.125 19.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      27
+      intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    25
+    linkNode		    [25 0 0]
+    dataLimits		    [23.575 23.575 14.625 34.575]
+    subviewer		    25
+    drawStyle		    SMART
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  data {
+    id			    29
+    ssIdNumber		    4
+    name		    "ee_velocity_twist"
+    linkNode		    [25 0 30]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"6"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    30
+    ssIdNumber		    5
+    name		    "ee_rates"
+    linkNode		    [25 29 31]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"6"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    31
+    ssIdNumber		    6
+    name		    "euler_angles_ee"
+    linkNode		    [25 30 0]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"3"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  instance {
+    id			    32
+    name		    "Xi/twist2pose/body2eulervel"
+    machine		    1
+    chart		    25
+  }
+  target {
+    id			    33
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1
