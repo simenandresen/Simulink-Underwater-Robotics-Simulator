@@ -3,7 +3,6 @@ Underwater Vehicle-Manipulator Simulator
 
 
 
-~~~´\/`~~~´\/`~~~´\/`~~~´\/`~~~´\/`~~~´\/`~~~~
 
    	>=X>						>o=>
   _____________
@@ -15,7 +14,6 @@ Underwater Vehicle-Manipulator Simulator
 
 						<OO<
 
-______________________________________________
 
 This simulator is for simulating the dynamics of a Underwater Vehicle-Manipulator system.
 
