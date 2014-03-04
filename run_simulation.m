@@ -5,35 +5,22 @@
 %  in Denavit-Hartenbarg terms
 %
 %-----------------------------------
-
 clear all; clc; close all;
 format compact;
 addpath './uvms_functions'
 init_kinematics;
-init_dynamics;
+init_kinetics;
 init_inputs;
 
 %% Global Simulation parameters
-dt=0.01;
+dt=0.001;
 
 %% Mathematical parameters
 d2r=pi/180;
 r2d=180/pi;
 
 %% Create Data structures for simulation
-
-% Ti is the parent class of all transformations from body to frame i -
-% with both homoegneous, rotation and position matrices/vectors
-Ti = struct('g0b',zeros(3,3),'g0i',zeros(4,4,n),'R0i', zeros(3,3,n),'R0b',zeros(3,3),'p0i', zeros(3,1,n),  'Adg0i',zeros(6,6,n),'Adg0i_inv',zeros(6,6,n),   ...
-'gbi',zeros(4,4,n),'Rbi', zeros(3,3,n),'pbi', zeros(3,1,n),'Adgbi',zeros(6,6,n),'Adgbi_inv',zeros(6,6,n),...
-'g6e',eye(4) ,'g0e',zeros(4,4),'R0e', zeros(3,3),'p0e', zeros(3,1),  'Adg0e',zeros(6,6),'Adg0e_inv',zeros(6,6),   ...
-'gbe',zeros(4,4),'Rbe', zeros(3,3),'pbe', zeros(3,1),'Adgbe',zeros(6,6),'Adgbe_inv',zeros(6,6) ...
-);
-
-% Ji is the structure to hold all the jacobians of the system
-Ji = struct('Ji',zeros(n,n+6,n),'Je',zeros(n,n+6));
-Kinematics = struct('Ti', Ti, 'Ji',Ji);
-
+Measured_States = struct('dzeta',zeros(12,1), 'zeta',zeros(12,1),'xi',zeros(12,1));
 dhParameters_bus = Simulink.Bus.createObject(DH);
 DH_bus = slBus1;
 Transformations_bus = Simulink.Bus.createObject(Ti);
@@ -45,24 +32,35 @@ kin_bus = slBus4;
 Kinetics_bus = Simulink.Bus.createObject(Kinetics_Parameters);
 kinetics_bus = slBus5;
 
+Measured_States_bus = Simulink.Bus.createObject(Measured_States);
+measured_states_bus = slBus6;
+
 
 %%
 
-sim('uvms',6);
+sim('uvms',3);
 
 
 %% get log data
 
+N=measured_states_log.xi.Length;
+xi_log = zeros(12,N);
 
 ee_pose_log = Ee_pose_log.Data;
-xi_log = Xi_log.Data;
-q_log = xi_log(:,7:12);
-zeta_log = Zeta_log.Data;
+xi_log(:,:) = measured_states_log.xi.Data;
+q_log = xi_log(7:12,:)';
+zeta_log = measured_states_log.zeta.Data;
+
+eta1 = xi_log(1:3,:)';
+eta2 = xi_log(4:6,:)';
+time = measured_states_log.dzeta.Time;
 
 
 %% Run animation
 
-myanimation
+%myplotting
+
+%myanimation
 
 
 
