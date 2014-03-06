@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.1083"
+    ComputedModelVersion    "1.1088"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Mar 06 17:55:33 2014"
+  LastModifiedDate	  "Thu Mar 06 18:04:24 2014"
   RTWModifiedTimeStamp	  316024343
-  ModelVersionFormat	  "1.%<AutoIncrement:1083>"
+  ModelVersionFormat	  "1.%<AutoIncrement:1088>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -832,7 +832,7 @@ Model {
       BlockType		      Constant
       Name		      "Constant"
       SID		      "247"
-      Position		      [445, 195, 475, 225]
+      Position		      [125, 235, 155, 265]
       ZOrder		      -4
       Value		      "tau_c"
     }
@@ -840,7 +840,7 @@ Model {
       BlockType		      Constant
       Name		      "Current"
       SID		      "282"
-      Position		      [445, 110, 475, 140]
+      Position		      [95, 44, 185, 86]
       ZOrder		      -4
       Value		      "V_current"
     }
@@ -849,7 +849,7 @@ Model {
       Name		      "Log Measured States"
       SID		      "261"
       Ports		      [1]
-      Position		      [980, 155, 1080, 185]
+      Position		      [760, 210, 860, 240]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -905,7 +905,8 @@ Model {
       Name		      "UVMS"
       SID		      "278"
       Ports		      [2, 1]
-      Position		      [600, 81, 875, 254]
+      Position		      [380, 136, 655, 309]
+      BackgroundColor	      "cyan"
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -916,7 +917,7 @@ Model {
       System {
 	Name			"UVMS"
 	Location		[1922, 679, 3118, 1104]
-	Open			off
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -932,7 +933,7 @@ Model {
 	  BlockType		  Inport
 	  Name			  "Current Velocity Inertial Frame"
 	  SID			  "280"
-	  Position		  [285, 478, 315, 492]
+	  Position		  [285, 458, 315, 472]
 	  ZOrder		  -1
 	  BackgroundColor	  "yellow"
 	  IconDisplay		  "Port number"
@@ -941,7 +942,7 @@ Model {
 	  BlockType		  Inport
 	  Name			  "tau"
 	  SID			  "281"
-	  Position		  [285, 403, 315, 417]
+	  Position		  [285, 398, 315, 412]
 	  ZOrder		  -1
 	  BackgroundColor	  "yellow"
 	  Port			  "2"
@@ -952,7 +953,7 @@ Model {
 	  Name			  "End Effector"
 	  SID			  "271"
 	  Ports			  [2]
-	  Position		  [865, 151, 965, 184]
+	  Position		  [745, 616, 845, 649]
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -1372,7 +1373,7 @@ Model {
 	  Name			  "Kinematic Transformations"
 	  SID			  "85"
 	  Ports			  [1, 2]
-	  Position		  [430, 269, 560, 371]
+	  Position		  [430, 253, 560, 377]
 	  BackgroundColor	  "cyan"
 	  MinAlgLoopOccurrences	  on
 	  PropExecContextOutsideSubsystem off
@@ -1755,7 +1756,7 @@ Model {
 	  Name			  "Kinetics"
 	  SID			  "153"
 	  Ports			  [4, 1]
-	  Position		  [865, 272, 1000, 423]
+	  Position		  [860, 254, 995, 496]
 	  MinAlgLoopOccurrences	  on
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -1766,7 +1767,7 @@ Model {
 	  System {
 	    Name		    "Kinetics"
 	    Location		    [1922, 44, 3118, 1899]
-	    Open		    on
+	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -3965,21 +3966,43 @@ Model {
 	  BlockType		  Outport
 	  Name			  "Measured States"
 	  SID			  "279"
-	  Position		  [1065, 228, 1095, 242]
+	  Position		  [1220, 368, 1250, 382]
 	  ZOrder		  -23
 	  BackgroundColor	  "lightBlue"
 	  IconDisplay		  "Port number"
 	}
 	Line {
+	  SrcBlock		  "Kinetics"
+	  SrcPort		  1
+	  Points		  [30, 0]
+	  Branch {
+	    Points		    [0, 200; -400, 0]
+	    Branch {
+	      Points		      [-215, 0]
+	      DstBlock		      "Kinematic Transformations"
+	      DstPort		      1
+	    }
+	    Branch {
+	      Points		      [0, 65]
+	      DstBlock		      "End Effector"
+	      DstPort		      2
+	    }
+	  }
+	  Branch {
+	    DstBlock		    "Measured States"
+	    DstPort		    1
+	  }
+	}
+	Line {
 	  SrcBlock		  "Kinematic Transformations"
 	  SrcPort		  1
-	  Points		  [100, 0]
+	  Points		  [125, 0]
 	  Branch {
 	    DstBlock		    "Kinetics"
 	    DstPort		    1
 	  }
 	  Branch {
-	    Points		    [0, -135]
+	    Points		    [0, 340]
 	    DstBlock		    "End Effector"
 	    DstPort		    1
 	  }
@@ -3987,43 +4010,18 @@ Model {
 	Line {
 	  SrcBlock		  "Kinematic Transformations"
 	  SrcPort		  2
-	  Points		  [285, 0]
 	  DstBlock		  "Kinetics"
 	  DstPort		  2
 	}
 	Line {
 	  SrcBlock		  "tau"
 	  SrcPort		  1
-	  Points		  [490, 0; 0, -45]
 	  DstBlock		  "Kinetics"
 	  DstPort		  3
 	}
 	Line {
-	  SrcBlock		  "Kinetics"
-	  SrcPort		  1
-	  Points		  [1, 0; 0, -115]
-	  Branch {
-	    DstBlock		    "Measured States"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [-176, 0]
-	    Branch {
-	      Points		      [-415, 0]
-	      DstBlock		      "Kinematic Transformations"
-	      DstPort		      1
-	    }
-	    Branch {
-	      Points		      [0, -60]
-	      DstBlock		      "End Effector"
-	      DstPort		      2
-	    }
-	  }
-	}
-	Line {
 	  SrcBlock		  "Current Velocity Inertial Frame"
 	  SrcPort		  1
-	  Points		  [530, 0]
 	  DstBlock		  "Kinetics"
 	  DstPort		  4
 	}
@@ -4032,12 +4030,14 @@ Model {
     Line {
       SrcBlock		      "Constant"
       SrcPort		      1
+      Points		      [0, 15]
       DstBlock		      "UVMS"
       DstPort		      2
     }
     Line {
       SrcBlock		      "Current"
       SrcPort		      1
+      Points		      [130, 0; 0, 114]
       DstBlock		      "UVMS"
       DstPort		      1
     }

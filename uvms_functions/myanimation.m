@@ -7,6 +7,8 @@
 
 close all;
 
+run('./rvctools/startup_rvc.m');
+
 %% init robot for animation
 global six_link;
 for i =1:6
