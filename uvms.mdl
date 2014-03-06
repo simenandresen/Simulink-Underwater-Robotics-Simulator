@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.1019"
+    ComputedModelVersion    "1.1083"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Mar 04 16:07:13 2014"
-  RTWModifiedTimeStamp	  315845141
-  ModelVersionFormat	  "1.%<AutoIncrement:1019>"
+  LastModifiedDate	  "Thu Mar 06 17:55:33 2014"
+  RTWModifiedTimeStamp	  316024343
+  ModelVersionFormat	  "1.%<AutoIncrement:1083>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -54,7 +54,7 @@ Model {
   StatusBar		  on
   BrowserShowLibraryLinks off
   BrowserLookUnderMasks	  off
-  SimulationMode	  "normal"
+  SimulationMode	  "accelerator"
   LinearizationMsg	  "none"
   Profile		  off
   ParamWorkspaceSource	  "MATLABWorkspace"
@@ -679,21 +679,6 @@ Model {
       BusSelectionMode	      off
     }
     Block {
-      BlockType		      Gain
-      Gain		      "1"
-      Multiplication	      "Element-wise(K.*u)"
-      ParamMin		      "[]"
-      ParamMax		      "[]"
-      ParamDataTypeStr	      "Inherit: Same as input"
-      OutMin		      "[]"
-      OutMax		      "[]"
-      OutDataTypeStr	      "Inherit: Same as input"
-      LockScale		      off
-      RndMeth		      "Floor"
-      SaturateOnIntegerOverflow	on
-      SampleTime	      "-1"
-    }
-    Block {
       BlockType		      Inport
       Port		      "1"
       OutputFunctionCall      off
@@ -842,7 +827,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "139"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "299"
+    SIDHighWatermark	    "308"
     Block {
       BlockType		      Constant
       Name		      "Constant"
@@ -860,11 +845,60 @@ Model {
       Value		      "V_current"
     }
     Block {
-      BlockType		      Terminator
-      Name		      "Terminator"
-      SID		      "283"
-      Position		      [980, 160, 1000, 180]
-      ZOrder		      -20
+      BlockType		      SubSystem
+      Name		      "Log Measured States"
+      SID		      "261"
+      Ports		      [1]
+      Position		      [980, 155, 1080, 185]
+      MinAlgLoopOccurrences   off
+      PropExecContextOutsideSubsystem off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      Opaque		      off
+      RequestExecContextInheritance off
+      MaskHideContents	      off
+      System {
+	Name			"Log Measured States"
+	Location		[1537, 624, 1850, 783]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"125"
+	Block {
+	  BlockType		  Inport
+	  Name			  "measured_states"
+	  SID			  "262"
+	  Position		  [370, 313, 400, 327]
+	  BackgroundColor	  "yellow"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace1"
+	  SID			  "246"
+	  Ports			  [1]
+	  Position		  [670, 289, 780, 351]
+	  ZOrder		  -7
+	  VariableName		  "measured_states_log"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "dt"
+	  SaveFormat		  "Timeseries"
+	}
+	Line {
+	  SrcBlock		  "measured_states"
+	  SrcPort		  1
+	  DstBlock		  "To Workspace1"
+	  DstPort		  1
+	}
+      }
     }
     Block {
       BlockType		      SubSystem
@@ -881,7 +915,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"UVMS"
-	Location		[2, 416, 1918, 1431]
+	Location		[1922, 679, 3118, 1104]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -896,18 +930,20 @@ Model {
 	ZoomFactor		"125"
 	Block {
 	  BlockType		  Inport
-	  Name			  "Current Inertial Frame"
+	  Name			  "Current Velocity Inertial Frame"
 	  SID			  "280"
 	  Position		  [285, 478, 315, 492]
 	  ZOrder		  -1
+	  BackgroundColor	  "yellow"
 	  IconDisplay		  "Port number"
 	}
 	Block {
 	  BlockType		  Inport
 	  Name			  "tau"
 	  SID			  "281"
-	  Position		  [285, 433, 315, 447]
+	  Position		  [285, 403, 315, 417]
 	  ZOrder		  -1
+	  BackgroundColor	  "yellow"
 	  Port			  "2"
 	  IconDisplay		  "Port number"
 	}
@@ -916,7 +952,7 @@ Model {
 	  Name			  "End Effector"
 	  SID			  "271"
 	  Ports			  [2]
-	  Position		  [865, 149, 995, 216]
+	  Position		  [865, 151, 965, 184]
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -944,6 +980,7 @@ Model {
 	      Name		      "Kinematics"
 	      SID		      "272"
 	      Position		      [145, 230, 160, 260]
+	      BackgroundColor	      "yellow"
 	      NamePlacement	      "alternate"
 	      IconDisplay	      "Port number"
 	    }
@@ -952,6 +989,7 @@ Model {
 	      Name		      "Measured states"
 	      SID		      "273"
 	      Position		      [140, 328, 170, 342]
+	      BackgroundColor	      "yellow"
 	      NamePlacement	      "alternate"
 	      Port		      "2"
 	      IconDisplay	      "Port number"
@@ -1334,7 +1372,7 @@ Model {
 	  Name			  "Kinematic Transformations"
 	  SID			  "85"
 	  Ports			  [1, 2]
-	  Position		  [430, 284, 560, 386]
+	  Position		  [430, 269, 560, 371]
 	  BackgroundColor	  "cyan"
 	  MinAlgLoopOccurrences	  on
 	  PropExecContextOutsideSubsystem off
@@ -1365,6 +1403,7 @@ Model {
 	      SID		      "287"
 	      Position		      [125, 348, 155, 362]
 	      ZOrder		      -1
+	      BackgroundColor	      "yellow"
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
@@ -1653,6 +1692,7 @@ Model {
 	      SID		      "172"
 	      Position		      [1160, 403, 1190, 417]
 	      ZOrder		      -23
+	      BackgroundColor	      "lightBlue"
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
@@ -1661,6 +1701,7 @@ Model {
 	      SID		      "286"
 	      Position		      [1160, 288, 1190, 302]
 	      ZOrder		      -23
+	      BackgroundColor	      "lightBlue"
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	    }
@@ -1714,7 +1755,7 @@ Model {
 	  Name			  "Kinetics"
 	  SID			  "153"
 	  Ports			  [4, 1]
-	  Position		  [865, 287, 1000, 438]
+	  Position		  [865, 272, 1000, 423]
 	  MinAlgLoopOccurrences	  on
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -1725,7 +1766,7 @@ Model {
 	  System {
 	    Name		    "Kinetics"
 	    Location		    [1922, 44, 3118, 1899]
-	    Open		    off
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -1741,16 +1782,18 @@ Model {
 	      BlockType		      Inport
 	      Name		      "Kinematics"
 	      SID		      "155"
-	      Position		      [335, 108, 365, 122]
+	      Position		      [170, 108, 200, 122]
 	      ZOrder		      -1
+	      BackgroundColor	      "yellow"
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Inport
 	      Name		      "zeta"
 	      SID		      "180"
-	      Position		      [335, 458, 365, 472]
+	      Position		      [170, 208, 200, 222]
 	      ZOrder		      -1
+	      BackgroundColor	      "yellow"
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	    }
@@ -1758,8 +1801,9 @@ Model {
 	      BlockType		      Inport
 	      Name		      "tau"
 	      SID		      "209"
-	      Position		      [335, 518, 365, 532]
+	      Position		      [170, 398, 200, 412]
 	      ZOrder		      -1
+	      BackgroundColor	      "yellow"
 	      Port		      "3"
 	      IconDisplay	      "Port number"
 	    }
@@ -1767,8 +1811,9 @@ Model {
 	      BlockType		      Inport
 	      Name		      "Current Inertial Frame"
 	      SID		      "299"
-	      Position		      [335, 308, 365, 322]
+	      Position		      [170, 308, 200, 322]
 	      ZOrder		      -1
+	      BackgroundColor	      "yellow"
 	      Port		      "4"
 	      IconDisplay	      "Port number"
 	    }
@@ -1777,7 +1822,7 @@ Model {
 	      Name		      "1/M"
 	      SID		      "203"
 	      Ports		      [1, 1]
-	      Position		      [695, 84, 725, 116]
+	      Position		      [540, 74, 570, 106]
 	      ZOrder		      -8
 	      Inputs		      "/"
 	      Multiplication	      "Matrix(*)"
@@ -1790,8 +1835,8 @@ Model {
 	      BlockType		      SubSystem
 	      Name		      "Dynamics Matrices"
 	      SID		      "194"
-	      Ports		      [3, 4]
-	      Position		      [475, 63, 630, 362]
+	      Ports		      [3, 6]
+	      Position		      [310, 65, 465, 365]
 	      MinAlgLoopOccurrences   off
 	      PropExecContextOutsideSubsystem off
 	      RTWSystemCode	      "Auto"
@@ -1801,8 +1846,8 @@ Model {
 	      MaskHideContents	      off
 	      System {
 		Name			"Dynamics Matrices"
-		Location		[2, 416, 1918, 1431]
-		Open			on
+		Location		[1922, 670, 3118, 1095]
+		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
 		ScreenColor		"white"
@@ -1813,21 +1858,23 @@ Model {
 		TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 		TiledPageScale		1
 		ShowPageBoundaries	off
-		ZoomFactor		"125"
+		ZoomFactor		"124"
 		Block {
 		  BlockType		  Inport
 		  Name			  "Kinematics"
 		  SID			  "195"
-		  Position		  [65, 98, 95, 112]
+		  Position		  [110, 543, 140, 557]
 		  ZOrder		  -1
+		  BackgroundColor	  "yellow"
 		  IconDisplay		  "Port number"
 		}
 		Block {
 		  BlockType		  Inport
 		  Name			  "zeta"
 		  SID			  "197"
-		  Position		  [65, 208, 95, 222]
+		  Position		  [110, 178, 140, 192]
 		  ZOrder		  -1
+		  BackgroundColor	  "yellow"
 		  Port			  "2"
 		  IconDisplay		  "Port number"
 		}
@@ -1835,17 +1882,169 @@ Model {
 		  BlockType		  Inport
 		  Name			  "V_c,inertial"
 		  SID			  "292"
-		  Position		  [70, 23, 100, 37]
+		  Position		  [110, 208, 140, 222]
 		  ZOrder		  -1
+		  BackgroundColor	  "yellow"
 		  Port			  "3"
 		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  SubSystem
+		  Name			  "C_a(zeta)"
+		  SID			  "302"
+		  Ports			  [3, 1]
+		  Position		  [750, 527, 1075, 573]
+		  ZOrder		  -4
+		  LibraryVersion	  "1.32"
+		  ErrorFcn		  "Stateflow.Translate.translate"
+		  PermitHierarchicalResolution "ExplicitOnly"
+		  TreatAsAtomicUnit	  on
+		  MinAlgLoopOccurrences	  off
+		  PropExecContextOutsideSubsystem off
+		  RTWSystemCode		  "Auto"
+		  FunctionWithSeparateData off
+		  Opaque		  off
+		  RequestExecContextInheritance	off
+		  MaskHideContents	  off
+		  SFBlockType		  "MATLAB Function"
+		  MaskType		  "Stateflow"
+		  MaskDescription	  "Embedded MATLAB block"
+		  MaskSelfModifiable	  on
+		  MaskDisplay		  "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('private"
+		  "/eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'AddedCoriolis']);"
+		  MaskIconFrame		  on
+		  MaskIconOpaque	  off
+		  MaskIconRotate	  "none"
+		  MaskPortRotate	  "default"
+		  MaskIconUnits		  "normalized"
+		  System {
+		    Name		    "C_a(zeta)"
+		    Location		    [257, 457, 812, 717]
+		    Open		    off
+		    ModelBrowserVisibility  off
+		    ModelBrowserWidth	    200
+		    ScreenColor		    "white"
+		    PaperOrientation	    "landscape"
+		    PaperPositionMode	    "auto"
+		    PaperType		    "usletter"
+		    PaperUnits		    "inches"
+		    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+		    TiledPageScale	    1
+		    ShowPageBoundaries	    off
+		    ZoomFactor		    "100"
+		    SIDHighWatermark	    "24"
+		    Block {
+		    BlockType		    Inport
+		    Name		    "zeta_r"
+		    SID			    "302::1"
+		    Position		    [20, 101, 40, 119]
+		    IconDisplay		    "Port number"
+		    }
+		    Block {
+		    BlockType		    Inport
+		    Name		    "Kinematics"
+		    SID			    "302::23"
+		    Position		    [20, 136, 40, 154]
+		    ZOrder		    9
+		    Port		    "2"
+		    IconDisplay		    "Port number"
+		    }
+		    Block {
+		    BlockType		    Inport
+		    Name		    "Kinetics_Parameters"
+		    SID			    "302::24"
+		    Position		    [20, 171, 40, 189]
+		    ZOrder		    10
+		    Port		    "3"
+		    IconDisplay		    "Port number"
+		    }
+		    Block {
+		    BlockType		    Demux
+		    Name		    " Demux "
+		    SID			    "302::20"
+		    Ports		    [1, 1]
+		    Position		    [270, 180, 320, 220]
+		    ZOrder		    6
+		    Outputs		    "1"
+		    }
+		    Block {
+		    BlockType		    S-Function
+		    Name		    " SFunction "
+		    SID			    "302::19"
+		    Tag			    "Stateflow S-Function uvms 10"
+		    Ports		    [3, 2]
+		    Position		    [180, 100, 230, 180]
+		    ZOrder		    5
+		    FunctionName	    "sf_sfun"
+		    PortCounts		    "[3 2]"
+		    EnableBusSupport	    on
+		    Port {
+		    PortNumber		    2
+		    Name		    "Ca"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		    }
+		    }
+		    Block {
+		    BlockType		    Terminator
+		    Name		    " Terminator "
+		    SID			    "302::22"
+		    Position		    [460, 191, 480, 209]
+		    ZOrder		    8
+		    }
+		    Block {
+		    BlockType		    Outport
+		    Name		    "Ca"
+		    SID			    "302::5"
+		    Position		    [460, 101, 480, 119]
+		    IconDisplay		    "Port number"
+		    }
+		    Line {
+		    SrcBlock		    "zeta_r"
+		    SrcPort		    1
+		    DstBlock		    " SFunction "
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Kinematics"
+		    SrcPort		    1
+		    DstBlock		    " SFunction "
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "Kinetics_Parameters"
+		    SrcPort		    1
+		    DstBlock		    " SFunction "
+		    DstPort		    3
+		    }
+		    Line {
+		    Name		    "Ca"
+		    Labels		    [0, 0]
+		    SrcBlock		    " SFunction "
+		    SrcPort		    2
+		    DstBlock		    "Ca"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    " Demux "
+		    SrcPort		    1
+		    DstBlock		    " Terminator "
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    " SFunction "
+		    SrcPort		    1
+		    DstBlock		    " Demux "
+		    DstPort		    1
+		    }
+		  }
 		}
 		Block {
 		  BlockType		  SubSystem
 		  Name			  "C_rb(zeta)"
 		  SID			  "179"
 		  Ports			  [3, 1]
-		  Position		  [1005, 200, 1210, 280]
+		  Position		  [750, 242, 1080, 288]
 		  ZOrder		  -4
 		  LibraryVersion	  "1.32"
 		  ErrorFcn		  "Stateflow.Translate.translate"
@@ -1995,7 +2194,7 @@ Model {
 		  BlockType		  Constant
 		  Name			  "Constant"
 		  SID			  "151"
-		  Position		  [540, 127, 670, 173]
+		  Position		  [415, 62, 545, 108]
 		  ZOrder		  -5
 		  Value			  "Kinetics_Parameters"
 		  OutDataTypeStr	  "Bus: kinetics_bus"
@@ -2005,7 +2204,7 @@ Model {
 		  Name			  "D(vr)"
 		  SID			  "187"
 		  Ports			  [3, 1]
-		  Position		  [995, 444, 1205, 506]
+		  Position		  [750, 437, 1080, 483]
 		  ZOrder		  -4
 		  LibraryVersion	  "1.32"
 		  ErrorFcn		  "Stateflow.Translate.translate"
@@ -2156,7 +2355,7 @@ Model {
 		  Name			  "M_rb + M_a"
 		  SID			  "152"
 		  Ports			  [2, 1]
-		  Position		  [1005, 84, 1210, 171]
+		  Position		  [750, 49, 1080, 96]
 		  ZOrder		  -4
 		  LibraryVersion	  "1.32"
 		  ErrorFcn		  "Stateflow.Translate.translate"
@@ -2289,10 +2488,161 @@ Model {
 		}
 		Block {
 		  BlockType		  SubSystem
+		  Name			  "Ma*H"
+		  SID			  "306"
+		  Ports			  [3, 1]
+		  Position		  [750, 147, 1080, 193]
+		  ZOrder		  -4
+		  LibraryVersion	  "1.32"
+		  ErrorFcn		  "Stateflow.Translate.translate"
+		  PermitHierarchicalResolution "ExplicitOnly"
+		  TreatAsAtomicUnit	  on
+		  MinAlgLoopOccurrences	  off
+		  PropExecContextOutsideSubsystem off
+		  RTWSystemCode		  "Auto"
+		  FunctionWithSeparateData off
+		  Opaque		  off
+		  RequestExecContextInheritance	off
+		  MaskHideContents	  off
+		  SFBlockType		  "MATLAB Function"
+		  MaskType		  "Stateflow"
+		  MaskDescription	  "Embedded MATLAB block"
+		  MaskSelfModifiable	  on
+		  MaskDisplay		  "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('private"
+		  "/eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'fcn']);"
+		  MaskIconFrame		  on
+		  MaskIconOpaque	  off
+		  MaskIconRotate	  "none"
+		  MaskPortRotate	  "default"
+		  MaskIconUnits		  "normalized"
+		  System {
+		    Name		    "Ma*H"
+		    Location		    [257, 457, 812, 717]
+		    Open		    off
+		    ModelBrowserVisibility  off
+		    ModelBrowserWidth	    200
+		    ScreenColor		    "white"
+		    PaperOrientation	    "landscape"
+		    PaperPositionMode	    "auto"
+		    PaperType		    "usletter"
+		    PaperUnits		    "inches"
+		    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+		    TiledPageScale	    1
+		    ShowPageBoundaries	    off
+		    ZoomFactor		    "100"
+		    SIDHighWatermark	    "24"
+		    Block {
+		    BlockType		    Inport
+		    Name		    "Kinematics"
+		    SID			    "306::1"
+		    Position		    [20, 101, 40, 119]
+		    IconDisplay		    "Port number"
+		    }
+		    Block {
+		    BlockType		    Inport
+		    Name		    "Kinetics_Parameters"
+		    SID			    "306::24"
+		    Position		    [20, 136, 40, 154]
+		    ZOrder		    10
+		    Port		    "2"
+		    IconDisplay		    "Port number"
+		    }
+		    Block {
+		    BlockType		    Inport
+		    Name		    "zeta"
+		    SID			    "306::23"
+		    Position		    [20, 171, 40, 189]
+		    ZOrder		    9
+		    Port		    "3"
+		    IconDisplay		    "Port number"
+		    }
+		    Block {
+		    BlockType		    Demux
+		    Name		    " Demux "
+		    SID			    "306::20"
+		    Ports		    [1, 1]
+		    Position		    [270, 180, 320, 220]
+		    ZOrder		    6
+		    Outputs		    "1"
+		    }
+		    Block {
+		    BlockType		    S-Function
+		    Name		    " SFunction "
+		    SID			    "306::19"
+		    Tag			    "Stateflow S-Function uvms 12"
+		    Ports		    [3, 2]
+		    Position		    [180, 100, 230, 180]
+		    ZOrder		    5
+		    FunctionName	    "sf_sfun"
+		    PortCounts		    "[3 2]"
+		    EnableBusSupport	    on
+		    Port {
+		    PortNumber		    2
+		    Name		    "MaH"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		    }
+		    }
+		    Block {
+		    BlockType		    Terminator
+		    Name		    " Terminator "
+		    SID			    "306::22"
+		    Position		    [460, 191, 480, 209]
+		    ZOrder		    8
+		    }
+		    Block {
+		    BlockType		    Outport
+		    Name		    "MaH"
+		    SID			    "306::5"
+		    Position		    [460, 101, 480, 119]
+		    IconDisplay		    "Port number"
+		    }
+		    Line {
+		    SrcBlock		    "Kinematics"
+		    SrcPort		    1
+		    DstBlock		    " SFunction "
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    "Kinetics_Parameters"
+		    SrcPort		    1
+		    DstBlock		    " SFunction "
+		    DstPort		    2
+		    }
+		    Line {
+		    SrcBlock		    "zeta"
+		    SrcPort		    1
+		    DstBlock		    " SFunction "
+		    DstPort		    3
+		    }
+		    Line {
+		    Name		    "MaH"
+		    Labels		    [0, 0]
+		    SrcBlock		    " SFunction "
+		    SrcPort		    2
+		    DstBlock		    "MaH"
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    " Demux "
+		    SrcPort		    1
+		    DstBlock		    " Terminator "
+		    DstPort		    1
+		    }
+		    Line {
+		    SrcBlock		    " SFunction "
+		    SrcPort		    1
+		    DstBlock		    " Demux "
+		    DstPort		    1
+		    }
+		  }
+		}
+		Block {
+		  BlockType		  SubSystem
 		  Name			  "N(xi)"
 		  SID			  "182"
 		  Ports			  [2, 1]
-		  Position		  [995, 330, 1200, 410]
+		  Position		  [750, 339, 1075, 386]
 		  ZOrder		  -4
 		  LibraryVersion	  "1.32"
 		  ErrorFcn		  "Stateflow.Translate.translate"
@@ -2429,7 +2779,43 @@ Model {
 		  Name			  "Product1"
 		  SID			  "298"
 		  Ports			  [2, 1]
-		  Position		  [1230, 467, 1260, 498]
+		  Position		  [1160, 452, 1190, 483]
+		  ZOrder		  -13
+		  Multiplication	  "Matrix(*)"
+		  InputSameDT		  off
+		  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+		  SaturateOnIntegerOverflow off
+		}
+		Block {
+		  BlockType		  Product
+		  Name			  "Product2"
+		  SID			  "304"
+		  Ports			  [2, 1]
+		  Position		  [1160, 542, 1190, 573]
+		  ZOrder		  -13
+		  Multiplication	  "Matrix(*)"
+		  InputSameDT		  off
+		  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+		  SaturateOnIntegerOverflow off
+		}
+		Block {
+		  BlockType		  Product
+		  Name			  "Product3"
+		  SID			  "206"
+		  Ports			  [2, 1]
+		  Position		  [1130, 257, 1160, 288]
+		  ZOrder		  -13
+		  Multiplication	  "Matrix(*)"
+		  InputSameDT		  off
+		  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+		  SaturateOnIntegerOverflow off
+		}
+		Block {
+		  BlockType		  Product
+		  Name			  "Product4"
+		  SID			  "307"
+		  Ports			  [2, 1]
+		  Position		  [1160, 162, 1190, 193]
 		  ZOrder		  -13
 		  Multiplication	  "Matrix(*)"
 		  InputSameDT		  off
@@ -2441,7 +2827,7 @@ Model {
 		  Name			  "relative current"
 		  SID			  "294"
 		  Ports			  [3, 1]
-		  Position		  [250, 17, 365, 83]
+		  Position		  [325, 233, 460, 387]
 		  ZOrder		  -4
 		  LibraryVersion	  "1.32"
 		  ErrorFcn		  "Stateflow.Translate.translate"
@@ -2591,14 +2977,16 @@ Model {
 		  BlockType		  Outport
 		  Name			  "M_rb"
 		  SID			  "196"
-		  Position		  [1290, 123, 1320, 137]
+		  Position		  [1305, 68, 1335, 82]
+		  BackgroundColor	  "lightBlue"
 		  IconDisplay		  "Port number"
 		}
 		Block {
 		  BlockType		  Outport
-		  Name			  "C_rb"
+		  Name			  "C_rb*zeta"
 		  SID			  "198"
-		  Position		  [1280, 233, 1310, 247]
+		  Position		  [1305, 268, 1335, 282]
+		  BackgroundColor	  "lightBlue"
 		  Port			  "2"
 		  IconDisplay		  "Port number"
 		}
@@ -2606,17 +2994,55 @@ Model {
 		  BlockType		  Outport
 		  Name			  "N"
 		  SID			  "199"
-		  Position		  [1280, 363, 1310, 377]
+		  Position		  [1305, 358, 1335, 372]
+		  BackgroundColor	  "lightBlue"
 		  Port			  "3"
 		  IconDisplay		  "Port number"
 		}
 		Block {
 		  BlockType		  Outport
-		  Name			  "D"
+		  Name			  "D*zeta r"
 		  SID			  "200"
-		  Position		  [1310, 478, 1340, 492]
+		  Position		  [1305, 463, 1335, 477]
+		  BackgroundColor	  "lightBlue"
 		  Port			  "4"
 		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Outport
+		  Name			  "C_a*zeta_r"
+		  SID			  "303"
+		  Position		  [1305, 553, 1335, 567]
+		  BackgroundColor	  "lightBlue"
+		  Port			  "5"
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Outport
+		  Name			  "Ma*H*Vc"
+		  SID			  "308"
+		  Position		  [1305, 173, 1335, 187]
+		  BackgroundColor	  "lightBlue"
+		  Port			  "6"
+		  IconDisplay		  "Port number"
+		}
+		Line {
+		  SrcBlock		  "Product1"
+		  SrcPort		  1
+		  DstBlock		  "D*zeta r"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Product2"
+		  SrcPort		  1
+		  DstBlock		  "C_a*zeta_r"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Product3"
+		  SrcPort		  1
+		  DstBlock		  "C_rb*zeta"
+		  DstPort		  1
 		}
 		Line {
 		  SrcBlock		  "M_rb + M_a"
@@ -2625,88 +3051,138 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  Labels		  [0, 0]
-		  SrcBlock		  "Kinematics"
+		  SrcBlock		  "Ma*H"
 		  SrcPort		  1
-		  Points		  [120, 0]
+		  DstBlock		  "Product4"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "relative current"
+		  SrcPort		  1
+		  Points		  [66, 0; 0, 165]
 		  Branch {
-		    Points		    [700, 0]
+		    DstBlock		    "D(vr)"
+		    DstPort		    3
+		  }
+		  Branch {
+		    Points		    [0, 60]
 		    Branch {
-		    DstBlock		    "M_rb + M_a"
+		    DstBlock		    "C_a(zeta)"
 		    DstPort		    1
 		    }
 		    Branch {
-		    Points		    [0, 135]
+		    Points		    [0, 90; 614, 0; 0, -60]
 		    Branch {
-		    DstBlock		    "C_rb(zeta)"
+		    DstBlock		    "Product2"
 		    DstPort		    2
 		    }
 		    Branch {
-		    Points		    [0, 110]
+		    DstBlock		    "Product1"
+		    DstPort		    2
+		    }
+		    }
+		  }
+		}
+		Line {
+		  SrcBlock		  "Kinematics"
+		  SrcPort		  1
+		  Points		  [110, 0]
+		  Branch {
+		    Points		    [0, -190]
+		    DstBlock		    "relative current"
+		    DstPort		    3
+		  }
+		  Branch {
+		    Points		    [470, 0]
+		    Branch {
+		    DstBlock		    "C_a(zeta)"
+		    DstPort		    2
+		    }
+		    Branch {
+		    Points		    [0, -100]
+		    Branch {
+		    Points		    [0, -5]
+		    DstBlock		    "D(vr)"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, -100]
 		    Branch {
 		    DstBlock		    "N(xi)"
 		    DstPort		    1
 		    }
 		    Branch {
-		    Points		    [0, 105]
-		    DstBlock		    "D(vr)"
+		    Points		    [0, -85]
+		    Branch {
+		    DstBlock		    "C_rb(zeta)"
+		    DstPort		    2
+		    }
+		    Branch {
+		    Points		    [0, -110]
+		    Branch {
+		    DstBlock		    "Ma*H"
+		    DstPort		    1
+		    }
+		    Branch {
+		    Points		    [0, -95]
+		    DstBlock		    "M_rb + M_a"
 		    DstPort		    1
 		    }
 		    }
 		    }
-		  }
-		  Branch {
-		    Points		    [0, -35]
-		    DstBlock		    "relative current"
-		    DstPort		    3
+		    }
+		    }
 		  }
 		}
 		Line {
 		  SrcBlock		  "Constant"
 		  SrcPort		  1
-		  Points		  [280, 0]
+		  Points		  [60, 0]
 		  Branch {
 		    DstBlock		    "M_rb + M_a"
 		    DstPort		    2
 		  }
 		  Branch {
+		    Points		    [0, 80]
+		    Branch {
+		    Points		    [0, 5]
+		    DstBlock		    "Ma*H"
+		    DstPort		    2
+		    }
+		    Branch {
 		    Points		    [0, 115]
 		    Branch {
 		    DstBlock		    "C_rb(zeta)"
 		    DstPort		    3
 		    }
 		    Branch {
-		    Points		    [0, 125]
+		    Points		    [0, 90]
 		    Branch {
+		    Points		    [0, 5]
 		    DstBlock		    "N(xi)"
 		    DstPort		    2
 		    }
 		    Branch {
 		    Points		    [0, 85]
+		    Branch {
+		    Points		    [0, 110]
+		    DstBlock		    "C_a(zeta)"
+		    DstPort		    3
+		    }
+		    Branch {
+		    Points		    [0, 5]
 		    DstBlock		    "D(vr)"
 		    DstPort		    2
 		    }
 		    }
-		  }
-		}
-		Line {
-		  SrcBlock		  "zeta"
-		  SrcPort		  1
-		  Points		  [45, 0]
-		  Branch {
-		    Points		    [0, -165]
-		    DstBlock		    "relative current"
-		    DstPort		    2
-		  }
-		  Branch {
-		    DstBlock		    "C_rb(zeta)"
-		    DstPort		    1
+		    }
+		    }
 		  }
 		}
 		Line {
 		  SrcBlock		  "C_rb(zeta)"
 		  SrcPort		  1
-		  DstBlock		  "C_rb"
+		  DstBlock		  "Product3"
 		  DstPort		  1
 		}
 		Line {
@@ -2716,65 +3192,75 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  SrcBlock		  "V_c,inertial"
-		  SrcPort		  1
-		  DstBlock		  "relative current"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "relative current"
-		  SrcPort		  1
-		  Points		  [605, 0; 0, 445]
-		  Branch {
-		    DstBlock		    "D(vr)"
-		    DstPort		    3
-		  }
-		  Branch {
-		    Points		    [0, 45; 240, 0]
-		    DstBlock		    "Product1"
-		    DstPort		    2
-		  }
-		}
-		Line {
 		  SrcBlock		  "D(vr)"
 		  SrcPort		  1
 		  DstBlock		  "Product1"
 		  DstPort		  1
 		}
 		Line {
-		  SrcBlock		  "Product1"
+		  SrcBlock		  "C_a(zeta)"
 		  SrcPort		  1
-		  DstBlock		  "D"
+		  DstBlock		  "Product2"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "zeta"
+		  SrcPort		  1
+		  Points		  [36, 0]
+		  Branch {
+		    Points		    [504, 0]
+		    Branch {
+		    DstBlock		    "Ma*H"
+		    DstPort		    3
+		    }
+		    Branch {
+		    Points		    [0, 65]
+		    Branch {
+		    Points		    [0, 56; 410, 0; 0, -26]
+		    DstBlock		    "Product3"
+		    DstPort		    2
+		    }
+		    Branch {
+		    DstBlock		    "C_rb(zeta)"
+		    DstPort		    1
+		    }
+		    }
+		  }
+		  Branch {
+		    Points		    [0, 125]
+		    DstBlock		    "relative current"
+		    DstPort		    2
+		  }
+		}
+		Line {
+		  SrcBlock		  "V_c,inertial"
+		  SrcPort		  1
+		  Points		  [100, 0]
+		  Branch {
+		    Points		    [900, 0]
+		    DstBlock		    "Product4"
+		    DstPort		    2
+		  }
+		  Branch {
+		    Points		    [55, 0; 0, 45]
+		    DstBlock		    "relative current"
+		    DstPort		    1
+		  }
+		}
+		Line {
+		  SrcBlock		  "Product4"
+		  SrcPort		  1
+		  DstBlock		  "Ma*H*Vc"
 		  DstPort		  1
 		}
 	      }
-	    }
-	    Block {
-	      BlockType		      Gain
-	      Name		      "Gain"
-	      SID		      "269"
-	      Position		      [650, 310, 680, 340]
-	      ZOrder		      -8
-	      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-	      SaturateOnIntegerOverflow	off
-	    }
-	    Block {
-	      BlockType		      Gain
-	      Name		      "Gain1"
-	      SID		      "270"
-	      Position		      [650, 160, 680, 190]
-	      ZOrder		      -8
-	      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-	      SaturateOnIntegerOverflow	off
 	    }
 	    Block {
 	      BlockType		      SubSystem
 	      Name		      "Measure states"
 	      SID		      "212"
 	      Ports		      [1, 1]
-	      Position		      [1010, 210, 1125, 290]
+	      Position		      [855, 195, 970, 275]
 	      TreatAsAtomicUnit	      on
 	      MinAlgLoopOccurrences   on
 	      PropExecContextOutsideSubsystem off
@@ -3352,19 +3838,7 @@ Model {
 	      Name		      "Product"
 	      SID		      "204"
 	      Ports		      [2, 1]
-	      Position		      [905, 232, 935, 263]
-	      ZOrder		      -13
-	      Multiplication	      "Matrix(*)"
-	      InputSameDT	      off
-	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-	      SaturateOnIntegerOverflow	off
-	    }
-	    Block {
-	      BlockType		      Product
-	      Name		      "Product1"
-	      SID		      "206"
-	      Ports		      [2, 1]
-	      Position		      [730, 167, 760, 198]
+	      Position		      [740, 217, 770, 248]
 	      ZOrder		      -13
 	      Multiplication	      "Matrix(*)"
 	      InputSameDT	      off
@@ -3375,11 +3849,11 @@ Model {
 	      BlockType		      Sum
 	      Name		      "Sum"
 	      SID		      "205"
-	      Ports		      [4, 1]
-	      Position		      [815, 206, 840, 299]
+	      Ports		      [6, 1]
+	      Position		      [665, 125, 695, 350]
 	      ZOrder		      -18
 	      ShowName		      off
-	      Inputs		      "---+"
+	      Inputs		      "-----+"
 	      InputSameDT	      off
 	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
 	      SaturateOnIntegerOverflow	off
@@ -3388,8 +3862,9 @@ Model {
 	      BlockType		      Outport
 	      Name		      "measured_states"
 	      SID		      "201"
-	      Position		      [1210, 243, 1240, 257]
+	      Position		      [1050, 228, 1080, 242]
 	      ZOrder		      -23
+	      BackgroundColor	      "lightBlue"
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
@@ -3411,54 +3886,6 @@ Model {
 	      DstPort		      2
 	    }
 	    Line {
-	      SrcBlock		      "Dynamics Matrices"
-	      SrcPort		      2
-	      DstBlock		      "Gain1"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Dynamics Matrices"
-	      SrcPort		      4
-	      DstBlock		      "Gain"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "zeta"
-	      SrcPort		      1
-	      Points		      [55, 0]
-	      Branch {
-		Points			[0, -250]
-		DstBlock		"Dynamics Matrices"
-		DstPort			2
-	      }
-	      Branch {
-		Points			[275, 0; 0, -275]
-		DstBlock		"Product1"
-		DstPort			2
-	      }
-	    }
-	    Line {
-	      SrcBlock		      "Product1"
-	      SrcPort		      1
-	      Points		      [35, 0]
-	      DstBlock		      "Sum"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Dynamics Matrices"
-	      SrcPort		      3
-	      Points		      [165, 0]
-	      DstBlock		      "Sum"
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "tau"
-	      SrcPort		      1
-	      Points		      [430, 0]
-	      DstBlock		      "Sum"
-	      DstPort		      4
-	    }
-	    Line {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Product"
 	      SrcPort		      1
@@ -3474,22 +3901,9 @@ Model {
 	    Line {
 	      SrcBlock		      "1/M"
 	      SrcPort		      1
-	      Points		      [160, 0]
+	      Points		      [150, 0]
 	      DstBlock		      "Product"
 	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Gain1"
-	      SrcPort		      1
-	      DstBlock		      "Product1"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Gain"
-	      SrcPort		      1
-	      Points		      [110, 0; 0, -60]
-	      DstBlock		      "Sum"
-	      DstPort		      3
 	    }
 	    Line {
 	      SrcBlock		      "Current Inertial Frame"
@@ -3497,60 +3911,53 @@ Model {
 	      DstBlock		      "Dynamics Matrices"
 	      DstPort		      3
 	    }
-	  }
-	}
-	Block {
-	  BlockType		  SubSystem
-	  Name			  "Log Measured States"
-	  SID			  "261"
-	  Ports			  [1]
-	  Position		  [865, 44, 1000, 116]
-	  MinAlgLoopOccurrences	  off
-	  PropExecContextOutsideSubsystem off
-	  RTWSystemCode		  "Auto"
-	  FunctionWithSeparateData off
-	  Opaque		  off
-	  RequestExecContextInheritance	off
-	  MaskHideContents	  off
-	  System {
-	    Name		    "Log Measured States"
-	    Location		    [1537, 624, 1850, 783]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "125"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "measured_states"
-	      SID		      "262"
-	      Position		      [370, 313, 400, 327]
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      ToWorkspace
-	      Name		      "To Workspace1"
-	      SID		      "246"
-	      Ports		      [1]
-	      Position		      [670, 289, 780, 351]
-	      ZOrder		      -7
-	      VariableName	      "measured_states_log"
-	      MaxDataPoints	      "inf"
-	      SampleTime	      "dt"
-	      SaveFormat	      "Timeseries"
+	    Line {
+	      SrcBlock		      "zeta"
+	      SrcPort		      1
+	      DstBlock		      "Dynamics Matrices"
+	      DstPort		      2
 	    }
 	    Line {
-	      SrcBlock		      "measured_states"
-	      SrcPort		      1
-	      DstBlock		      "To Workspace1"
+	      SrcBlock		      "Dynamics Matrices"
+	      SrcPort		      2
+	      Points		      [95, 0; 0, 10]
+	      DstBlock		      "Sum"
 	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Dynamics Matrices"
+	      SrcPort		      3
+	      Points		      [65, 0; 0, -5]
+	      DstBlock		      "Sum"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Dynamics Matrices"
+	      SrcPort		      4
+	      Points		      [85, 0; 0, -20]
+	      DstBlock		      "Sum"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Dynamics Matrices"
+	      SrcPort		      5
+	      Points		      [105, 0; 0, -35]
+	      DstBlock		      "Sum"
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      "Dynamics Matrices"
+	      SrcPort		      6
+	      Points		      [125, 0; 0, -50]
+	      DstBlock		      "Sum"
+	      DstPort		      5
+	    }
+	    Line {
+	      SrcBlock		      "tau"
+	      SrcPort		      1
+	      Points		      [445, 0]
+	      DstBlock		      "Sum"
+	      DstPort		      6
 	    }
 	  }
 	}
@@ -3560,14 +3967,14 @@ Model {
 	  SID			  "279"
 	  Position		  [1065, 228, 1095, 242]
 	  ZOrder		  -23
+	  BackgroundColor	  "lightBlue"
 	  IconDisplay		  "Port number"
 	}
 	Line {
 	  SrcBlock		  "Kinematic Transformations"
 	  SrcPort		  1
-	  Points		  [0, -10; 100, 0]
+	  Points		  [100, 0]
 	  Branch {
-	    Points		    [185, 0]
 	    DstBlock		    "Kinetics"
 	    DstPort		    1
 	  }
@@ -3587,14 +3994,14 @@ Model {
 	Line {
 	  SrcBlock		  "tau"
 	  SrcPort		  1
-	  Points		  [1, -30; 489, 0; 0, -30]
+	  Points		  [490, 0; 0, -45]
 	  DstBlock		  "Kinetics"
 	  DstPort		  3
 	}
 	Line {
 	  SrcBlock		  "Kinetics"
 	  SrcPort		  1
-	  Points		  [1, 0; 0, -130]
+	  Points		  [1, 0; 0, -115]
 	  Branch {
 	    DstBlock		    "Measured States"
 	    DstPort		    1
@@ -3607,21 +4014,14 @@ Model {
 	      DstPort		      1
 	    }
 	    Branch {
-	      Points		      [0, -35]
-	      Branch {
-		DstBlock		"End Effector"
-		DstPort			2
-	      }
-	      Branch {
-		Points			[0, -120]
-		DstBlock		"Log Measured States"
-		DstPort			1
-	      }
+	      Points		      [0, -60]
+	      DstBlock		      "End Effector"
+	      DstPort		      2
 	    }
 	  }
 	}
 	Line {
-	  SrcBlock		  "Current Inertial Frame"
+	  SrcBlock		  "Current Velocity Inertial Frame"
 	  SrcPort		  1
 	  Points		  [530, 0]
 	  DstBlock		  "Kinetics"
@@ -3644,7 +4044,7 @@ Model {
     Line {
       SrcBlock		      "UVMS"
       SrcPort		      1
-      DstBlock		      "Terminator"
+      DstBlock		      "Log Measured States"
       DstPort		      1
     }
   }
@@ -3662,7 +4062,7 @@ Stateflow {
     name		    "uvms"
     created		    "19-Feb-2014 09:50:42"
     isLibrary		    0
-    firstTarget		    87
+    firstTarget		    105
     sfVersion		    76014001.00040001
   }
   chart {
@@ -4130,7 +4530,6 @@ Stateflow {
     firstJunction	    27
     viewObj		    25
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -4155,12 +4554,16 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function M = getInertiaMatrix(Kinematics, Kinetics_Parameters)\n%#codegen\n    n=6;\n    M = zero"
-      "s(12,12);\n    Inertia = Kinetics_Parameters.Inertia;\n        \n    % Jgb = jacobian from Vbb -> Vbb\n    Jgb ="
-      " [eye(6), zeros(6,6)];\n    i=1;\n    Ji=Jgb;\n    ri=Kinetics_Parameters.Persistent.rig(i,:);\n    Hi = [eye(3)"
-      ", skew(ri)'; zeros(3,3), eye(3)];\n    Ii=Hi'*Inertia(:,:,1)*Hi;\n    M=M+(Ji')*Ii*Ji;\n    for i=1:n\n        J"
-      "i = Kinematics.Ji.Ji(:,:,i);\n        ri=Kinetics_Parameters.Persistent.rig(i+1,:);\n        Hi = [eye(3), skew("
-      "ri)'; zeros(3,3), eye(3)];\n        Ii=Hi'*Inertia(:,:,i+1)*Hi;\n        M=M+(Ji')*Ii*Ji;\n    end\nend"
+      script		      "function M = getInertiaMatrix(Kinematics, Kinetics_Parameters)\n%#codegen\n%   getInertiaMatrix R"
+      "eturns the sum of the Rigid body inertia and the added mass:\n%   M_rb + M_a\n%   \n    n=6;\n    i=1;\n    M = "
+      "zeros(12,12);\n    Inertia = Kinetics_Parameters.Inertia;\n    AddedInertia = Kinetics_Parameters.AddedInertia;\n"
+      "    Jgb = [eye(6), zeros(6,6)];                                 % Jacobian from vehicle \n    Ji=Jgb;\n    Hi = "
+      "Kinetics_Parameters.Persistent.Hrg(:,:,i);\n    Ii=Hi'*(Inertia(:,:,1) + AddedInertia(:,:,1))*Hi;           % In"
+      "ertia of vehicle in CO\n    M=M+(Ji')*Ii*Ji;\n    for i=1:n\n        Ji = Kinematics.Ji.Ji(:,:,i);              "
+      "             % body jacobian\n        Hi =Kinetics_Parameters.Persistent.Hrg(:,:,i+1);        % get Transformati"
+      "on matrix of link i\n        Ii=Hi'*(Inertia(:,:,i+1) + AddedInertia(:,:,i+1))*Hi;   % Transform Inertia matrix "
+      "from CG to CO\n        M=M+(Ji')*Ii*Ji;                                        % Add link i's inertia to total i"
+      "nertia\n    end\nend\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -4274,7 +4677,6 @@ Stateflow {
     firstJunction	    35
     viewObj		    33
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -4303,40 +4705,40 @@ Stateflow {
       "-----------------------------------\n%#codegen\n%\n%   This function calculates the coriolis according to From a"
       "nd Pettersen\n%   (2013).\n%-----------------------------------------------------------------------\n    n=6;\n "
       "   C=zeros(12,12);\n    Inertia=Kinetics_Parameters.Inertia;\n    Jis = Kinematics.Ji.Ji;\n    \n    % i = b\n  "
-      "  Jgb = [eye(6), zeros(6,6)];\n    i=1;\n    ri=Kinetics_Parameters.Persistent.rig(i,:);\n    Hi = [eye(3), skew"
-      "(ri)'; zeros(3,3), eye(3)];\n    Ii=Hi'*Inertia(:,:,i);\n    Wb = getWb(Ii,zeta);\n    C = - (Jgb')*Wb*Hi*Jgb;  "
-      "   % time derivative of Jgb = 0  \n    \n    % i >=1\n    for i=1:n\n\n        ri=Kinetics_Parameters.Persistent"
-      ".rig(i+1,:);\n        Hi = [eye(3), skew(ri)'; zeros(3,3), eye(3)];\n        Ii=Hi'*Inertia(:,:,i+1);\n        W"
-      "i=getWi(Ii,Jis(:,:,i), zeta);\n        Jgi_dot=getJgi_dot(Kinematics, zeta,i);\n        Jgi = Jis(:,:,i);\n     "
-      "   \n        C = C + (Jgi')*Ii*Hi*Jgi_dot - (Jgi')*Wi*Hi*Jgi;\n    end\nend\n\n\n\nfunction Wb = getWb(I , zeta)"
-      "\n% Get the matrix Wi for i=b\n% I: Inertia matrix for vehicle\n% zeta: generalized velocity\n    Wb = zeros(6,6"
-      ");\n    v = zeta(1:3);\n    omega = zeta(4:6);\n    mI = I(1:3,1:3); % Identity matrix times mass of link b\n   "
-      " Ib = I(4:6,4:6); % Moment of inertia\n    mrgb = I(4:6,1:3); % mass times skew symmetric r_g^b\n    dKv= mI*v -"
-      " mrgb*omega;\n    dKomega = Ib*omega + mrgb*v;\n    \n    Wb = [zeros(3,3), skew(dKv) ; skew(dKv), skew(dKomega)"
-      "];\nend\n\nfunction Wi = getWi(I, Ji,zeta)\n% Get matrix Wi for robot links\n% I: inertia matrix for link i\n% J"
-      "i: Jacobian for link i\n% zeta: generalized coordinates\n    Wi = zeros(6,6);\n    V0i = Ji*zeta;\n    v = V0i(1"
-      ":3);\n    omega = V0i(4:6);\n    mI = I(1:3,1:3); % Identity matrix times mass of link b\n    Ib = I(4:6,4:6); %"
-      " Moment of inertia\n    mrgb = I(4:6,1:3); % mass times skew symmetric r_g^b\n    dKv= mI*v - mrgb*omega;\n    d"
-      "Komega = Ib*omega + mrgb*v;\n    Wi = [zeros(3,3), skew(dKv) ; skew(dKv), skew(dKomega)];\nend\n\nfunction Jgi_d"
-      "ot=getJgi_dot(Kinematics, zeta,i)\n% the functions below is related to Jgi_dot\n    Jgi_dot = zeros(6,6+6);\n   "
-      " n=6;\n    Jgi = Kinematics.Ji.Ji(:,:,i);\n    omega = Jgi*zeta;\n    Rbi = Kinematics.Ti.Rbi(:,:,i);\n    pbi ="
-      " Kinematics.Ti.pbi(:,i);\n    omegaib = getOmegaib(Kinematics,zeta,i);\n    dpbi =  getDpbi(Kinematics,zeta,i);\n"
-      "        \n    dAdg_inv = [(Rbi')*skew(omegaib) , -(Rbi')*skew(omegaib)*skew(pbi) + (Rbi')*skew(dpbi); ...\n     "
-      "           zeros(3,3) , (Rbi')*skew(omegaib) ];\n    dJi = zeros(6,6);\n    omega0b = zeta(4:6);\n    \n    % ge"
-      "t d/dt(Ji)\n    Xii=[0,0,0,0,0,1]';\n    for k=2:n\n       if k<=i\n            dpbk = getDpbi(Kinematics, zeta "
-      ",k-1);\n            Rbk= Kinematics.Ti.Rbi(:,:,k-1);\n            omega0k = [zeros(3,3) , eye(3)]*Kinematics.Ji."
-      "Ji(:,:,k-1)*zeta;\n            omegabk = omega0k - (Rbk')*omega0b;\n            dJi(:,k) = [zeros(3,3), skew(dpb"
-      "k)*Rbk*skew(omegabk) ...\n                ; zeros(3,3) , (Rbk')*skew(omegabk)]*Xii;\n       end\n    end\n    Ji"
-      "=getji(Kinematics.Ti, i);\n    Adg_inv = Kinematics.Ti.Adgbi_inv(:,:,i);\n    Jgi_dot = [dAdg_inv, dAdg_inv*Ji +"
-      " Adg_inv*dJi ];\nend\n\nfunction omegaib = getOmegaib(Kinematics,zeta,i)\n% returns angular rage of vehcile wrt "
-      "frame i noted in vehicle frame\n    omegaib = zeros(3,1);\n    Rbi = Kinematics.Ti.Rbi(:,:,i);\n    Jgi = Kinema"
-      "tics.Ji.Ji(:,:,i);\n    omega0b = zeta(4:6);\n    omegaib = omega0b - Rbi*[zeros(3,3), eye(3)]*Jgi*zeta;\nend\n\n"
-      "function dpbi = getDpbi( Kinematics, zeta,iter)\n% returns time derivative of position vector of from frame b to"
-      " frame i\n    dpbi = zeros(3,1);\n    H = [eye(3), zeros(3,3)];\n    Rbi=Kinematics.Ti.Rbi(:,:,iter);\n    Adgbi"
-      "_inv = Kinematics.Ti.Adgbi_inv(:,:,iter);\n    Ji = getji(Kinematics.Ti,iter);\n    qd=zeros(6,1);\n    qd(:,:)="
-      "zeta(7:12);\n    dpbi = Rbi*H*Adgbi_inv*Ji*qd;\nend\n\n\nfunction mat = getji(Ti,i)\n% return matrix Ji (see rep"
-      "ort)\n    n=6;\n    mat=zeros(6,6);\n    Xii=[0,0,0,0,0,1]';\n    mat(:,1)=eye(6)*Xii;\n    for j=2:n\n        i"
-      "f j<=i\n            mat(:,j) = Ti.Adgbi(:,:,j-1)*Xii;\n        end\n    end\nend\n\n\n\n\n\n"
+      "  Jgb = [eye(6), zeros(6,6)];\n    i=1;\n    Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i);\n    Ii=Hi'*Inertia"
+      "(:,:,i);\n    Wb = getWb(Ii,zeta);\n    C = - (Jgb')*Wb*Hi*Jgb;     % time derivative of Jgb = 0  \n    \n    % "
+      "i >=1\n    for i=1:n\n        Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i+1);\n        Ii=Hi'*Inertia(:,:,i+1)"
+      ";\n        Wi=getWi(Ii,Jis(:,:,i), zeta);\n        Jgi_dot=getJgi_dot(Kinematics, zeta,i);\n        Jgi = Jis(:,"
+      ":,i);\n        \n        C = C + (Jgi')*Ii*Hi*Jgi_dot - (Jgi')*Wi*Hi*Jgi;\n    end\nend\n\n\n\nfunction Wb = get"
+      "Wb(I , zeta)\n% Get the matrix Wi for i=b\n% I: Inertia matrix for vehicle\n% zeta: generalized velocity\n    Wb"
+      " = zeros(6,6);\n    v = zeta(1:3);\n    omega = zeta(4:6);\n    mI = I(1:3,1:3); % Identity matrix times mass of"
+      " link b\n    Ib = I(4:6,4:6); % Moment of inertia\n    mrgb = I(4:6,1:3); % mass times skew symmetric r_g^b\n   "
+      " dKv= mI*v - mrgb*omega;\n    dKomega = Ib*omega + mrgb*v;\n    \n    Wb = [zeros(3,3), skew(dKv) ; skew(dKv), s"
+      "kew(dKomega)];\nend\n\nfunction Wi = getWi(I, Ji,zeta)\n% Get matrix Wi for robot links\n% I: inertia matrix for"
+      " link i\n% Ji: Jacobian for link i\n% zeta: generalized coordinates\n    Wi = zeros(6,6);\n    V0i = Ji*zeta;\n "
+      "   v = V0i(1:3);\n    omega = V0i(4:6);\n    mI = I(1:3,1:3); % Identity matrix times mass of link b\n    Ib = I"
+      "(4:6,4:6); % Moment of inertia\n    mrgb = I(4:6,1:3); % mass times skew symmetric r_g^b\n    dKv= mI*v - mrgb*o"
+      "mega;\n    dKomega = Ib*omega + mrgb*v;\n    Wi = [zeros(3,3), skew(dKv) ; skew(dKv), skew(dKomega)];\nend\n\nfu"
+      "nction Jgi_dot=getJgi_dot(Kinematics, zeta,i)\n% the functions below is related to Jgi_dot\n    Jgi_dot = zeros("
+      "6,6+6);\n    n=6;\n    Jgi = Kinematics.Ji.Ji(:,:,i);\n    omega = Jgi*zeta;\n    Rbi = Kinematics.Ti.Rbi(:,:,i)"
+      ";\n    pbi = Kinematics.Ti.pbi(:,i);\n    omegaib = getOmegaib(Kinematics,zeta,i);\n    dpbi =  getDpbi(Kinemati"
+      "cs,zeta,i);\n        \n    dAdg_inv = [(Rbi')*skew(omegaib) , -(Rbi')*skew(omegaib)*skew(pbi) + (Rbi')*skew(dpbi"
+      "); ...\n                zeros(3,3) , (Rbi')*skew(omegaib) ];\n    dJi = zeros(6,6);\n    omega0b = zeta(4:6);\n "
+      "   \n    % get d/dt(Ji)\n    Xii=[0,0,0,0,0,1]';\n    for k=2:n\n       if k<=i\n            dpbk = getDpbi(Kine"
+      "matics, zeta ,k-1);\n            Rbk= Kinematics.Ti.Rbi(:,:,k-1);\n            omega0k = [zeros(3,3) , eye(3)]*K"
+      "inematics.Ji.Ji(:,:,k-1)*zeta;\n            omegabk = omega0k - (Rbk')*omega0b;\n            dJi(:,k) = [zeros(3"
+      ",3), skew(dpbk)*Rbk*skew(omegabk) ...\n                ; zeros(3,3) , (Rbk')*skew(omegabk)]*Xii;\n       end\n  "
+      "  end\n    Ji=getji(Kinematics.Ti, i);\n    Adg_inv = Kinematics.Ti.Adgbi_inv(:,:,i);\n    Jgi_dot = [dAdg_inv, "
+      "dAdg_inv*Ji + Adg_inv*dJi ];\nend\n\nfunction omegaib = getOmegaib(Kinematics,zeta,i)\n% returns angular rage of"
+      " vehcile wrt frame i noted in vehicle frame\n    omegaib = zeros(3,1);\n    Rbi = Kinematics.Ti.Rbi(:,:,i);\n   "
+      " Jgi = Kinematics.Ji.Ji(:,:,i);\n    omega0b = zeta(4:6);\n    omegaib = omega0b - Rbi*[zeros(3,3), eye(3)]*Jgi*"
+      "zeta;\nend\n\nfunction dpbi = getDpbi( Kinematics, zeta,iter)\n% returns time derivative of position vector of f"
+      "rom frame b to frame i\n    dpbi = zeros(3,1);\n    H = [eye(3), zeros(3,3)];\n    Rbi=Kinematics.Ti.Rbi(:,:,ite"
+      "r);\n    Adgbi_inv = Kinematics.Ti.Adgbi_inv(:,:,iter);\n    Ji = getji(Kinematics.Ti,iter);\n    qd=zeros(6,1);"
+      "\n    qd(:,:)=zeta(7:12);\n    dpbi = Rbi*H*Adgbi_inv*Ji*qd;\nend\n\n\nfunction mat = getji(Ti,i)\n% return matr"
+      "ix Ji (see report)\n    n=6;\n    mat=zeros(6,6);\n    Xii=[0,0,0,0,0,1]';\n    mat(:,1)=eye(6)*Xii;\n    for j="
+      "2:n\n        if j<=i\n            mat(:,j) = Ti.Adgbi(:,:,j-1)*Xii;\n        end\n    end\nend\n\nfunction S = s"
+      "kew(v)\n  S = [  0   -v(3)  v(2)\n       v(3)  0    -v(1)\n       -v(2) v(1)   0];\nend\n\n\n\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -4635,9 +5037,6 @@ Stateflow {
     firstJunction	    52
     viewObj		    50
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    8
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -4799,7 +5198,6 @@ Stateflow {
     firstJunction	    61
     viewObj		    59
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -4976,7 +5374,6 @@ Stateflow {
     firstJunction	    70
     viewObj		    68
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -5128,8 +5525,8 @@ Stateflow {
   }
   chart {
     id			    77
-    name		    "UVMS/Kinetics/Measure states/zeta2xi/body2eulervel"
-    windowPosition	    [495.75 83.25 200.25 189.75]
+    name		    "UVMS/Kinetics/Dynamics Matrices/C_a(zeta)"
+    windowPosition	    [390.75 188.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
     treeNode		    [0 78 0 0]
@@ -5137,14 +5534,16 @@ Stateflow {
     firstJunction	    79
     viewObj		    77
     machine		    1
-    ssIdHighWaterMark	    8
+    subviewS {
+    }
+    ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    81
-    chartFileNumber	    11
+    chartFileNumber	    10
     disableImplicitCasting  1
     eml {
-      name		      "fcn"
+      name		      "AddedCoriolis"
     }
   }
   state {
@@ -5161,17 +5560,44 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function [dq, dp, deuler] = fcn(zeta, euler)                       \n    %#codegen\n       \n    "
-      "phi=euler(1);\n    theta=euler(2);\n    psi=euler(3);\n    \n    \n    cphi = cos(phi);\n    sphi = sin(phi);\n "
-      "   cth  = cos(theta);\n    sth  = sin(theta);\n \n    J1 = Rzyx(phi,theta,psi);\n \n    if cth==0, error('J2 is "
-      "singular for theta = +-90 degrees'); end\n \n    J2 = [...\n      1  sphi*sth/cth  cphi*sth/cth;\n      0  cphi "
-      "         -sphi;\n      0  sphi/cth      cphi/cth ];\n \n    J = [ J1  zeros(3,3);\n      zeros(3,3) J2 ];\n     "
-      "   \n    vehicle_velocity_twist = zeta(1:6);\n\n    vehicle_rates=J*vehicle_velocity_twist;\n    dp = vehicle_ra"
-      "tes(1:3);\n    deuler = vehicle_rates(4:6);\n    dq = zeta(7:12);\nend\n\n\n\nfunction R = Rzyx(phi,theta,psi)\n"
-      "    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(theta);\n    sth  = sin(theta);\n    cpsi = cos(psi);"
-      "\n    spsi = sin(psi);\n\n    R = [...\n       cpsi*cth  -spsi*cphi+cpsi*sth*sphi  spsi*sphi+cpsi*cphi*sth\n    "
-      "   spsi*cth  cpsi*cphi+sphi*sth*spsi   -cpsi*sphi+sth*spsi*cphi\n       -sth      cth*sphi                  cth*"
-      "cphi ];\nend\n"
+      script		      "function Ca = AddedCoriolis(zeta_r,Kinematics,Kinetics_Parameters)\n%#codegen ..................."
+      "...........................\n%\n%   This function calculates the added coriolis matrix\n%......................."
+      "................................\n    n=6;\n    Ca=zeros(12,12);\n    Inertia=Kinetics_Parameters.AddedInertia;\n"
+      "    Jis = Kinematics.Ji.Ji;\n    \n    % vehicle\n    Jgb = [eye(6), zeros(6,6)];\n    i=1;\n    Hi = Kinetics_P"
+      "arameters.Persistent.Hrg(:,:,i+1);\n    Ii=Hi'*Inertia(:,:,i);\n    Wb = getWb(Ii,zeta_r);\n    Ca = - (Jgb')*Wb"
+      "*Hi*Jgb;     % time derivative of Jgb = 0  \n    \n    % manipulator links\n    for i=1:n\n        Hi = Kinetics"
+      "_Parameters.Persistent.Hrg(:,:,i+1);\n        Ii=Hi'*Inertia(:,:,i+1);\n        Wi=getWi(Ii,Jis(:,:,i), zeta_r);"
+      "\n        Jgi_dot=getJgi_dot(Kinematics, zeta_r,i);\n        Jgi = Jis(:,:,i);\n        Ca = Ca + (Jgi')*Ii*Hi*J"
+      "gi_dot - (Jgi')*Wi*Hi*Jgi;\n    end\nend\n\n\n\nfunction Wb = getWb(I , zeta)\n% Get the matrix Wi for i=b\n% I:"
+      " Inertia matrix for vehicle\n% zeta: generalized velocity\n    Wb = zeros(6,6);\n    v = zeta(1:3);\n    omega ="
+      " zeta(4:6);\n    mI = I(1:3,1:3); % Identity matrix times mass of link b\n    Ib = I(4:6,4:6); % Moment of inert"
+      "ia\n    mrgb = I(4:6,1:3); % mass times skew symmetric r_g^b\n    dKv= mI*v - mrgb*omega;\n    dKomega = Ib*omeg"
+      "a + mrgb*v;\n    \n    Wb = [zeros(3,3), skew(dKv) ; skew(dKv), skew(dKomega)];\nend\n\nfunction Wi = getWi(I, J"
+      "i,zeta)\n% Get matrix Wi for robot links\n% I: inertia matrix for link i\n% Ji: Jacobian for link i\n% zeta: gen"
+      "eralized coordinates\n    Wi = zeros(6,6);\n    V0i = Ji*zeta;\n    v = V0i(1:3);\n    omega = V0i(4:6);\n    mI"
+      " = I(1:3,1:3); % Identity matrix times mass of link b\n    Ib = I(4:6,4:6); % Moment of inertia\n    mrgb = I(4:"
+      "6,1:3); % mass times skew symmetric r_g^b\n    dKv= mI*v - mrgb*omega;\n    dKomega = Ib*omega + mrgb*v;\n    Wi"
+      " = [zeros(3,3), skew(dKv) ; skew(dKv), skew(dKomega)];\nend\n\nfunction Jgi_dot=getJgi_dot(Kinematics, zeta,i)\n"
+      "% the functions below is related to Jgi_dot\n    Jgi_dot = zeros(6,6+6);\n    n=6;\n    Jgi = Kinematics.Ji.Ji(:"
+      ",:,i);\n    omega = Jgi*zeta;\n    Rbi = Kinematics.Ti.Rbi(:,:,i);\n    pbi = Kinematics.Ti.pbi(:,i);\n    omega"
+      "ib = getOmegaib(Kinematics,zeta,i);\n    dpbi =  getDpbi(Kinematics,zeta,i);\n        \n    dAdg_inv = [(Rbi')*s"
+      "kew(omegaib) , -(Rbi')*skew(omegaib)*skew(pbi) + (Rbi')*skew(dpbi); ...\n                zeros(3,3) , (Rbi')*ske"
+      "w(omegaib) ];\n    dJi = zeros(6,6);\n    omega0b = zeta(4:6);\n    \n    % get d/dt(Ji)\n    Xii=[0,0,0,0,0,1]'"
+      ";\n    for k=2:n\n       if k<=i\n            dpbk = getDpbi(Kinematics, zeta ,k-1);\n            Rbk= Kinematic"
+      "s.Ti.Rbi(:,:,k-1);\n            omega0k = [zeros(3,3) , eye(3)]*Kinematics.Ji.Ji(:,:,k-1)*zeta;\n            ome"
+      "gabk = omega0k - (Rbk')*omega0b;\n            dJi(:,k) = [zeros(3,3), skew(dpbk)*Rbk*skew(omegabk) ...\n        "
+      "        ; zeros(3,3) , (Rbk')*skew(omegabk)]*Xii;\n       end\n    end\n    Ji=getji(Kinematics.Ti, i);\n    Adg"
+      "_inv = Kinematics.Ti.Adgbi_inv(:,:,i);\n    Jgi_dot = [dAdg_inv, dAdg_inv*Ji + Adg_inv*dJi ];\nend\n\nfunction o"
+      "megaib = getOmegaib(Kinematics,zeta,i)\n% returns angular rage of vehcile wrt frame i noted in vehicle frame\n  "
+      "  omegaib = zeros(3,1);\n    Rbi = Kinematics.Ti.Rbi(:,:,i);\n    Jgi = Kinematics.Ji.Ji(:,:,i);\n    omega0b = "
+      "zeta(4:6);\n    omegaib = omega0b - Rbi*[zeros(3,3), eye(3)]*Jgi*zeta;\nend\n\nfunction dpbi = getDpbi( Kinemati"
+      "cs, zeta,iter)\n% returns time derivative of position vector of from frame b to frame i\n    dpbi = zeros(3,1);\n"
+      "    H = [eye(3), zeros(3,3)];\n    Rbi=Kinematics.Ti.Rbi(:,:,iter);\n    Adgbi_inv = Kinematics.Ti.Adgbi_inv(:,:"
+      ",iter);\n    Ji = getji(Kinematics.Ti,iter);\n    qd=zeros(6,1);\n    qd(:,:)=zeta(7:12);\n    dpbi = Rbi*H*Adgb"
+      "i_inv*Ji*qd;\nend\n\n\nfunction mat = getji(Ti,i)\n% return matrix Ji (see report)\n    n=6;\n    mat=zeros(6,6)"
+      ";\n    Xii=[0,0,0,0,0,1]';\n    mat(:,1)=eye(6)*Xii;\n    for j=2:n\n        if j<=i\n            mat(:,j) = Ti."
+      "Adgbi(:,:,j-1)*Xii;\n        end\n    end\nend\n\n\nfunction S = skew(v)\n  S = [  0   -v(3)  v(2)\n       v(3) "
+      " 0    -v(1)\n       -v(2) v(1)   0];\nend\n\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -5208,7 +5634,7 @@ Stateflow {
   data {
     id			    81
     ssIdNumber		    4
-    name		    "zeta"
+    name		    "zeta_r"
     linkNode		    [77 0 82]
     scope		    INPUT_DATA
     machine		    1
@@ -5227,8 +5653,178 @@ Stateflow {
   data {
     id			    82
     ssIdNumber		    5
-    name		    "dq"
+    name		    "Ca"
     linkNode		    [77 81 83]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    83
+    ssIdNumber		    6
+    name		    "Kinematics"
+    linkNode		    [77 82 84]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_SIMULINK_OBJECT_TYPE
+	primitive		SF_DOUBLE_TYPE
+	busObject		"kin_bus"
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Bus: kin_bus"
+  }
+  data {
+    id			    84
+    ssIdNumber		    7
+    name		    "Kinetics_Parameters"
+    linkNode		    [77 83 0]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_SIMULINK_OBJECT_TYPE
+	primitive		SF_DOUBLE_TYPE
+	busObject		"kinetics_bus"
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Bus: kinetics_bus"
+  }
+  instance {
+    id			    85
+    name		    "UVMS/Kinetics/Dynamics Matrices/C_a(zeta)"
+    machine		    1
+    chart		    77
+  }
+  chart {
+    id			    86
+    name		    "UVMS/Kinetics/Measure states/zeta2xi/body2eulervel"
+    windowPosition	    [495.75 83.25 200.25 189.75]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3120 1920 1.25]
+    treeNode		    [0 87 0 0]
+    firstTransition	    89
+    firstJunction	    88
+    viewObj		    86
+    machine		    1
+    ssIdHighWaterMark	    8
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    90
+    chartFileNumber	    11
+    disableImplicitCasting  1
+    eml {
+      name		      "fcn"
+    }
+  }
+  state {
+    id			    87
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    86
+    treeNode		    [86 0 0 0]
+    superState		    SUBCHART
+    subviewer		    86
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function [dq, dp, deuler] = fcn(zeta, euler)                       \n    %#codegen\n       \n    "
+      "phi=euler(1);\n    theta=euler(2);\n    psi=euler(3);\n    \n    \n    cphi = cos(phi);\n    sphi = sin(phi);\n "
+      "   cth  = cos(theta);\n    sth  = sin(theta);\n \n    J1 = Rzyx(phi,theta,psi);\n \n    if cth==0, error('J2 is "
+      "singular for theta = +-90 degrees'); end\n \n    J2 = [...\n      1  sphi*sth/cth  cphi*sth/cth;\n      0  cphi "
+      "         -sphi;\n      0  sphi/cth      cphi/cth ];\n \n    J = [ J1  zeros(3,3);\n      zeros(3,3) J2 ];\n     "
+      "   \n    vehicle_velocity_twist = zeta(1:6);\n\n    vehicle_rates=J*vehicle_velocity_twist;\n    dp = vehicle_ra"
+      "tes(1:3);\n    deuler = vehicle_rates(4:6);\n    dq = zeta(7:12);\nend\n\n\n\nfunction R = Rzyx(phi,theta,psi)\n"
+      "    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(theta);\n    sth  = sin(theta);\n    cpsi = cos(psi);"
+      "\n    spsi = sin(psi);\n\n    R = [...\n       cpsi*cth  -spsi*cphi+cpsi*sth*sphi  spsi*sphi+cpsi*cphi*sth\n    "
+      "   spsi*cth  cpsi*cphi+sphi*sth*spsi   -cpsi*sphi+sth*spsi*cphi\n       -sth      cth*sphi                  cth*"
+      "cphi ];\nend\n"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  junction {
+    id			    88
+    position		    [23.5747 49.5747 7]
+    chart		    86
+    linkNode		    [86 0 0]
+    subviewer		    86
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    89
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [32.125 19.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      88
+      intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    86
+    linkNode		    [86 0 0]
+    dataLimits		    [23.575 23.575 14.625 34.575]
+    subviewer		    86
+    drawStyle		    SMART
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  data {
+    id			    90
+    ssIdNumber		    4
+    name		    "zeta"
+    linkNode		    [86 0 91]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"12"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    91
+    ssIdNumber		    5
+    name		    "dq"
+    linkNode		    [86 90 92]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -5245,10 +5841,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    83
+    id			    92
     ssIdNumber		    7
     name		    "dp"
-    linkNode		    [77 82 84]
+    linkNode		    [86 91 93]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -5267,10 +5863,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    84
+    id			    93
     ssIdNumber		    6
     name		    "deuler"
-    linkNode		    [77 83 85]
+    linkNode		    [86 92 94]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -5289,10 +5885,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    85
+    id			    94
     ssIdNumber		    8
     name		    "euler"
-    linkNode		    [77 84 0]
+    linkNode		    [86 93 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -5311,13 +5907,186 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    86
+    id			    95
     name		    "UVMS/Kinetics/Measure states/zeta2xi/body2eulervel"
     machine		    1
-    chart		    77
+    chart		    86
+  }
+  chart {
+    id			    96
+    name		    "UVMS/Kinetics/Dynamics Matrices/Ma*H"
+    windowPosition	    [375.75 203.25 200.25 189.75]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3120 1920 1.25]
+    treeNode		    [0 97 0 0]
+    firstTransition	    99
+    firstJunction	    98
+    viewObj		    96
+    machine		    1
+    toolbarMode		    LIBRARY_TOOLBAR
+    subviewS {
+    }
+    ssIdHighWaterMark	    7
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    100
+    chartFileNumber	    12
+    disableImplicitCasting  1
+    eml {
+      name		      "fcn"
+    }
+  }
+  state {
+    id			    97
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    96
+    treeNode		    [96 0 0 0]
+    superState		    SUBCHART
+    subviewer		    96
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function MaH = fcn(Kinematics,Kinetics_Parameters,zeta)\n%#codegen ..........................\n%\n"
+      "%  returns rest of the the added mass\n%  force matrix:\n%       Ma*H(xi,zeta)\n% .............................."
+      "....\n    n=6;\n    i=1;\n    \n    %% get the total Added mass matrix\n    Ma = zeros(12,12);\n    AddedInertia"
+      " = Kinetics_Parameters.AddedInertia;\n    Jgb = [eye(6), zeros(6,6)];                                 % Jacobian"
+      " from vehicle \n    Ji=Jgb;\n    Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i);\n    Ii=Hi'*( AddedInertia(:,:,"
+      "1))*Hi;                           % Inertia of vehicle in CO\n    Ma=Ma+(Ji')*Ii*Ji;\n    for i=1:n\n        Ji "
+      "= Kinematics.Ji.Ji(:,:,i);                           % body jacobian\n        Hi =Kinetics_Parameters.Persistent"
+      ".Hrg(:,:,i+1);        % get Transformation matrix of link i\n        Ii=Hi'*(AddedInertia(:,:,i+1))*Hi;         "
+      "             % Transform Inertia matrix from CG to CO\n        Ma=Ma+(Ji')*Ii*Ji;                               "
+      "       % Add link i's inertia to total inertia\n    end\n    \n    %% calculate the matrix product\n    H = zero"
+      "s(12,6);\n    R0b = Kinematics.Ti.R0b;\n    omega0b = zeta(4:6);\n    H(1:3,1:3) = R0b'*skew(omega0b);\n    MaH "
+      "= Ma*H;\nend\n\nfunction S = skew(v)\n  S = [  0   -v(3)  v(2)\n       v(3)  0    -v(1)\n       -v(2) v(1)   0];"
+      "\nend"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  junction {
+    id			    98
+    position		    [23.5747 49.5747 7]
+    chart		    96
+    linkNode		    [96 0 0]
+    subviewer		    96
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    99
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [32.125 19.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      98
+      intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    96
+    linkNode		    [96 0 0]
+    dataLimits		    [23.575 23.575 14.625 34.575]
+    subviewer		    96
+    drawStyle		    SMART
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  data {
+    id			    100
+    ssIdNumber		    4
+    name		    "Kinematics"
+    linkNode		    [96 0 101]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    101
+    ssIdNumber		    7
+    name		    "Kinetics_Parameters"
+    linkNode		    [96 100 102]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    102
+    ssIdNumber		    5
+    name		    "MaH"
+    linkNode		    [96 101 103]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    103
+    ssIdNumber		    6
+    name		    "zeta"
+    linkNode		    [96 102 0]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  instance {
+    id			    104
+    name		    "UVMS/Kinetics/Dynamics Matrices/Ma*H"
+    machine		    1
+    chart		    96
   }
   target {
-    id			    87
+    id			    105
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1

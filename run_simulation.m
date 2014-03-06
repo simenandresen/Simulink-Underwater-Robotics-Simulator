@@ -13,7 +13,7 @@ init_kinetics;
 init_inputs;
 
 %% Global Simulation parameters
-dt=0.001;
+dt=0.01;
 
 %% Mathematical parameters
 d2r=pi/180;
@@ -38,7 +38,7 @@ measured_states_bus = slBus6;
 
 %%
 
-sim('uvms',3);
+sim('uvms',10);
 
 
 %% get log data

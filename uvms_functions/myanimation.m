@@ -28,6 +28,7 @@ xlabel('x');
 ylabel('y');
 zlabel('z');
 m_i=1;
+ws=12;
 hold on;
 
 %% animate
@@ -46,7 +47,7 @@ for i=1:step:length(q_log(:,1))
     end
     rov_figure=patch('Vertices', new_mat', 'Faces', my_faces, 'FaceColor', 'g');
     set(rov_figure,'facealpha',0.5);
-    axis([-7, 7, -7, 7 , -7, 7]*0.7);  
+    axis([-ws, ws, -ws, ws , -ws, ws]);  
     
     ee_traj(end+1,:)=ee_pose_log(i,:);
     plot3(ee_traj(:,1),ee_traj(:,2),ee_traj(:,3), 'om');

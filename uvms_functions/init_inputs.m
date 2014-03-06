@@ -43,5 +43,5 @@ tau_c = zeros(12,1);
 
 %% Current
 
-V_current = [1,1,0,0,0,0]';
+V_current = [1,0,1,0,0,0]';
 
