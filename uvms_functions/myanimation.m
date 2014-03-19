@@ -7,7 +7,9 @@
 
 close all;
 
-run('./rvctools/startup_rvc.m');
+if (exist('Link')) ==0
+    run('./rvctools/startup_rvc.m');
+end
 
 %% init robot for animation
 global six_link;

@@ -3,6 +3,14 @@
 %% number of links
 n=6;
 
+%% Physical Dimension ROV %%
+
+%  For deriving the mass and inertia for the ROV, the following dimensions
+%  is used:
+x_rov = 2.3;
+y_rov = 2; 
+z_rov = 1; 
+
 %% The denavit-hartenberg defines each frame as a homognous transformation
 % definded by:
 % Ai=Rot_z(theta)Trans_z(d)Trans_x(a)Rot_x(alpha)
@@ -54,7 +62,7 @@ qmax(6)=160*(pi/180);
 rig=zeros(n+1,3);   % vector from frame i to CG
 rib=zeros(n+1,3);   % vector from frame i to CB
 
-rib(1,:) = [-1; 0; 0.5];
+rib(1,:) = [-1; 0; 0.7];
 rig(1,:) = [-1; 0; 0.3];
 
 rib(2,:) = [-DH.a(1)*0.5; 0; 0];
@@ -74,9 +82,6 @@ rig(6,:) = [0; 0; 0];
 
 rib(7,:) = [0; 0; DH.d(6)*0.5];
 rig(7,:) = [0; 0; DH.d(6)*0.5];
-
-
-
 
 Hrg = zeros(6,6,n+1);
 Hrb = zeros(6,6,n+1);

@@ -6,15 +6,6 @@
 %
 %.................................................
 
-
-%% Physical Dimension ROV %%
-
-%  For deriving the mass and inertia for the ROV, the following dimensions
-%  is used:
-x_rov = 2.3;
-y_rov = 2; 
-z_rov = 1; 
-
 %% persistent forces in CG of each link %%
 
 % nabla is calculated based on modeling the links as cylinders with a cross
