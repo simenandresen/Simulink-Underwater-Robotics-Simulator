@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.695"
+    ComputedModelVersion    "1.838"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Apr 08 17:11:17 2014"
-  RTWModifiedTimeStamp	  318774549
-  ModelVersionFormat	  "1.%<AutoIncrement:695>"
+  LastModifiedDate	  "Tue Apr 29 17:32:12 2014"
+  RTWModifiedTimeStamp	  320330800
+  ModelVersionFormat	  "1.%<AutoIncrement:838>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -613,7 +613,7 @@ Model {
       }
       Name		      "Configuration"
       CurrentDlgPage	      "Solver"
-      ConfigPrmDlgPosition     [ 172, 497, 1080, 1141 ] 
+      ConfigPrmDlgPosition     [ 176, 497, 1084, 1141 ] 
     }
     PropName		    "ConfigurationSets"
   }
@@ -681,6 +681,15 @@ Model {
     Block {
       BlockType		      Derivative
       CoefficientInTFapproximation "inf"
+    }
+    Block {
+      BlockType		      FromWorkspace
+      VariableName	      "simulink_input"
+      OutDataTypeStr	      "Inherit: auto"
+      SampleTime	      "-1"
+      Interpolate	      on
+      ZeroCross		      off
+      OutputAfterFinalValue   "Extrapolation"
     }
     Block {
       BlockType		      Inport
@@ -832,7 +841,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "125"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "298"
+    SIDHighWatermark	    "303"
     Block {
       BlockType		      SubSystem
       Name		      "Inverse Kinematics"
@@ -934,7 +943,7 @@ Model {
 	  Name			  "Vee2Zeta"
 	  SID			  "123"
 	  Ports			  [7, 3]
-	  Position		  [680, 195, 830, 505]
+	  Position		  [670, 195, 820, 505]
 	  ZOrder		  -4
 	  LibraryVersion	  "1.32"
 	  ErrorFcn		  "Stateflow.Translate.translate"
@@ -942,6 +951,7 @@ Model {
 	  TreatAsAtomicUnit	  on
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
+	  SystemSampleTime	  "dt"
 	  RTWSystemCode		  "Auto"
 	  FunctionWithSeparateData off
 	  Opaque		  off
@@ -1201,7 +1211,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "VehicleVelocity"
-	    Location		    [114, 818, 740, 1218]
+	    Location		    [2, 418, 1918, 1431]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -1242,6 +1252,7 @@ Model {
 	      TreatAsAtomicUnit	      on
 	      MinAlgLoopOccurrences   off
 	      PropExecContextOutsideSubsystem off
+	      SystemSampleTime	      "dt"
 	      RTWSystemCode	      "Auto"
 	      FunctionWithSeparateData off
 	      Opaque		      off
@@ -1484,7 +1495,7 @@ Model {
 		  LibraryVersion	  "1.260"
 		  SourceBlock		  "simulink/Signal\nRouting/Manual Switch"
 		  SourceType		  "Manual Switch"
-		  sw			  "1"
+		  sw			  "0"
 		  action		  "0"
 		  varsize		  off
 		}
@@ -1699,12 +1710,12 @@ Model {
 	      BlockType		      UnitDelay
 	      Name		      "Unit Delay1"
 	      SID		      "174"
-	      Position		      [710, 538, 730, 562]
+	      Position		      [710, 508, 730, 532]
 	      ZOrder		      -21
 	      BlockMirror	      on
 	      NamePlacement	      "alternate"
-	      InputProcessing	      "Elements as channels (sample based)"
-	      SampleTime	      "-1"
+	      X0		      "VV_States"
+	      SampleTime	      "dt"
 	    }
 	    Block {
 	      BlockType		      Outport
@@ -1722,7 +1733,7 @@ Model {
 	    Line {
 	      SrcBlock		      "Unit Delay1"
 	      SrcPort		      1
-	      Points		      [-115, 0; 0, -145]
+	      Points		      [-115, 0; 0, -115]
 	      DstBlock		      "Calculate VehcileVelocity"
 	      DstPort		      4
 	    }
@@ -1741,9 +1752,9 @@ Model {
 	    Line {
 	      SrcBlock		      "Calculate VehcileVelocity"
 	      SrcPort		      2
-	      Points		      [50, 0]
+	      Points		      [41, 0]
 	      Branch {
-		Points			[0, 165]
+		Points			[0, 135]
 		DstBlock		"Unit Delay1"
 		DstPort			1
 	      }
@@ -2262,7 +2273,7 @@ Model {
 	Line {
 	  SrcBlock		  "Vee2Zeta"
 	  SrcPort		  3
-	  Points		  [5, 0; 0, 140]
+	  Points		  [15, 0; 0, 140]
 	  DstBlock		  "Unit Delay3"
 	  DstPort		  1
 	}
@@ -2314,8 +2325,8 @@ Model {
       BlockType		      SubSystem
       Name		      "Path generator"
       SID		      "133"
-      Ports		      [0, 1]
-      Position		      [15, 236, 170, 304]
+      Ports		      [1, 1]
+      Position		      [80, 236, 235, 304]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -2325,7 +2336,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Path generator"
-	Location		[1922, 914, 3118, 1493]
+	Location		[1922, 550, 3118, 879]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -2338,6 +2349,14 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"125"
+	Block {
+	  BlockType		  Inport
+	  Name			  "Kinematics"
+	  SID			  "303"
+	  Position		  [220, 313, 250, 327]
+	  BackgroundColor	  "orange"
+	  IconDisplay		  "Port number"
+	}
 	Block {
 	  BlockType		  Clock
 	  Name			  "Clock"
@@ -3417,6 +3436,22 @@ Model {
 	  }
 	}
 	Block {
+	  BlockType		  FromWorkspace
+	  Name			  "From\nWorkspace"
+	  SID			  "301"
+	  Position		  [200, 363, 265, 387]
+	  ZOrder		  -10
+	  VariableName		  "ee_traj_input"
+	  SampleTime		  "0"
+	  ZeroCross		  on
+	  Port {
+	    PortNumber		    1
+	    Name		    "v_ee_c"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
 	  BlockType		  SubSystem
 	  Name			  "MATLAB Function"
 	  SID			  "136"
@@ -3659,6 +3694,142 @@ Model {
 	  }
 	}
 	Block {
+	  BlockType		  SubSystem
+	  Name			  "MATLAB Function2"
+	  SID			  "302"
+	  Ports			  [2, 1]
+	  Position		  [355, 339, 425, 386]
+	  ZOrder		  -4
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  MinAlgLoopOccurrences	  off
+	  PropExecContextOutsideSubsystem off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  Opaque		  off
+	  RequestExecContextInheritance	off
+	  MaskHideContents	  off
+	  SFBlockType		  "MATLAB Function"
+	  MaskType		  "Stateflow"
+	  MaskDescription	  "Embedded MATLAB block"
+	  MaskSelfModifiable	  on
+	  MaskDisplay		  "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('private/"
+	  "eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'fcn']);"
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  off
+	  MaskIconRotate	  "none"
+	  MaskPortRotate	  "default"
+	  MaskIconUnits		  "normalized"
+	  System {
+	    Name		    "MATLAB Function2"
+	    Location		    [257, 457, 812, 717]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "23"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "Kinematics"
+	      SID		      "302::23"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      9
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "V"
+	      SID		      "302::1"
+	      Position		      [20, 136, 40, 154]
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "302::20"
+	      Ports		      [1, 1]
+	      Position		      [270, 160, 320, 200]
+	      ZOrder		      6
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "302::19"
+	      Tag		      "Stateflow S-Function uvms_kinematics 22"
+	      Ports		      [2, 2]
+	      Position		      [180, 100, 230, 160]
+	      ZOrder		      5
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[2 2]"
+	      EnableBusSupport	      on
+	      Port {
+		PortNumber		2
+		Name			"Vout"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "302::22"
+	      Position		      [460, 171, 480, 189]
+	      ZOrder		      8
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "Vout"
+	      SID		      "302::5"
+	      Position		      [460, 101, 480, 119]
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "Kinematics"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "V"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      Name		      "Vout"
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "Vout"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
 	  BlockType		  Reference
 	  Name			  "Manual Switch"
 	  SID			  "137"
@@ -3668,7 +3839,7 @@ Model {
 	  LibraryVersion	  "1.260"
 	  SourceBlock		  "simulink/Signal\nRouting/Manual Switch"
 	  SourceType		  "Manual Switch"
-	  sw			  "0"
+	  sw			  "1"
 	  action		  "0"
 	  varsize		  off
 	  Port {
@@ -3690,20 +3861,6 @@ Model {
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
-	  BlockType		  Constant
-	  Name			  "v_ee_command"
-	  SID			  "146"
-	  Position		  [240, 344, 355, 386]
-	  ZOrder		  -4
-	  Value			  "Vee_com"
-	  Port {
-	    PortNumber		    1
-	    Name		    "v_ee_c"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
 	  BlockType		  Outport
 	  Name			  "End_Effector_Com"
 	  SID			  "147"
@@ -3713,10 +3870,10 @@ Model {
 	Line {
 	  Name			  "v_ee_c"
 	  Labels		  [0, 0]
-	  SrcBlock		  "v_ee_command"
+	  SrcBlock		  "From\nWorkspace"
 	  SrcPort		  1
-	  DstBlock		  "Manual Switch"
-	  DstPort		  1
+	  DstBlock		  "MATLAB Function2"
+	  DstPort		  2
 	}
 	Line {
 	  SrcBlock		  "Clock"
@@ -3766,6 +3923,19 @@ Model {
 	  DstBlock		  "End_Effector_Com"
 	  DstPort		  1
 	}
+	Line {
+	  SrcBlock		  "MATLAB Function2"
+	  SrcPort		  1
+	  DstBlock		  "Manual Switch"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Kinematics"
+	  SrcPort		  1
+	  Points		  [40, 0; 0, 30]
+	  DstBlock		  "MATLAB Function2"
+	  DstPort		  1
+	}
       }
     }
     Block {
@@ -3800,7 +3970,7 @@ Model {
 	  BlockType		  Inport
 	  Name			  "zeta"
 	  SID			  "74"
-	  Position		  [330, 258, 360, 272]
+	  Position		  [260, 258, 290, 272]
 	  IconDisplay		  "Port number"
 	}
 	Block {
@@ -6742,8 +6912,15 @@ Model {
       SrcBlock		      "model"
       SrcPort		      1
       Points		      [0, -65; -430, 0]
-      DstBlock		      "Inverse Kinematics"
-      DstPort		      1
+      Branch {
+	DstBlock		"Inverse Kinematics"
+	DstPort			1
+      }
+      Branch {
+	Points			[-285, 0]
+	DstBlock		"Path generator"
+	DstPort			1
+      }
     }
     Line {
       Labels		      [2, 0]
@@ -6785,7 +6962,7 @@ Stateflow {
     name		    "uvms_kinematics"
     created		    "26-Mar-2014 13:39:42"
     isLibrary		    0
-    firstTarget		    181
+    firstTarget		    189
     debug {
     }
     sfVersion		    76014001.00040001
@@ -7287,17 +7464,18 @@ Stateflow {
       ", previousDH)\n%\n%  Vp is the primary task trajectory - end effector\n%  Vs is the secondary task trajectory - "
       "vehicle\n%\n%#codegen\n    Jp = Kinematics.Ji.Je;\n    Js = [eye(6), zeros(6,6)];\n    xi = States.xi;\n    q = "
       "xi (7:12);\n    Ks = diag([   ones(1,3)*10  ,  ones(1,3)*80]);\n    Vp = End_Effector_Com.velocity;\n    \n    ["
-      "W, DH] = getW(q,previousDH,QLimits);\n    JpInv = zeros(12,6);\n    JsInv = zeros(12,6);\n    %JsInv = pinv(Js);"
-      "\n    JsInv(:,:) = W \\ transpose(Js) /((Js /W) *transpose(Js));\n    JpInv(:,:) = W \\ transpose(Jp) /((Jp /W) "
-      "*transpose(Jp));\n    I = eye(12);\n    zeta = JpInv*(Vp + Ks*EEposeError  ) + ( I - JpInv*Jp) * JsInv * Vs ;\n "
-      "   W_diag = diag(W);\nend\n\n% --------------------------------------------------------------------------\n%   R"
-      "eturns the weighting matrix for use in the weighted pseudo inverse\n% ------------------------------------------"
-      "--------------------------------\nfunction [W, DH] = getW(q, previousDH,QLimits)\n%#codegen    \n% link joints\n"
-      "    DH =diag([ones(1,6)*1000,zeros(1,6)]); % derivative of H matrix\n    qmin = QLimits.qmin;\n    qmax = QLimit"
-      "s.qmax;\n    for i=1:6\n        temp = abs((((qmax(i)-qmin(i)).^2)*(2*q(i)-qmax(i)-qmin(i))) ./ ((4*(qmax(i)-q(i"
-      ")).^2) * ((q(i)-qmin(i)).^2)));\n        if (temp-previousDH(i+6,i+6)) < 0 \n            DH(i+6,i+6)=abs(temp); "
-      "% 0;\n        else\n            DH(i+6,i+6)=abs(temp);\n        end\n    end\n   W = eye(12);\n   W = W + DH;\n "
-      "  \nend"
+      "W, DH] = getW(q,previousDH,QLimits);\n    \n    %coder.extrinsic('disp');\n    %disp('W is disabled in getZeta')"
+      ";\n    W = diag([ones(6,1)*100000 ; ones(6,1)]);\n    \n    JpInv = zeros(12,6);\n    JsInv = zeros(12,6);\n    "
+      "%JsInv = pinv(Js);\n    JsInv(:,:) = W \\ transpose(Js) /((Js /W) *transpose(Js));\n    JpInv(:,:) = W \\ transp"
+      "ose(Jp) /((Jp /W) *transpose(Jp));\n    I = eye(12);\n    zeta = JpInv*(Vp + Ks*EEposeError  ) + ( I - JpInv*Jp)"
+      " * JsInv * Vs;\n    W_diag = diag(W);\nend\n\n% ----------------------------------------------------------------"
+      "----------\n%   Returns the weighting matrix for use in the weighted pseudo inverse\n% -------------------------"
+      "-------------------------------------------------\nfunction [W, DH] = getW(q, previousDH,QLimits)\n%#codegen    "
+      "\n% link joints\n    DH =diag([ones(1,6)*2000,zeros(1,6)]); % derivative of H matrix\n    qmin = QLimits.qmin;\n"
+      "    qmax = QLimits.qmax;\n    for i=1:6\n        temp = abs((((qmax(i)-qmin(i)).^2)*(2*q(i)-qmax(i)-qmin(i))) ./"
+      " ((4*(qmax(i)-q(i)).^2) * ((q(i)-qmin(i)).^2)));\n        if (temp-previousDH(i+6,i+6)) < 0 \n            DH(i+6"
+      ",i+6)=abs(temp); % 0;\n        else\n            DH(i+6,i+6)=abs(temp);\n        end\n    end\n   W = eye(12);\n"
+      "   W = W + DH;\n   \nend"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -7591,7 +7769,8 @@ Stateflow {
       isEML		      1
       script		      "function ee_vel_c = fcn(t)\n%#codegen\nee_vel_c = zeros(6,1);\n% xvel = 0.2*cos(t/20);\n% zvel = "
       "0.2*sin(t);\n% yvel = 0.3*cos(t/0.5);\n% ee_vel_c(6) = 0.01*sin(t/30);\n% ee_vel_c(1) = xvel;\n% ee_vel_c(2) = y"
-      "vel;\n% ee_vel_c(3) = zvel;\n\nee_vel_c(3) = 0.17;\n\nee_vel_c(5) = 0.7*sin(t);\n\nend"
+      "vel;\n% ee_vel_c(3) = zvel;\n\nee_vel_c(3) = -0.1*sin(t);\nee_vel_c(5) = 0.7*sin(t);\nee_vel_c(6) = 0.7*sin(t);\n"
+      "ee_vel_c(4) = 0.7*sin(t);\n\n%ee_vel_c(2) = 0.19;\n\n\n%ee_vel_c(5) = 0.7*sin(t);\n\nend"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -7681,7 +7860,6 @@ Stateflow {
     firstJunction	    49
     viewObj		    47
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -8083,7 +8261,6 @@ Stateflow {
     firstJunction	    71
     viewObj		    69
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    13
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -8109,75 +8286,69 @@ Stateflow {
     eml {
       isEML		      1
       script		      "function [V_vehicle , VV_States] = getVehicleVelocity(Kinematics,End_Effector_Com, CircleProps, P"
-      "rev_VV_States)\n%#codegen \n    \n    %% set initial parameters\n    Vee = End_Effector_Com.velocity;\n    VV_St"
-      "ates = struct('StatusLinear',0, 'StatusAngular', 0 ,'Circle2EEVec',zeros(3,1), ...\n                'linearVehic"
-      "leVelocity', zeros(6,1), 'angularVehicleVelocity', zeros(6,1) , 'yawAngle',0);\n    V_vehicle = zeros(6,1);\n   "
-      " VV_States.Circle2EEVec = getPCircle(Kinematics,CircleProps);    % vector from center of circle to EE\n    VV_St"
-      "ates.yawAngle = getYawAngleBetweenVehicleAndEE( Kinematics);\n    \n    %% Get the status of the vehicle velocit"
-      "y assigner\n    StatusLinear = getStatusLinear(Prev_VV_States,VV_States,CircleProps);\n    StatusAngular = getSt"
-      "atusAngular(Prev_VV_States, VV_States, CircleProps); \n    \n    %% act on the different StatusLinear\n    if St"
-      "atusLinear == 0 \n        V_vehicle = zeros(6,1);\n    elseif StatusLinear == 1\n        V_vehicle = getLinearVe"
-      "locitySameAsEE(Vee, VV_States, CircleProps, Kinematics);         \n    elseif StatusLinear == 2\n        V_vehic"
-      "le = Prev_VV_States.linearVehicleVelocity;\n    elseif StatusLinear == 3\n        V_vehicle = getReturnToInnerCi"
-      "rcleVelocity(VV_States, CircleProps);\n    else\n        error('something went wrong in linear states');\n    en"
-      "d\n    linearVelocity = V_vehicle;\n    \n    %% act on the different StatusAngular\n    if StatusAngular == 0\n"
-      "        V_vehicle = zeros(6,1);\n    elseif StatusAngular == 1 \n        V_vehicle = getAngularSameAsEE(Vee, Kin"
-      "ematics);\n    elseif StatusAngular == 2\n        V_vehicle = Prev_VV_States.angularVehicleVelocity;\n    elseif"
-      " StatusAngular == 3\n        V_vehicle = getReturnToInnerYawAngle(Kinematics, VV_States);\n    else\n        err"
-      "or('something went wrong in angular states');\n    end\n    angularVelocity = V_vehicle;\n    \n    %% set the s"
-      "tatuses and the commanded vehicle\n    V_vehicle = angularVelocity + linearVelocity;        \n    VV_States.Stat"
-      "usLinear = StatusLinear;\n    VV_States.StatusAngular = StatusAngular;\n    VV_States.linearVehicleVelocity = li"
-      "nearVelocity;\n    VV_States.angularVehicleVelocity = angularVelocity;\nend\n\n%--------------------------------"
-      "----------------------------------------------------------------------------------\nfunction V_vehicle = getRetu"
-      "rnToInnerYawAngle(Kinematics, VV_States)\n    yawAngle = VV_States.yawAngle;\n    V_vehicle = zeros(6,1);\n    A"
-      "dgbe = Kinematics.Ti.Adgbe;\n    Rbe = Kinematics.Ti.Rbe;\n    omega_e = zeros(3,1);\n    omega_b = zeros(3,1);\n"
-      "    K = 1;\n    omega_b(3) = K * yawAngle / abs(yawAngle);\n    \n    omega_e = Rbe' * omega_b; % transform back"
-      " to ee\n    V_vehicle = Adgbe * [0 ; 0 ; 0 ; omega_e];\nend\n\n%------------------------------------------------"
-      "------------------------------------------------------------------\nfunction V_vehicle = getLinearVelocitySameAs"
-      "EE(Vee, VV_States, CircleProps,Kinematics)\n    Rbe = Kinematics.Ti.Rbe;\n    x = norm(VV_States.Circle2EEVec ) "
-      " - CircleProps.middleCircleRadius;\n    radiusDelta = CircleProps.innerMiddelRadiusDelta;\n    V_vehicle = zeros"
-      "(6,1);\n    V_vehicle(1:3) = Rbe*Vee(1:3)*(x/radiusDelta);\nend\n\n%--------------------------------------------"
-      "----------------------------------------------------------------------\nfunction V_vehicle = getAngularSameAsEE("
-      "Vee, Kinematics)\n    V_vehicle = zeros(6,1);\n    Adgbe = Kinematics.Ti.Adgbe;\n    Rbe = Kinematics.Ti.Rbe;\n "
-      "   omega_e = Vee(4:6);\n    omega_b = Rbe * omega_e;\n    omega_b(1:2) = [0;0];       % only keep the rate that "
-      "works around the z direction of the body frame\n    omega_e = Rbe' * omega_b;   % transform back to e again\n   "
-      " V_vehicle = Adgbe * [0 ; 0 ; 0 ; omega_e];\n\nend\n\n%---------------------------------------------------------"
-      "---------------------------------------------------------\n% get the yaw angle by transforming the forward direc"
-      "tion of the end\n% effector (z) to the frame of the vehicle, and take the dot product\nfunction yawAngle  = getY"
-      "awAngleBetweenVehicleAndEE( Kinematics)\n    Rb6 = Kinematics.Ti.gbe(1:3,1:3);\n    R6e = [0,-1 , 0; 0,0,-1; 1,0"
-      ",0];\n    R = Rb6*R6e;\n    zInFrameB = Rb6*[0;0;1];\n    \n    yawAngle = atan2(R(2,1),R(1,1));\n    angularVel"
-      "ocity = zeros(3,1);\nend\n\n\n%---------------------------------------------------------------------------------"
-      "---------------------------------\n%   create a smooth velocity for the vehicle to make EE return to the inner\n"
-      "%   circle. \nfunction V_vehicle = getReturnToInnerCircleVelocity(VV_States, CircleProps)\n    ir = CircleProps."
-      "innerCircleRadius;\n    mr = CircleProps.middleCircleRadius;\n    c = ir + (mr - ir)./2;      % point between th"
-      "e two radiuses\n    K = 0.8;\n    V_vehicle = zeros(6,1);\n    V_vehicle(1:3) = K*VV_States.Circle2EEVec./norm( "
-      "VV_States.Circle2EEVec );\n\nend\n\n\n%-------------------------------------------------------------------------"
-      "-----------------------------------------\n%  get the angular status \n%\nfunction StatusAngular = getStatusAngu"
-      "lar(Prev_VV_States, VV_States, CircleProps)\n    PrevStatusAngular = Prev_VV_States.StatusAngular;\n    yawAngle"
-      " = VV_States.yawAngle;\n    prevYawAngle = Prev_VV_States.yawAngle;\n    \n    if PrevStatusAngular == 0 && abs("
-      "yawAngle) > CircleProps.yawAngleMiddleLimit\n        StatusAngular = 1;\n    elseif PrevStatusAngular == 1 && ab"
-      "s(prevYawAngle) > abs(yawAngle)\n        StatusAngular = 2; \n    elseif PrevStatusAngular == 2 && abs(prevYawAn"
-      "gle) < abs(yawAngle)\n        StatusAngular = 1;\n    elseif ( PrevStatusAngular == 1 || PrevStatusAngular == 2 "
-      ") && abs( yawAngle ) < CircleProps.yawAngleMiddleLimit\n        StatusAngular = 3;\n    elseif ( PrevStatusAngul"
-      "ar == 1 || PrevStatusAngular == 2 || PrevStatusAngular == 3 ) && abs( yawAngle ) < CircleProps.yawAngleInnerLimi"
-      "t\n        StatusAngular = 0;\n    else\n        StatusAngular = PrevStatusAngular;\n    end\nend\n\n%----------"
-      "--------------------------------------------------------------------------------------------------------\n%   th"
-      "e different states are as follows:\n%   0 = vehicle steady \n%   1 = outside middle circle - integrating deviati"
-      "on of vector\n%   2 = inside middle circle on the way back to optimal area \nfunction StatusLinear = getStatusLi"
-      "near(Prev_VV_States, VV_States, CircleProps)\n    PrevStatusLinear = Prev_VV_States.StatusLinear;\n    prevCircl"
-      "e2EEVec = Prev_VV_States.Circle2EEVec;\n    Circle2EEVec = VV_States.Circle2EEVec;\n    \n    if PrevStatusLinea"
-      "r == 0 && norm (Circle2EEVec) > CircleProps.middleCircleRadius && norm(Circle2EEVec) >= norm(prevCircle2EEVec)  "
-      "   \n       StatusLinear = 1;\n    elseif (PrevStatusLinear == 1 ||  PrevStatusLinear == 2 ) && norm (Circle2EEV"
-      "ec) > CircleProps.middleCircleRadius && norm(Circle2EEVec) < norm(prevCircle2EEVec)\n        StatusLinear = 2;\n"
-      "    elseif (PrevStatusLinear == 1 || PrevStatusLinear == 2)  % && norm(Circle2EEVec) < CircleProps.middleCircleR"
-      "adius\n        StatusLinear =3;\n    elseif (PrevStatusLinear == 3 || PrevStatusLinear == 2) && norm(Circle2EEVe"
-      "c) < CircleProps.innerCircleRadius\n        StatusLinear = 0;\n    else\n        StatusLinear = PrevStatusLinear"
-      ";\n    end\nend\n\n%--------------------------------------------------------------------------------------------"
-      "----------------------\n% get the vector to the center of the circle denoted in the frame of the\n% frame of the"
-      " center of the circle\nfunction pCircle2EEinFrameC = getPCircle(Kinematics, CircleProps)  \n    g0b = Kinematics"
-      ".Ti.g0b;\n    gbe = Kinematics.Ti.gbe;\n    circleCenterInFrame0 = g0b(1:3,4) + g0b(1:3,1:3)*CircleProps.CenterI"
-      "nFrameB;\n    pVehicle2EEinFrameB = gbe(1:3,4);\n    pCircle2EEinFrameC = pVehicle2EEinFrameB - CircleProps.Cent"
-      "erInFrameB;\nend\n\n\n\n\n\n"
+      "rev_VV_States)\n%#codegen \n    %% set initial parameters\n    VV_States = struct('StatusLinear',0, 'StatusAngul"
+      "ar', 0 ,'Circle2EEVec',zeros(3,1), ...\n                'linearVehicleVelocity', zeros(6,1), 'angularVehicleVelo"
+      "city', zeros(6,1) , 'psibe',0, 'V_EE', zeros(6,1), 'VdotP', 0);\n    V_vehicle = zeros(6,1);\n    VV_States.V_EE"
+      " = End_Effector_Com.velocity;\n    VV_States.Circle2EEVec = getPCircle(Kinematics,CircleProps);    % vector from"
+      " center of circle to EE\n    VV_States.VdotP = ( Kinematics.Ti.Rbe * VV_States.V_EE(1:3) )' * VV_States.Circle2E"
+      "EVec;\n    VV_States.psibe = getPsibe( Kinematics);\n    \n    %% Get the status of the vehicle velocity assigne"
+      "r\n    StatusLinear = getStatusLinear(Prev_VV_States,VV_States,CircleProps);\n    StatusAngular = getStatusAngul"
+      "ar(Prev_VV_States, VV_States, CircleProps); \n    \n    %% act on the different StatusLinear\n    if StatusLinea"
+      "r == 0 \n        V_vehicle = zeros(6,1);\n    elseif StatusLinear == 1\n        V_vehicle = getLinearVelocitySam"
+      "eAsEE( VV_States, CircleProps, Kinematics);         \n    elseif StatusLinear == 2\n        V_vehicle = zeros(6,"
+      "1);\n    elseif StatusLinear == 3\n        V_vehicle = getReturnToInnerCircleVelocity(VV_States,CircleProps, Kin"
+      "ematics);\n    else\n        error('something went wrong in linear states');\n    end\n    linearVelocity = V_ve"
+      "hicle;\n    \n    %% act on the different StatusAngular\n    if StatusAngular == 0\n        V_vehicle = zeros(6,"
+      "1);\n    elseif StatusAngular == 1 \n        V_vehicle = getReturnToInnerpsibe(Kinematics, VV_States);\n    else"
+      "\n        error('something went wrong in angular states');\n    end\n    angularVelocity = V_vehicle;\n    \n   "
+      " %% set the statuses and the commanded vehicle\n    V_vehicle = angularVelocity + linearVelocity;        \n    V"
+      "V_States.StatusLinear = StatusLinear;\n    VV_States.StatusAngular = StatusAngular;\n    VV_States.linearVehicle"
+      "Velocity = linearVelocity;\n    VV_States.angularVehicleVelocity = angularVelocity;       \nend\n\n%------------"
+      "------------------------------------------------------------------------------------------------------\nfunction"
+      " V_vehicle = getReturnToInnerpsibe(Kinematics, VV_States)\n    psibe = VV_States.psibe;\n    k_ang = 1;\n    Vee"
+      " = VV_States.V_EE;\n    omegabe = Vee(4:6);\n    Rbe = Kinematics.Ti.Rbe;\n    ybe = Kinematics.Ti.pbe(2);\n    "
+      "xbe = Kinematics.Ti.pbe(1);\n    % angular velocity of ee around z axis vehicle\n    rb0e = [0,0,1] * Rbe * omeg"
+      "abe;\n    V_vehicle = [ybe ; -xbe ; 0 ; 0 ; 0 ; 1] * ( rb0e + k_ang * psibe  ) ;    \n   \nend\n\n%-------------"
+      "-----------------------------------------------------------------------------------------------------\nfunction "
+      "V_vehicle = getLinearVelocitySameAsEE(VV_States, CircleProps,Kinematics)\n    Vee = VV_States.V_EE;\n    Rbe = K"
+      "inematics.Ti.Rbe;\n    x = norm(VV_States.Circle2EEVec )  - CircleProps.middleCircleRadius;\n    radiusDelta = C"
+      "ircleProps.innerMiddelRadiusDelta;\n    V_vehicle = zeros(6,1);\n    V_vehicle(1:3) = Rbe*Vee(1:3)*(x/radiusDelt"
+      "a);\nend\n\n%---------------------------------------------------------------------------------------------------"
+      "---------------\nfunction V_vehicle = getAngularSameAsEE(VV_States, Kinematics)\n    Vee = VV_States.V_EE;\n    "
+      "omegabe = Vee(4:6);\n    Rbe = Kinematics.Ti.Rbe;\n    ybe = Kinematics.Ti.pbe(2);\n    xbe = Kinematics.Ti.pbe("
+      "1);\n    % angular velocity of ee around z axis vehicle\n    rb0e = [0,0,1] * Rbe * omegabe;\n    V_vehicle = [y"
+      "be ; -xbe ; 0 ; 0 ; 0 ; 1] * rb0e ;    \nend\n\n%---------------------------------------------------------------"
+      "---------------------------------------------------\n% get the yaw angle by transforming the forward direction o"
+      "f the end\n% effector (z) to the frame of the vehicle, and take the dot product\nfunction psibe  = getPsibe( Kin"
+      "ematics)\n    Rbe = Kinematics.Ti.Rbe;\n    re = [0,0,1]';\n    rb = Rbe * re;\n    rb2 = rb(1:2);\n    psibe = "
+      "atan2 ( rb2(2) , rb2(1) );\nend\n\n\n\n%------------------------------------------------------------------------"
+      "------------------------------------------\n%   create a smooth velocity for the vehicle to make EE return to th"
+      "e inner\n%   circle. \nfunction V_vehicle = getReturnToInnerCircleVelocity(VV_States , CircleProps, Kinematics)\n"
+      "    Vee = VV_States.V_EE;\n    ir = CircleProps.innerCircleRadius;\n    mr = CircleProps.middleCircleRadius;\n  "
+      "  ve = Vee(1:3);\n    Rbe = Kinematics.Ti.Rbe;\n    c = ir + (mr - ir)./2;      % point between the two radiuses"
+      "\n    K = 0.6;\n    V_vehicle = zeros(6,1);\n    V_vehicle(1:3) = Rbe*ve +  K*VV_States.Circle2EEVec./norm( VV_S"
+      "tates.Circle2EEVec );\n\nend\n\n\n%-----------------------------------------------------------------------------"
+      "-------------------------------------\n%  get the angular status \n%\nfunction StatusAngular = getStatusAngular("
+      "Prev_VV_States, VV_States, CircleProps)\n    PrevStatus = Prev_VV_States.StatusAngular;\n    psibe = VV_States.p"
+      "sibe;\n    prev_psibe = Prev_VV_States.psibe;\n    \n    if  PrevStatus == 0 && abs(psibe) >= CircleProps.psis\n"
+      "        StatusAngular = 1;\n    elseif abs( psibe ) < CircleProps.psii\n        StatusAngular = 0;\n    else\n  "
+      "      StatusAngular = PrevStatus;\n    end\nend\n\n%------------------------------------------------------------"
+      "------------------------------------------------------\n%   the different states are as follows:\n%   0 = vehicl"
+      "e steady \n%   1 = outside middle circle - integrating deviation of vector\n%   2 = inside middle circle on the "
+      "way back to optimal area \nfunction StatusLinear = getStatusLinear(Prev_VV_States, VV_States, CircleProps)\n    "
+      "PrevStatus = Prev_VV_States.StatusLinear;\n    prevCircle2EEVec = Prev_VV_States.Circle2EEVec;\n    VdotP = VV_S"
+      "tates.VdotP; \n     Circle2EEVec = VV_States.Circle2EEVec;\n    \n    if ( PrevStatus == 0 || PrevStatus == 2 ) "
+      "&& norm (Circle2EEVec) > CircleProps.middleCircleRadius && VdotP > 0     \n       StatusLinear = 1;\n    elseif "
+      "(PrevStatus == 1 ||  PrevStatus == 2 ) && norm (Circle2EEVec) > CircleProps.middleCircleRadius && VdotP < 0\n   "
+      "     StatusLinear = 3;\n    elseif (PrevStatus == 1 || PrevStatus == 2) && norm(Circle2EEVec) < CircleProps.midd"
+      "leCircleRadius\n        StatusLinear = 3;\n    elseif (PrevStatus == 3 || PrevStatus == 2) && norm(Circle2EEVec)"
+      " < CircleProps.innerCircleRadius\n        StatusLinear = 0;\n    else\n        StatusLinear = PrevStatus;\n    e"
+      "nd\nend\n\n%----------------------------------------------------------------------------------------------------"
+      "--------------\n% get the vector to the center of the circle denoted in the\n% frame of the center of the circle"
+      "\nfunction pCircle2EEinFrameC = getPCircle(Kinematics, CircleProps)  \n    g0b = Kinematics.Ti.g0b;\n    gbe = K"
+      "inematics.Ti.gbe;\n    circleCenterInFrame0 = g0b(1:3,4) + g0b(1:3,1:3)*CircleProps.CenterInFrameB;\n    pVehicl"
+      "e2EEinFrameB = gbe(1:3,4);\n    pCircle2EEinFrameC = pVehicle2EEinFrameB - CircleProps.CenterInFrameB;\nend\n\n\n"
+      "\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -9748,8 +9919,6 @@ Stateflow {
     viewObj		    157
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -9891,8 +10060,6 @@ Stateflow {
     viewObj		    165
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -10034,8 +10201,6 @@ Stateflow {
     viewObj		    173
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    8
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -10162,8 +10327,148 @@ Stateflow {
     machine		    1
     chart		    173
   }
-  target {
+  chart {
     id			    181
+    name		    "Path generator/MATLAB Function2"
+    windowPosition	    [375.75 203.25 200.25 189.75]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 3120 1920 1.25]
+    treeNode		    [0 182 0 0]
+    firstTransition	    184
+    firstJunction	    183
+    viewObj		    181
+    machine		    1
+    toolbarMode		    LIBRARY_TOOLBAR
+    subviewS {
+    }
+    ssIdHighWaterMark	    6
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    185
+    chartFileNumber	    22
+    disableImplicitCasting  1
+    eml {
+      name		      "fcn"
+    }
+  }
+  state {
+    id			    182
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    181
+    treeNode		    [181 0 0 0]
+    superState		    SUBCHART
+    subviewer		    181
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function Vout = fcn(Kinematics, V)\n%#codegen\nAdg0e_inv = Kinematics.Ti.Adg0e_inv ;\nRe0 = Kinem"
+      "atics.Ti.R0e';\nVout = [Re0, zeros(3,3) ; zeros(3,3) , Re0] * V;\n\nend"
+      editorLayout	      "100 M4x1[10 5 700 500]"
+    }
+  }
+  junction {
+    id			    183
+    position		    [23.5747 49.5747 7]
+    chart		    181
+    linkNode		    [181 0 0]
+    subviewer		    181
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    184
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [32.125 19.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      183
+      intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    181
+    linkNode		    [181 0 0]
+    dataLimits		    [23.575 23.575 14.625 34.575]
+    subviewer		    181
+    drawStyle		    SMART
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  data {
+    id			    185
+    ssIdNumber		    6
+    name		    "Kinematics"
+    linkNode		    [181 0 186]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    186
+    ssIdNumber		    4
+    name		    "V"
+    linkNode		    [181 185 187]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    187
+    ssIdNumber		    5
+    name		    "Vout"
+    linkNode		    [181 186 0]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  instance {
+    id			    188
+    name		    "Path generator/MATLAB Function2"
+    machine		    1
+    chart		    181
+  }
+  target {
+    id			    189
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1

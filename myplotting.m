@@ -65,105 +65,113 @@ leg=legend('$\dot{u}_1$','$\dot v_2$','$\dot w_3$', '$\dot p_4$', '$\dot q_5$', 
 set(leg,'Interpreter','latex')
 grid on;
 
+if KINEMATICS_ONLY == true 
+    %% ---------- end effector --------------------------------
+    i=i+1;
+    h(i)=figure(i);
+    set(h(i), 'name', 'Fig: End Effector','NumberTitle','off');
+    subplot(2,2,1);
+    plot3(ee_pose_com(:,1),ee_pose_com(:,2),ee_pose_com(:,3), '-r');
+    hold on;
+    plot3(ee_pose_mes(:,1),ee_pose_mes(:,2),ee_pose_mes(:,3), '-g');
+    legend('Commanded trajectory', 'Measured Trajectory');
 
-%% ---------- end effector --------------------------------
-i=i+1;
-h(i)=figure(i);
-set(h(i), 'name', 'Fig: End Effector','NumberTitle','off');
-subplot(2,2,1);
-plot3(ee_pose_com(:,1),ee_pose_com(:,2),ee_pose_com(:,3), '-r');
-hold on;
-plot3(ee_pose_mes(:,1),ee_pose_mes(:,2),ee_pose_mes(:,3), '-g');
-legend('Commanded trajectory', 'Measured Trajectory');
+    plot3(ee_pose_com(1,1),ee_pose_com(1,2),ee_pose_com(1,3), 'or');
+    text(ee_pose_com(1,1),ee_pose_com(1,2),ee_pose_com(1,3),'  start','HorizontalAlignment','left','FontSize',8);
+    grid on;
+    axis([-4,4,-4,4,-4,4]);
+    xlabel ('x') ; ylabel ('y'); zlabel('z');
 
-plot3(ee_pose_com(1,1),ee_pose_com(1,2),ee_pose_com(1,3), 'or');
-text(ee_pose_com(1,1),ee_pose_com(1,2),ee_pose_com(1,3),'  start','HorizontalAlignment','left','FontSize',8);
-grid on;
-axis([-4,4,-4,4,-4,4]);
-xlabel ('x') ; ylabel ('y'); zlabel('z');
+    vec = [ee_pose_com(:,4:6) ; ee_pose_mes(:, 4:6) ] ;
+    axismin = min(vec(:) ) * r2d - 10;
+    axismax = max( vec(:)) * r2d + 10;
+    clear vec;
 
-vec = [ee_pose_com(:,4:6) ; ee_pose_mes(:, 4:6) ] ;
-axismin = min(vec(:) ) * r2d - 10;
-axismax = max( vec(:)) * r2d + 10;
-clear vec;
+    subplot(2,2,2);
+    plot(time, ee_pose_com(:,4:6)*r2d);
+    leg=legend('$\phi$', '$\theta$', '$\psi$');
+    set(leg,'Interpreter','latex');
+    title('Commanded End Effector Pose');
+    grid on;
+    yaxis([axismin,axismax]);
 
-subplot(2,2,2);
-plot(time, ee_pose_com(:,4:6)*r2d);
-leg=legend('$\phi$', '$\theta$', '$\psi$');
-set(leg,'Interpreter','latex');
-title('Commanded End Effector Pose');
-grid on;
-yaxis([axismin,axismax]);
-
-subplot(2,2,4);
-aPlot = plot(time, ee_pose_mes(:,4:6)*r2d);
-leg=legend('$\phi$', '$\theta$', '$\psi$');
-set(leg,'Interpreter','latex');
-title('Measured End Effector Pose');
-grid on;
-yaxis([axismin,axismax]);
-
-
-%% ---------- weighting matrix --------------------------
-
-i=i+1;
-h(i)=figure(i);
-set(h(i),'Units','normalized');
-set(h(i), 'name', 'Fig: Weighting Matrix W','NumberTitle','off');
-
-subplot(2,3,2);
-plot(time,W_diag(:,1:6));
-leg=legend('$w_{1,1}$','$w_{2,2}$','$w_{3,3}$','$w_{4,4}$','$w_{5,5}$','$w_{6,6}$');
-set(leg,'Interpreter','latex');
-title('W matrix vehicle');
-grid on;
-xlabel('time [s]'); ylabel('w');
-
-subplot(2,3,4);
-plot(time,W_diag(:,7:12));
-leg=legend('$w_{7,7}$','$w_{8,8}$','$w_{9,9}$','$w_{10,10}$','$w_{11,11 }$','$w_{12,12}$');
-set(leg,'Interpreter','latex');
-title('W matrix manipulator');
-grid on;
-xlabel('time [s]'); ylabel('w');
-
-subplot(2,3,1);
-plot(time,VVStatusLinear);
-title('Status of Vehicle Velocity Assigner');
-grid on;
-
-subplot(2,3,6);
-plot(time,VVStatusAngular);
-title('Status of Vehicle Velocity Assigner');
-grid on;
-
-subplot(2,3,3);
-plot(time, Circle2EEVec);
-title('Vector from Center of circle to end effector');
-legend('x', 'y', 'z');
-grid on;
+    subplot(2,2,4);
+    aPlot = plot(time, ee_pose_mes(:,4:6)*r2d);
+    leg=legend('$\phi$', '$\theta$', '$\psi$');
+    set(leg,'Interpreter','latex');
+    title('Measured End Effector Pose');
+    grid on;
+    yaxis([axismin,axismax]);
 
 
-%% ---------- Vs secondary trajectory commanded vehicle and EE trajectory --------------------------
+    %% ---------- weighting matrix --------------------------
 
-i=i+1;
-h(i)=figure(i);
-set(h(i),'Units','normalized');
-set(h(i), 'name', 'Fig: Vs','NumberTitle','off');
-subplot(2,1,1);
-plot(time, vs_com);
-title('V secondary trajectory - Vehichle body commanded velocities');
-xlabel('time [s]'); ylabel('[m/s , deg/s]');
-legend('u','v','w','p','q','r');
-grid on;
+    i=i+1;
+    h(i)=figure(i);
+    set(h(i),'Units','normalized');
+    set(h(i), 'name', 'Fig: Weighting Matrix W','NumberTitle','off');
 
-subplot(2,1,2);
-plot(time, ee_v_com(:,1:6));
-title('End effector commanded velocities');
-xlabel('time [s]'); ylabel('[m/s , deg/s]');
-legend('u','v','w','p','q','r');
-grid on;
+    subplot(2,3,2);
+    plot(time,W_diag(:,1:6));
+    leg=legend('$w_{1,1}$','$w_{2,2}$','$w_{3,3}$','$w_{4,4}$','$w_{5,5}$','$w_{6,6}$');
+    set(leg,'Interpreter','latex');
+    title('W matrix vehicle');
+    grid on;
+    xlabel('time [s]'); ylabel('w');
 
+    subplot(2,3,4);
+    plot(time,W_diag(:,7:12));
+    leg=legend('$w_{7,7}$','$w_{8,8}$','$w_{9,9}$','$w_{10,10}$','$w_{11,11 }$','$w_{12,12}$');
+    set(leg,'Interpreter','latex');
+    title('W matrix manipulator');
+    grid on;
+    xlabel('time [s]'); ylabel('w');
+
+    subplot(2,3,1);
+    plot(time,VVStatusLinear, '.-b');
+    title('StatusLinear of Vehicle Velocity Assigner');
+    grid on;
+
+    subplot(2,3,6);
+    plot(time,VVStatusAngular, '.-b');
+    title('StatusAngular of Vehicle Velocity Assigner');
+    grid on;
+
+    subplot(2,3,3);
+    plot(time, Circle2EEVec);
+    title('Vector from Center of circle to end effector');
+    legend('x', 'y', 'z');
+    grid on;
+
+
+    subplot(2,3,5);
+    plot(time, VdotP );
+    title('Inner product between p_se and V_ee');
+    xlabel('time [s]'); ylabel('p dot V ');
+    grid on;
+
+
+    %% ---------- Vs secondary trajectory commanded vehicle and EE trajectory --------------------------
+
+    i=i+1;
+    h(i)=figure(i);
+    set(h(i),'Units','normalized');
+    set(h(i), 'name', 'Fig: Vs','NumberTitle','off');
+    subplot(2,1,1);
+    plot(time, vs_com);
+    title('V secondary trajectory - Vehichle body commanded velocities');
+    xlabel('time [s]'); ylabel('[m/s , deg/s]');
+    legend('u','v','w','p','q','r');
+    grid on;
+
+    subplot(2,1,2);
+    plot(time, ee_v_com(:,1:6));
+    title('End effector commanded velocities');
+    xlabel('time [s]'); ylabel('[m/s , deg/s]');
+    legend('u','v','w','p','q','r');
+    grid on;
+    
+end % end KINEMATICS ONLY = true
 
 
 %%
@@ -313,7 +321,7 @@ if KINEMATICS_ONLY == false
     leg=legend('$\tau_7$','$\tau_8$','$\tau_9$', '$\tau_{10}$', '$\tau_{11}$', '$\tau_{12}$');
     set(leg,'Interpreter','latex')
     grid on;
-end
+end % end KINEMATICS_ONLY == false
 
 
 %%

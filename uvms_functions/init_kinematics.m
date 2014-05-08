@@ -101,7 +101,7 @@ end
 
 
 %% circle properties - Inverse kinematics
-CircleProps = struct('CenterInFrameB', zeros(3,1), 'outerCircleRadius', 0, 'middleCircleRadius',0,'innerCircleRadius',0, 'innerMiddelRadiusDelta', 0, 'yawAngleOuterLimit', 0, 'yawAngleMiddleLimit',0, 'yawAngleInnerLimit',0);
+CircleProps = struct('CenterInFrameB', zeros(3,1), 'outerCircleRadius', 0, 'middleCircleRadius',0,'innerCircleRadius',0, 'innerMiddelRadiusDelta', 0, 'psis',0, 'psii',0);
 CircleProps.CenterInFrameB = [1.7,0,0.2]';
 radFactor = 0.8;
 CircleProps.outerCircleRadius = 0.7*radFactor;
@@ -109,9 +109,9 @@ CircleProps.middleCircleRadius = 0.6*radFactor;
 CircleProps.innerCircleRadius = 0.25*radFactor;
 CircleProps.innerMiddelRadiusDelta = CircleProps.outerCircleRadius - CircleProps.middleCircleRadius;
 
-CircleProps.yawAngleInnerLimit = 10 * d2r;
-CircleProps.yawAngleMiddleLimit = 60 * d2r;
-CircleProps.yawAngleOuterLimit = 70 * d2r;
+CircleProps.psii = 10 * d2r;
+CircleProps.psis = 50 * d2r;
+
 
 
 

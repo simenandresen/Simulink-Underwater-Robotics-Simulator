@@ -46,13 +46,13 @@ ee_pose_quaternion_init = [g0e_init(1:3,4)', q'];
 tau_c = zeros(12,1);
 
 %% Current
-V_current = [0,0.2,0,0,0,0]';
+V_current = [0,0,0,0,0,0]';
 
 %% Commanded states
 
 commanded_zeta = zeros(12,1);
 commanded_zeta(1)=0.1;
-commanded_zeta(8)=0.03;
+commanded_zeta(8)=0;
 
 %% Commanded End effector
 
