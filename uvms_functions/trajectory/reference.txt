@@ -1,0 +1,19 @@
+Murtaza Ali Khan and Muhammad Sarfraz, "Motion Tweening for Skeletal Animation by Cardinal Spline", Informatics Engineering and Information Science, Vol. 254, pp. 179-188. Springer Berlin Heidelberg, 2011.
+--------------------------------------
+Bibtex entry
+
+@incollection {KhanSarfraz2011,
+   author = {Murtaza Ali Khan and Muhammad Sarfraz},
+   title = {Motion Tweening for Skeletal Animation by Cardinal Spline},
+   booktitle = {Informatics Engineering and Information Science},
+   series = {Communications in Computer and Information Science},
+   editor = {Abd Manaf, Azizah and Sahibuddin, Shamsul and Ahmad, Rabiah and Mohd Daud, Salwani and El-Qawasmeh, Eyas},
+   publisher = {Springer Berlin Heidelberg},
+   isbn = {978-3-642-25483-3},
+   keyword = {Computer Science},
+   pages = {179-188},
+   volume = {254},
+   url = {http://dx.doi.org/10.1007/978-3-642-25483-3_14},
+   note = {10.1007/978-3-642-25483-3_14},
+   year = {2011}
+}
