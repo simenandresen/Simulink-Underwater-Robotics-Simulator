@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.838"
+    ComputedModelVersion    "1.839"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Apr 29 17:32:12 2014"
-  RTWModifiedTimeStamp	  320330800
-  ModelVersionFormat	  "1.%<AutoIncrement:838>"
+  LastModifiedDate	  "Fri May 09 15:46:47 2014"
+  RTWModifiedTimeStamp	  321551206
+  ModelVersionFormat	  "1.%<AutoIncrement:839>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -67,6 +67,7 @@ Model {
     $ObjectID		    1
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
     model_		    "uvms_kinematics"
+    signals_		    []
     overrideMode_	    [0.0]
     Array {
       Type		      "Cell"
@@ -858,7 +859,7 @@ Model {
       System {
 	Name			"Inverse Kinematics"
 	Location		[2, 418, 1918, 1431]
-	Open			off
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -2336,8 +2337,8 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Path generator"
-	Location		[1922, 550, 3118, 879]
-	Open			on
+	Location		[2, 418, 1918, 1431]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -6963,8 +6964,6 @@ Stateflow {
     created		    "26-Mar-2014 13:39:42"
     isLibrary		    0
     firstTarget		    189
-    debug {
-    }
     sfVersion		    76014001.00040001
   }
   chart {
@@ -7465,13 +7464,13 @@ Stateflow {
       "vehicle\n%\n%#codegen\n    Jp = Kinematics.Ji.Je;\n    Js = [eye(6), zeros(6,6)];\n    xi = States.xi;\n    q = "
       "xi (7:12);\n    Ks = diag([   ones(1,3)*10  ,  ones(1,3)*80]);\n    Vp = End_Effector_Com.velocity;\n    \n    ["
       "W, DH] = getW(q,previousDH,QLimits);\n    \n    %coder.extrinsic('disp');\n    %disp('W is disabled in getZeta')"
-      ";\n    W = diag([ones(6,1)*100000 ; ones(6,1)]);\n    \n    JpInv = zeros(12,6);\n    JsInv = zeros(12,6);\n    "
-      "%JsInv = pinv(Js);\n    JsInv(:,:) = W \\ transpose(Js) /((Js /W) *transpose(Js));\n    JpInv(:,:) = W \\ transp"
-      "ose(Jp) /((Jp /W) *transpose(Jp));\n    I = eye(12);\n    zeta = JpInv*(Vp + Ks*EEposeError  ) + ( I - JpInv*Jp)"
-      " * JsInv * Vs;\n    W_diag = diag(W);\nend\n\n% ----------------------------------------------------------------"
-      "----------\n%   Returns the weighting matrix for use in the weighted pseudo inverse\n% -------------------------"
-      "-------------------------------------------------\nfunction [W, DH] = getW(q, previousDH,QLimits)\n%#codegen    "
-      "\n% link joints\n    DH =diag([ones(1,6)*2000,zeros(1,6)]); % derivative of H matrix\n    qmin = QLimits.qmin;\n"
+      ";\n    %W = diag([ones(6,1)*100000 ; ones(6,1)]);\n    \n    JpInv = zeros(12,6);\n    JsInv = zeros(12,6);\n   "
+      " %JsInv = pinv(Js);\n    JsInv(:,:) = W \\ transpose(Js) /((Js /W) *transpose(Js));\n    JpInv(:,:) = W \\ trans"
+      "pose(Jp) /((Jp /W) *transpose(Jp));\n    I = eye(12);\n    zeta = JpInv*(Vp + Ks*EEposeError  ) + ( I - JpInv*Jp"
+      ") * JsInv * Vs;\n    W_diag = diag(W);\nend\n\n% ---------------------------------------------------------------"
+      "-----------\n%   Returns the weighting matrix for use in the weighted pseudo inverse\n% ------------------------"
+      "--------------------------------------------------\nfunction [W, DH] = getW(q, previousDH,QLimits)\n%#codegen   "
+      " \n% link joints\n    DH =diag([ones(1,6)*2000,zeros(1,6)]); % derivative of H matrix\n    qmin = QLimits.qmin;\n"
       "    qmax = QLimits.qmax;\n    for i=1:6\n        temp = abs((((qmax(i)-qmin(i)).^2)*(2*q(i)-qmax(i)-qmin(i))) ./"
       " ((4*(qmax(i)-q(i)).^2) * ((q(i)-qmin(i)).^2)));\n        if (temp-previousDH(i+6,i+6)) < 0 \n            DH(i+6"
       ",i+6)=abs(temp); % 0;\n        else\n            DH(i+6,i+6)=abs(temp);\n        end\n    end\n   W = eye(12);\n"
@@ -10339,8 +10338,6 @@ Stateflow {
     viewObj		    181
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    6
     decomposition	    CLUSTER_CHART
     type		    EML_CHART

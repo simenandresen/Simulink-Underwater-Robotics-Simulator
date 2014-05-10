@@ -46,7 +46,7 @@ ee_pose_quaternion_init = [g0e_init(1:3,4)', q'];
 tau_c = zeros(12,1);
 
 %% Current
-V_current = [0,0,0,0,0,0]';
+V_current = [0,0.05,0,0,0,0]';
 
 %% Commanded states
 

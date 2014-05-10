@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.1487"
+    ComputedModelVersion    "1.1497"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu May 08 17:22:45 2014"
-  RTWModifiedTimeStamp	  321460823
-  ModelVersionFormat	  "1.%<AutoIncrement:1487>"
+  LastModifiedDate	  "Fri May 09 12:41:14 2014"
+  RTWModifiedTimeStamp	  321479455
+  ModelVersionFormat	  "1.%<AutoIncrement:1497>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -67,7 +67,6 @@ Model {
     $ObjectID		    1
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
     model_		    "uvms"
-    signals_		    []
     overrideMode_	    [0.0]
     Array {
       Type		      "Cell"
@@ -151,8 +150,8 @@ Model {
 	  SolverMode		  "Auto"
 	  EnableConcurrentExecution off
 	  ConcurrentTasks	  off
-	  Solver		  "ode8"
-	  SolverName		  "ode8"
+	  Solver		  "ode4"
+	  SolverName		  "ode4"
 	  SolverJacobianMethodControl "auto"
 	  ShapePreserveControl	  "DisableAll"
 	  ZeroCrossControl	  "UseLocalSettings"
@@ -248,7 +247,7 @@ Model {
 	  LifeSpan		  "inf"
 	  MaxStackSize		  "Inherit from target"
 	  BufferReusableBoundary  on
-	  SimCompilerOptimization "Off"
+	  SimCompilerOptimization "On"
 	  AccelVerboseBuild	  off
 	  ParallelExecutionInRapidAccelerator on
 	}
@@ -614,7 +613,7 @@ Model {
       }
       Name		      "Configuration"
       CurrentDlgPage	      "Solver"
-      ConfigPrmDlgPosition     [ 158, 311, 1599, 1390 ] 
+      ConfigPrmDlgPosition     [ 544, 422, 1722, 1165 ] 
     }
     PropName		    "ConfigurationSets"
   }
@@ -835,7 +834,7 @@ Model {
   System {
     Name		    "uvms_sliding"
     Location		    [2, 418, 1918, 1431]
-    Open		    on
+    Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
     ScreenColor		    "white"
@@ -2474,7 +2473,7 @@ Model {
 	  System {
 	    Name		    "sliding mode 2"
 	    Location		    [2, 418, 1918, 1431]
-	    Open		    off
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -2516,7 +2515,7 @@ Model {
 	      BlockType		      Constant
 	      Name		      "Constant"
 	      SID		      "485"
-	      Position		      [235, 127, 365, 173]
+	      Position		      [265, 127, 395, 173]
 	      ZOrder		      -5
 	      Value		      "Kinetics_Parameters"
 	      OutDataTypeStr	      "Bus: kinetics_bus"
@@ -3044,7 +3043,7 @@ Model {
 	    Line {
 	      SrcBlock		      "Constant"
 	      SrcPort		      1
-	      Points		      [255, 0]
+	      Points		      [225, 0]
 	      DstBlock		      "tau1"
 	      DstPort		      1
 	    }
@@ -8318,7 +8317,6 @@ Stateflow {
     firstJunction	    98
     viewObj		    96
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -8839,9 +8837,6 @@ Stateflow {
     firstJunction	    126
     viewObj		    124
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
-    subviewS {
-    }
     ssIdHighWaterMark	    10
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -9031,7 +9026,6 @@ Stateflow {
     firstJunction	    136
     viewObj		    134
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    8
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -9191,7 +9185,6 @@ Stateflow {
     firstJunction	    145
     viewObj		    143
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    12
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -9219,151 +9212,151 @@ Stateflow {
       script		      "function tau = slidingMode(Kinetics_Parameters, Kinematics,Measured_States,Commanded_States,dxi_c"
       "om, dxi_mes, dzeta_0_com)\n%#codegen\n    Lambda = diag([ones(1,6)*25 , ones(1,6)*25]);\n    zeta_mes = Measured"
       "_States.zeta;\n    y = Lambda * (Commanded_States.xi - Measured_States.xi);\n    zeta_0_tilde = dxi_com - dxi_me"
-      "s;\n    dy = Lambda * zeta_0_tilde;\n    s = y + zeta_0_tilde;\n    xi_mes = Measured_States.xi;\n    \n    % ge"
-      "t the jacobian Ja\n    R0b = Kinematics.Ti.R0b;\n    Teuler = getTeuler( Measured_States.xi (4:6)  );\n    Ja = "
-      "[ R0b' , zeros(3,3), zeros(3,6);\n           zeros(3,3), Teuler, zeros(3,6);\n           zeros(6,3), zeros(6,3),"
-      " eye(6)\n         ];\n    dJa = getdJa (Kinematics, zeta_mes, xi_mes, dxi_mes);\n    \n    N = getN (Kinematics,"
-      "Kinetics_Parameters);\n    M0 = getM0 (Kinematics, Kinetics_Parameters, Ja);\n    M = getM (Kinematics,Kinetics_"
-      "Parameters);\n    C0 = getC0 (Kinematics,Kinetics_Parameters, zeta_mes , Ja, dJa);\n    D0 = getD0 (Kinematics, "
-      "Kinetics_Parameters, zeta_mes , Ja);\n    \n       \n    \n    Kd=diag([ones(1,6)*60, ones(1,6)*50]);\n    Ks=di"
-      "ag([ones(1,6)*390, ones(1,6)*300]);\n    \n    temp = (dy + dzeta_0_com);\n    tau = M0* temp   +  M* dJa* s + C"
-      "0* temp + D0* temp + N + Kd*Ja* s + Ks* sat(Ja*s, 0.1);  \n    \n    \nend\n\n\nfunction vec = sat (x,epsilon)\n"
-      "    vec=zeros(length(x),1);\n    for i=1:length(x)\n       if x(i) > epsilon\n           vec(i)=1;\n       elsei"
-      "f x(i) < -epsilon\n           vec(i)=-1;\n       else\n           vec(i)=x(i)/epsilon;\n       end\n    end\nend"
-      "\n\n% get the derivative of the jacobian matrix Ja\nfunction dJa = getdJa(Kinematics, zeta, xi , dxi)\n    Rb0 ="
-      " Kinematics.Ti.R0b';\n    omega0b = zeta(4:6);\n    dRb0 = - Rb0 * skew (omega0b);\n    dTb0 = getdTb0( xi, dxi)"
-      ";\n    dJa = [ dRb0 , zeros(3,3), zeros(3,6);\n           zeros(3,3), dTb0, zeros(3,6);\n           zeros(6,3), "
-      "zeros(6,3), zeros(6,6);\n         ];\nend\n\n% get the derivative of the Transfromation matrix from euler rates "
-      "to body\n% rates\nfunction dTb0 = getdTb0( xi, dxi)\n    dTb0 = zeros(3,3);\n    phi = xi(4);\n    theta = xi(5)"
-      ";\n    dphi = dxi(4);\n    dtheta = dxi(5);\n    \n    dTb0 = [...\n            0,           0,      - cos(theta"
-      ")*dtheta;\n            0,    -sin(phi)*dphi,   -sin(theta)*dtheta*sin(phi) + cos(theta)*cos(phi)*dphi;\n        "
-      "    0,    -cos(phi)     ,   -sin(theta)*dtheta*cos(phi) - cos(theta)*sin(phi)*dphi\n            ];\nend\n\n% Get"
-      " the transformation matrix from euler rates to body rates\nfunction T = getTeuler ( euler )\n    phi=euler(1);\n"
-      "    theta=euler(2);\n    psi=euler(3);\n       \n    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(thet"
-      "a);\n    sth  = sin(theta);\n \n    T = [...\n      1  0      -sth;\n      0  cphi   cth*sphi;\n      0  -sphi  "
-      "cth*cphi ];\nend\n\n\n\n%% --------------------------------------------------------------\n%  Functions to gathe"
-      "r the vectors   \n%%---------------------------------------------------------------\n\nfunction M0 = getM0(Kinem"
-      "atics, Kinetics_Parameters, Ja)\n    Mrb = getInertiaMatrix(Kinematics, Kinetics_Parameters);\n    Ma = getMa(Ki"
-      "nematics, Kinetics_Parameters);\n    M0 = (Mrb + Ma)*Ja;\nend\n\nfunction M = getM(Kinematics, Kinetics_Paramete"
-      "rs)\n    Mrb = getInertiaMatrix(Kinematics, Kinetics_Parameters);\n    Ma = getMa(Kinematics, Kinetics_Parameter"
-      "s);\n    M = (Mrb + Ma);\nend\n\n\nfunction C0 = getC0 (Kinematics,Kinetics_Parameters,zeta, Ja, dJa)\n    C = g"
-      "etCrb(Kinematics,Kinetics_Parameters, zeta)  + getCa(Kinematics,Kinetics_Parameters,zeta);\n    M = getM(Kinemat"
-      "ics, Kinetics_Parameters);\n    \n    C0 = C*Ja + M*dJa;\nend\n\nfunction D0 = getD0 (Kinematics, Kinetics_Param"
-      "eters,zeta, Ja)\n    D =  getD(Kinematics, Kinetics_Parameters,zeta);\n    D0 = D* Ja;\nend\n\n\n%% ------------"
-      "--------------------------------------------------\n%  Inertia function   \n%%----------------------------------"
-      "-----------------------------\nfunction M = getInertiaMatrix(Kinematics, Kinetics_Parameters)\n%#codegen\n%   ge"
-      "tInertiaMatrix Returns the sum of the Rigid body inertia and the added mass:\n%   M_rb + M_a\n%   \n    n=6;\n  "
-      "  i=1;\n    M = zeros(12,12);\n    Inertia = Kinetics_Parameters.Inertia;\n    Jgb = [eye(6), zeros(6,6)];      "
-      "                           % Jacobian from vehicle \n    Ji=Jgb;\n    Hi = Kinetics_Parameters.Persistent.Hrg(:,"
-      ":,i);\n    Ii=Hi'*(Inertia(:,:,1))*Hi;                                 % Inertia of vehicle in CO\n    M=M+(Ji')"
-      "*Ii*Ji;\n    for i=1:n\n        Ji = Kinematics.Ji.Ji(:,:,i);                           % body jacobian\n       "
-      " Hi =Kinetics_Parameters.Persistent.Hrg(:,:,i+1);        % get Transformation matrix of link i\n        Ii=Hi'*("
-      "Inertia(:,:,i+1) )*Hi;                          % Transform Inertia matrix from CG to CO\n        M=M+(Ji')*Ii*J"
-      "i;                                        % Add link i's inertia to total inertia\n    end\nend\n\n\n\n\n\n\n\n%"
-      "% ------------------------------------------------------\n% Persistent Forces   \n%%----------------------------"
-      "---------------------------\nfunction N_p = getN(Kinematics,Kinetics_Parameters)\n%#codegen\n%   N_p - 12 x 1 ve"
-      "ctor of generalized forces\n%   Persistent_Forces returns the generalized forces due to boyancy and \n%   gravit"
-      "y\n\n    %% init\n    n=6;\n    N_p=zeros(12,1);\n    Jgis = Kinematics.Ji.Ji;\n    \n    %%  vehicle\n    F_bp "
-      "= getFbp(Kinematics, Kinetics_Parameters,1);           % Get wrench from persistent forces in CO\n    Jbb=([eye("
-      "6), zeros(6,6)]);                                 % Jacobian from b to b\n    N_p = Jbb'*F_bp;                  "
-      "                          % Get contribution to total forces through Jbb\n    \n    %% robot links\n    for i=1:"
-      "n\n        Jgi=Jgis(:,:,i);                                        % Jacobian from b to i\n        F_ip = getFip"
-      "(Kinematics,Kinetics_Parameters, i+1);     % Get wrench in CO\n        N_p = N_p + (Jgi')*F_ip;                 "
-      "               % Map to generalized forces and add to total\n    end\n    N_p = - N_p;                          "
-      "                      % reverse the sign to comply with the sign convention\nend\n    \n    \nfunction F_ip = ge"
-      "tFip(Kinematics,Kinetics_Parameters, i)\n%#codegen\n% function calculating wrench from persistent forces \n% i=b"
-      ": vehicle\n% i>=1: robot arms\n    F_ip = zeros(6,1);\n    mi = Kinetics_Parameters.Persistent.m(i);\n    g = Ki"
-      "netics_Parameters.Persistent.g;\n    rho = Kinetics_Parameters.Persistent.rho;\n    nabla = Kinetics_Parameters."
-      "Persistent.nabla(i);\n    Ri0 = Kinematics.Ti.R0i(:,:,i-1)';\n    Hrg = Kinetics_Parameters.Persistent.Hrg(:,:,i"
-      ");  \n    Hrb = Kinetics_Parameters.Persistent.Hrb(:,:,i);\n    ez=[0;0;1];\n    F_ip(:,:) = (Hrg')*[-mi*g*Ri0*e"
-      "z ;0;0;0]  + (Hrb')*[rho*nabla*g*Ri0*ez ;0;0;0 ];\nend\n\n\nfunction F_bp = getFbp(Kinematics,Kinetics_Parameter"
-      "s, i)\n%#codegen\n% function calculating wrench from persistent forces \n% i=b: vehicle\n% i>=1: robot arms\n   "
-      " F_bp = zeros(6,1);\n    mi = Kinetics_Parameters.Persistent.m(i);\n    g = Kinetics_Parameters.Persistent.g;\n "
-      "   Hrg = Kinetics_Parameters.Persistent.Hrg(:,:,i);  \n    Hrb = Kinetics_Parameters.Persistent.Hrb(:,:,i);\n   "
-      " rho = Kinetics_Parameters.Persistent.rho;\n    nabla = Kinetics_Parameters.Persistent.nabla(i);\n    Ri0 = (Kin"
-      "ematics.Ti.R0b)';\n    ez=[0;0;1];\n    F_bp(:,:) = (Hrg')*[-mi*g*Ri0*ez ; 0;0;0]  + (Hrb')*[rho*nabla*g*Ri0*ez "
-      "; 0;0;0 ];\nend\n\nfunction [phi,theta,psi] = myR2euler(R)\n%#codegen\n    phi   = atan2(R(3,2),R(3,3));\n    th"
-      "eta = -asin(R(3,1));\n    psi   = atan2(R(2,1),R(1,1));\nend\n\n\n\n%% -----------------------------------------"
-      "-------------\n% Coriolis Matrix   \n%%-------------------------------------------------------\nfunction C = get"
-      "Crb(Kinematics,Kinetics_Parameters, zeta)\n%#codegen\n%---------------------------------------------------------"
-      "--------------\n%   This function calculates the coriolis according to From and Pettersen\n%   (2013).\n%-------"
-      "----------------------------------------------------------------\n    n=6;\n    C=zeros(12,12);\n    Inertia=Kin"
-      "etics_Parameters.Inertia;\n    Jis = Kinematics.Ji.Ji;\n    \n    % i = b\n    Jgb = [eye(6), zeros(6,6)];\n    "
-      "i=1;\n    Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i);\n    Ii=Hi'*Inertia(:,:,i);\n    Wb = getWb(Ii,zeta);\n"
-      "    C = - (Jgb')*Wb*Hi*Jgb;     % time derivative of Jgb = 0  \n    \n    % i >=1\n    for i=1:n\n        Hi = K"
-      "inetics_Parameters.Persistent.Hrg(:,:,i+1);\n        Ii=Hi'*Inertia(:,:,i+1);\n        Wi=getWi(Ii,Jis(:,:,i), z"
-      "eta);\n        Jgi_dot=getJgi_dot(Kinematics, zeta,i);\n        Jgi = Jis(:,:,i);\n        \n        C = C + (Jg"
-      "i')*Ii*Hi*Jgi_dot - (Jgi')*Wi*Hi*Jgi;\n    end\nend\n\n\n\nfunction Wb = getWb(I , zeta)\n%#codegen\n% Get the m"
-      "atrix Wi for i=b\n% I: Inertia matrix for vehicle\n% zeta: generalized velocity\n    Wb = zeros(6,6);\n    v = z"
-      "eta(1:3);\n    omega = zeta(4:6);\n    mI = I(1:3,1:3); % Identity matrix times mass of link b\n    Ib = I(4:6,4"
-      ":6); % Moment of inertia\n    mrgb = I(4:6,1:3); % mass times skew symmetric r_g^b\n    dKv= mI*v - mrgb*omega;\n"
-      "    dKomega = Ib*omega + mrgb*v;\n    \n    Wb = [zeros(3,3), skew(dKv) ; skew(dKv), skew(dKomega)];\nend\n\nfun"
-      "ction Wi = getWi(I, Ji,zeta)\n%#codegen\n% Get matrix Wi for robot links\n% I: inertia matrix for link i\n% Ji: "
-      "Jacobian for link i\n% zeta: generalized coordinates\n    Wi = zeros(6,6);\n    V0i = Ji*zeta;\n    v = V0i(1:3)"
-      ";\n    omega = V0i(4:6);\n    mI = I(1:3,1:3); % Identity matrix times mass of link b\n    Ib = I(4:6,4:6); % Mo"
-      "ment of inertia\n    mrgb = I(4:6,1:3); % mass times skew symmetric r_g^b\n    dKv= mI*v - mrgb*omega;\n    dKom"
-      "ega = Ib*omega + mrgb*v;\n    Wi = [zeros(3,3), skew(dKv) ; skew(dKv), skew(dKomega)];\nend\n\nfunction Jgi_dot="
-      "getJgi_dot(Kinematics, zeta,i)\n%#codegen\n% the functions below is related to Jgi_dot\n    Jgi_dot = zeros(6,6+"
-      "6);\n    n=6;\n    Jgi = Kinematics.Ji.Ji(:,:,i);\n    omega = Jgi*zeta;\n    Rbi = Kinematics.Ti.Rbi(:,:,i);\n "
-      "   pbi = Kinematics.Ti.pbi(:,i);\n    omegaib = getOmegaib(Kinematics,zeta,i);\n    dpbi =  getDpbi(Kinematics,z"
-      "eta,i);\n        \n    dAdg_inv = [(Rbi')*skew(omegaib) , -(Rbi')*skew(omegaib)*skew(pbi) + (Rbi')*skew(dpbi); ."
-      "..\n                zeros(3,3) , (Rbi')*skew(omegaib) ];\n    dJi = zeros(6,6);\n    omega0b = zeta(4:6);\n    \n"
-      "    % get d/dt(Ji)\n    Xii=[0,0,0,0,0,1]';\n    for k=2:n\n       if k<=i\n            dpbk = getDpbi(Kinematic"
-      "s, zeta ,k-1);\n            Rbk= Kinematics.Ti.Rbi(:,:,k-1);\n            omega0k = [zeros(3,3) , eye(3)]*Kinema"
-      "tics.Ji.Ji(:,:,k-1)*zeta;\n            omegabk = omega0k - (Rbk')*omega0b;\n            dJi(:,k) = [zeros(3,3), "
-      "skew(dpbk)*Rbk*skew(omegabk) ...\n                ; zeros(3,3) , (Rbk')*skew(omegabk)]*Xii;\n       end\n    end"
-      "\n    Ji=getji(Kinematics.Ti, i);\n    Adg_inv = Kinematics.Ti.Adgbi_inv(:,:,i);\n    Jgi_dot = [dAdg_inv, dAdg_"
-      "inv*Ji + Adg_inv*dJi ];\nend\n\nfunction omegaib = getOmegaib(Kinematics,zeta,i)\n%#codegen\n% returns angular r"
-      "age of vehcile wrt frame i noted in vehicle frame\n    omegaib = zeros(3,1);\n    Rbi = Kinematics.Ti.Rbi(:,:,i)"
-      ";\n    Jgi = Kinematics.Ji.Ji(:,:,i);\n    omega0b = zeta(4:6);\n    omegaib = omega0b - Rbi*[zeros(3,3), eye(3)"
-      "]*Jgi*zeta;\nend\n\nfunction dpbi = getDpbi( Kinematics, zeta,iter)\n%#codegen\n% returns time derivative of pos"
-      "ition vector of from frame b to frame i\n    dpbi = zeros(3,1);\n    H = [eye(3), zeros(3,3)];\n    Rbi=Kinemati"
-      "cs.Ti.Rbi(:,:,iter);\n    Adgbi_inv = Kinematics.Ti.Adgbi_inv(:,:,iter);\n    Ji = getji(Kinematics.Ti,iter);\n "
-      "   qd=zeros(6,1);\n    qd(:,:)=zeta(7:12);\n    dpbi = Rbi*H*Adgbi_inv*Ji*qd;\nend\n\n\nfunction mat = getji(Ti,"
-      "i)\n%#codegen\n% return matrix Ji (see report)\n    n=6;\n    mat=zeros(6,6);\n    Xii=[0,0,0,0,0,1]';\n    mat("
-      ":,1)=eye(6)*Xii;\n    for j=2:n\n        if j<=i\n            mat(:,j) = Ti.Adgbi(:,:,j-1)*Xii;\n        end\n  "
-      "  end\nend\n\nfunction S = skew(v)\n%#codegen\n\n  S = [  0   -v(3)  v(2)\n       v(3)  0    -v(1)\n       -v(2)"
-      " v(1)   0];\nend\n\n\n%% ------------------------------------------------------\n% D matrix \n%%----------------"
-      "---------------------------------------\nfunction D = getD(Kinematics, Kinetics_Parameters,zeta_r)\n%#codegen\n%"
-      "\n% Returns the D matrix in the dynamics equation. The total forces is based\n% on mappin the forces in each fra"
-      "me to the total generalized forces\n% through the jacoian: tau = J^T*F_i. The forces in frame i is calculated\n%"
-      " from the forces in CG to CO through the transformation matrix: F_co =\n% Hrg^T*F_cg\n%\n    %% init\n    n=6;\n"
-      "    D=zeros(12,12);                                      % init matrix size\n    HydroDynamics = Kinetics_Parame"
-      "ters.HydroDynamics;   % Hydrodynamics parameters\n    Jgis = Kinematics.Ji.Ji;                             % Jac"
-      "obians\n    Hrgs = Kinetics_Parameters.Persistent.Hrg;           % Transformation matrix\n    \n    \n    %% veh"
-      "icle\n    i=1;\n    Jbb=[eye(6), zeros(6)];                               % Jacobian from frame 0 to frame b\n  "
-      "  Hrg = Hrgs(:,:,i);                                    % Transformation matrix\n    Vcg = Hrg*Jbb*zeta_r;      "
-      "                             % velocity in CG mapped from CO\n    Dcg =  HydroDynamics.Linear(:,:,i) + ...\n    "
-      "       HydroDynamics.Quadratic(:,:,i)*diag(abs(Vcg)); % Wrench in CG\n    Di = Hrg'*Dcg;                        "
-      "                % Wrench in CO mapped from CG    \n    D = Jbb'*Di*Jbb;                                      % A"
-      "dd contribution to the total matrix mapped from frame i \n                                                      "
-      "    % to generalized coordinates                                   \n    \n    %% robot links\n    for i=1:n\n  "
-      "      Jgi = Jgis(:,:,i);                                % Jacobian from frame 0 to frame i \n        Hrg = Hrgs("
-      ":,:,i+1);                              % Transformation matrix\n        Vcg = Hrg*Jgi*zeta_r;                   "
-      "            % velocity in CG\n        Dcg = HydroDynamics.Linear(:,:,i+1)+... \n          HydroDynamics.Quadrati"
-      "c(:,:,i+1)*diag(abs(Vcg));% Wrench in CG   \n        Di = Hrg'*Dcg;                                    % Wrench "
-      "in CO    \n        D = D + Jgi'*Di*Jgi;                              % Add frame i's contribution to D matrix   "
-      " \n    end\nend\n\n%% ------------------------------------------------------\n% Added Coriolis\n%%--------------"
-      "-----------------------------------------\nfunction Ca = getCa(Kinematics,Kinetics_Parameters,zeta_r)\n%%#codege"
-      "n ..............................................\n%\n%   This function calculates the added coriolis matrix\n%.."
-      ".....................................................\n    n=6;\n    Ca=zeros(12,12);\n    Inertia=Kinetics_Para"
-      "meters.AddedInertia;\n    Jis = Kinematics.Ji.Ji;\n    \n    % vehicle\n    Jgb = [eye(6), zeros(6,6)];\n    i=1"
-      ";\n    Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i+1);\n    Ii=Hi'*Inertia(:,:,i);\n    Wb = getWb(Ii,zeta_r);"
-      "\n    Ca = - (Jgb')*Wb*Hi*Jgb;     % time derivative of Jgb = 0  \n    \n    % manipulator links\n    for i=1:n\n"
-      "        Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i+1);\n        Ii=Hi'*Inertia(:,:,i+1);\n        Wi=getWi(Ii"
-      ",Jis(:,:,i), zeta_r);\n        Jgi_dot=getJgi_dot(Kinematics, zeta_r,i);\n        Jgi = Jis(:,:,i);\n        Ca "
-      "= Ca + (Jgi')*Ii*Hi*Jgi_dot - (Jgi')*Wi*Hi*Jgi;\n    end\nend\n\n%% --------------------------------------------"
-      "----------\n% Added Mass\n%%-------------------------------------------------------\nfunction Ma = getMa(Kinemat"
-      "ics,Kinetics_Parameters)\n%#codegen ..........................\n%\n%  returns rest of the the added mass\n%  for"
-      "ce matrix:\n%       Ma*H(xi,zeta)\n% ..................................\n    n=6;\n    i=1;\n    \n    %% get th"
-      "e total Added mass matrix\n    Ma = zeros(12,12);\n    AddedInertia = Kinetics_Parameters.AddedInertia;\n    Jgb"
-      " = [eye(6), zeros(6,6)];                                 % Jacobian from vehicle \n    Ji=Jgb;\n    Hi = Kinetic"
-      "s_Parameters.Persistent.Hrg(:,:,i);\n    Ii=Hi'*( AddedInertia(:,:,1))*Hi;                           % Inertia o"
-      "f vehicle in CO\n    Ma=Ma+(Ji')*Ii*Ji;\n    for i=1:n\n        Ji = Kinematics.Ji.Ji(:,:,i);                   "
-      "        % body jacobian\n        Hi =Kinetics_Parameters.Persistent.Hrg(:,:,i+1);        % get Transformation ma"
-      "trix of link i\n        Ii=Hi'*(AddedInertia(:,:,i+1))*Hi;                      % Transform Inertia matrix from "
-      "CG to CO\n        Ma=Ma+(Ji')*Ii*Ji;                                      % Add link i's inertia to total inerti"
-      "a\n    end\n end\n\n\n\n\n\n\n\n"
+      "s;\n    zeta_0_com = dxi_com;\n    dy = Lambda * zeta_0_tilde;\n    s = y + zeta_0_tilde;\n    xi_mes = Measured"
+      "_States.xi;\n    \n    % get the jacobian Ja\n    R0b = Kinematics.Ti.R0b;\n    Teuler = getTeuler( Measured_Sta"
+      "tes.xi (4:6)  );\n    Ja = [ R0b' , zeros(3,3), zeros(3,6);\n           zeros(3,3), Teuler, zeros(3,6);\n       "
+      "    zeros(6,3), zeros(6,3), eye(6)\n         ];\n    dJa = getdJa (Kinematics, zeta_mes, xi_mes, dxi_mes);\n    "
+      "\n    N = getN (Kinematics,Kinetics_Parameters);\n    M0 = 0.9*getM0 (Kinematics, Kinetics_Parameters, Ja);\n   "
+      " M = getM (Kinematics,Kinetics_Parameters);\n    C0 = 1.1*getC0 (Kinematics,Kinetics_Parameters, zeta_mes , Ja, "
+      "dJa);\n    D0 = 1.1*getD0 (Kinematics, Kinetics_Parameters, zeta_mes , Ja);\n    \n       \n    \n    Kd=diag([o"
+      "nes(1,6)*60, ones(1,6)*50]);\n    Ks=diag([ones(1,6)*390, ones(1,6)*300]);\n    \n    temp = (dy + dzeta_0_com);"
+      "\n    temp2 = (y + zeta_0_com);\n    tau = M0* temp   +  M* dJa* s + C0* temp2 + D0* temp2 + N + Kd*Ja* s + Ks* "
+      "sat(Ja*s, 0.05);  \n    \n    \nend\n\n\nfunction vec = sat (x,epsilon)\n    vec=zeros(length(x),1);\n    for i="
+      "1:length(x)\n       if x(i) > epsilon\n           vec(i)=1;\n       elseif x(i) < -epsilon\n           vec(i)=-1"
+      ";\n       else\n           vec(i)=x(i)/epsilon;\n       end\n    end\nend\n\n% get the derivative of the jacobia"
+      "n matrix Ja\nfunction dJa = getdJa(Kinematics, zeta, xi , dxi)\n    Rb0 = Kinematics.Ti.R0b';\n    omega0b = zet"
+      "a(4:6);\n    dRb0 = - Rb0 * skew (omega0b);\n    dTb0 = getdTb0( xi, dxi);\n    dJa = [ dRb0 , zeros(3,3), zeros"
+      "(3,6);\n           zeros(3,3), dTb0, zeros(3,6);\n           zeros(6,3), zeros(6,3), zeros(6,6);\n         ];\ne"
+      "nd\n\n% get the derivative of the Transfromation matrix from euler rates to body\n% rates\nfunction dTb0 = getdT"
+      "b0( xi, dxi)\n    dTb0 = zeros(3,3);\n    phi = xi(4);\n    theta = xi(5);\n    dphi = dxi(4);\n    dtheta = dxi"
+      "(5);\n    \n    dTb0 = [...\n            0,           0,      - cos(theta)*dtheta;\n            0,    -sin(phi)*"
+      "dphi,   -sin(theta)*dtheta*sin(phi) + cos(theta)*cos(phi)*dphi;\n            0,    -cos(phi)     ,   -sin(theta)"
+      "*dtheta*cos(phi) - cos(theta)*sin(phi)*dphi\n            ];\nend\n\n% Get the transformation matrix from euler r"
+      "ates to body rates\nfunction T = getTeuler ( euler )\n    phi=euler(1);\n    theta=euler(2);\n    psi=euler(3);\n"
+      "       \n    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(theta);\n    sth  = sin(theta);\n \n    T = "
+      "[...\n      1  0      -sth;\n      0  cphi   cth*sphi;\n      0  -sphi  cth*cphi ];\nend\n\n\n\n%% -------------"
+      "-------------------------------------------------\n%  Functions to gather the vectors   \n%%--------------------"
+      "-------------------------------------------\n\nfunction M0 = getM0(Kinematics, Kinetics_Parameters, Ja)\n    Mrb"
+      " = getInertiaMatrix(Kinematics, Kinetics_Parameters);\n    Ma = getMa(Kinematics, Kinetics_Parameters);\n    M0 "
+      "= (Mrb + Ma)*Ja;\nend\n\nfunction M = getM(Kinematics, Kinetics_Parameters)\n    Mrb = getInertiaMatrix(Kinemati"
+      "cs, Kinetics_Parameters);\n    Ma = getMa(Kinematics, Kinetics_Parameters);\n    M = (Mrb + Ma);\nend\n\n\nfunct"
+      "ion C0 = getC0 (Kinematics,Kinetics_Parameters,zeta, Ja, dJa)\n    C = getCrb(Kinematics,Kinetics_Parameters, ze"
+      "ta)  + getCa(Kinematics,Kinetics_Parameters,zeta);\n    M = getM(Kinematics, Kinetics_Parameters);\n    \n    C0"
+      " = C*Ja + M*dJa;\nend\n\nfunction D0 = getD0 (Kinematics, Kinetics_Parameters,zeta, Ja)\n    D =  getD(Kinematic"
+      "s, Kinetics_Parameters,zeta);\n    D0 = D* Ja;\nend\n\n\n%% ----------------------------------------------------"
+      "----------\n%  Inertia function   \n%%---------------------------------------------------------------\nfunction "
+      "M = getInertiaMatrix(Kinematics, Kinetics_Parameters)\n%#codegen\n%   getInertiaMatrix Returns the sum of the Ri"
+      "gid body inertia and the added mass:\n%   M_rb + M_a\n%   \n    n=6;\n    i=1;\n    M = zeros(12,12);\n    Inert"
+      "ia = Kinetics_Parameters.Inertia;\n    Jgb = [eye(6), zeros(6,6)];                                 % Jacobian fr"
+      "om vehicle \n    Ji=Jgb;\n    Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i);\n    Ii=Hi'*(Inertia(:,:,1))*Hi;  "
+      "                               % Inertia of vehicle in CO\n    M=M+(Ji')*Ii*Ji;\n    for i=1:n\n        Ji = Kin"
+      "ematics.Ji.Ji(:,:,i);                           % body jacobian\n        Hi =Kinetics_Parameters.Persistent.Hrg("
+      ":,:,i+1);        % get Transformation matrix of link i\n        Ii=Hi'*(Inertia(:,:,i+1) )*Hi;                  "
+      "        % Transform Inertia matrix from CG to CO\n        M=M+(Ji')*Ii*Ji;                                      "
+      "  % Add link i's inertia to total inertia\n    end\nend\n\n\n\n\n\n\n\n%% --------------------------------------"
+      "----------------\n% Persistent Forces   \n%%-------------------------------------------------------\nfunction N_"
+      "p = getN(Kinematics,Kinetics_Parameters)\n%#codegen\n%   N_p - 12 x 1 vector of generalized forces\n%   Persiste"
+      "nt_Forces returns the generalized forces due to boyancy and \n%   gravity\n\n    %% init\n    n=6;\n    N_p=zero"
+      "s(12,1);\n    Jgis = Kinematics.Ji.Ji;\n    \n    %%  vehicle\n    F_bp = getFbp(Kinematics, Kinetics_Parameters"
+      ",1);           % Get wrench from persistent forces in CO\n    Jbb=([eye(6), zeros(6,6)]);                       "
+      "          % Jacobian from b to b\n    N_p = Jbb'*F_bp;                                            % Get contribu"
+      "tion to total forces through Jbb\n    \n    %% robot links\n    for i=1:n\n        Jgi=Jgis(:,:,i);             "
+      "                           % Jacobian from b to i\n        F_ip = getFip(Kinematics,Kinetics_Parameters, i+1);  "
+      "   % Get wrench in CO\n        N_p = N_p + (Jgi')*F_ip;                                % Map to generalized forc"
+      "es and add to total\n    end\n    N_p = - N_p;                                                % reverse the sign"
+      " to comply with the sign convention\nend\n    \n    \nfunction F_ip = getFip(Kinematics,Kinetics_Parameters, i)\n"
+      "%#codegen\n% function calculating wrench from persistent forces \n% i=b: vehicle\n% i>=1: robot arms\n    F_ip ="
+      " zeros(6,1);\n    mi = Kinetics_Parameters.Persistent.m(i);\n    g = Kinetics_Parameters.Persistent.g;\n    rho "
+      "= Kinetics_Parameters.Persistent.rho;\n    nabla = Kinetics_Parameters.Persistent.nabla(i);\n    Ri0 = Kinematic"
+      "s.Ti.R0i(:,:,i-1)';\n    Hrg = Kinetics_Parameters.Persistent.Hrg(:,:,i);  \n    Hrb = Kinetics_Parameters.Persi"
+      "stent.Hrb(:,:,i);\n    ez=[0;0;1];\n    F_ip(:,:) = (Hrg')*[-mi*g*Ri0*ez ;0;0;0]  + (Hrb')*[rho*nabla*g*Ri0*ez ;"
+      "0;0;0 ];\nend\n\n\nfunction F_bp = getFbp(Kinematics,Kinetics_Parameters, i)\n%#codegen\n% function calculating "
+      "wrench from persistent forces \n% i=b: vehicle\n% i>=1: robot arms\n    F_bp = zeros(6,1);\n    mi = Kinetics_Pa"
+      "rameters.Persistent.m(i);\n    g = Kinetics_Parameters.Persistent.g;\n    Hrg = Kinetics_Parameters.Persistent.H"
+      "rg(:,:,i);  \n    Hrb = Kinetics_Parameters.Persistent.Hrb(:,:,i);\n    rho = Kinetics_Parameters.Persistent.rho"
+      ";\n    nabla = Kinetics_Parameters.Persistent.nabla(i);\n    Ri0 = (Kinematics.Ti.R0b)';\n    ez=[0;0;1];\n    F"
+      "_bp(:,:) = (Hrg')*[-mi*g*Ri0*ez ; 0;0;0]  + (Hrb')*[rho*nabla*g*Ri0*ez ; 0;0;0 ];\nend\n\nfunction [phi,theta,ps"
+      "i] = myR2euler(R)\n%#codegen\n    phi   = atan2(R(3,2),R(3,3));\n    theta = -asin(R(3,1));\n    psi   = atan2(R"
+      "(2,1),R(1,1));\nend\n\n\n\n%% ------------------------------------------------------\n% Coriolis Matrix   \n%%--"
+      "-----------------------------------------------------\nfunction C = getCrb(Kinematics,Kinetics_Parameters, zeta)"
+      "\n%#codegen\n%-----------------------------------------------------------------------\n%   This function calcula"
+      "tes the coriolis according to From and Pettersen\n%   (2013).\n%------------------------------------------------"
+      "-----------------------\n    n=6;\n    C=zeros(12,12);\n    Inertia=Kinetics_Parameters.Inertia;\n    Jis = Kine"
+      "matics.Ji.Ji;\n    \n    % i = b\n    Jgb = [eye(6), zeros(6,6)];\n    i=1;\n    Hi = Kinetics_Parameters.Persis"
+      "tent.Hrg(:,:,i);\n    Ii=Hi'*Inertia(:,:,i);\n    Wb = getWb(Ii,zeta);\n    C = - (Jgb')*Wb*Hi*Jgb;     % time d"
+      "erivative of Jgb = 0  \n    \n    % i >=1\n    for i=1:n\n        Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i+"
+      "1);\n        Ii=Hi'*Inertia(:,:,i+1);\n        Wi=getWi(Ii,Jis(:,:,i), zeta);\n        Jgi_dot=getJgi_dot(Kinema"
+      "tics, zeta,i);\n        Jgi = Jis(:,:,i);\n        \n        C = C + (Jgi')*Ii*Hi*Jgi_dot - (Jgi')*Wi*Hi*Jgi;\n "
+      "   end\nend\n\n\n\nfunction Wb = getWb(I , zeta)\n%#codegen\n% Get the matrix Wi for i=b\n% I: Inertia matrix fo"
+      "r vehicle\n% zeta: generalized velocity\n    Wb = zeros(6,6);\n    v = zeta(1:3);\n    omega = zeta(4:6);\n    m"
+      "I = I(1:3,1:3); % Identity matrix times mass of link b\n    Ib = I(4:6,4:6); % Moment of inertia\n    mrgb = I(4"
+      ":6,1:3); % mass times skew symmetric r_g^b\n    dKv= mI*v - mrgb*omega;\n    dKomega = Ib*omega + mrgb*v;\n    \n"
+      "    Wb = [zeros(3,3), skew(dKv) ; skew(dKv), skew(dKomega)];\nend\n\nfunction Wi = getWi(I, Ji,zeta)\n%#codegen\n"
+      "% Get matrix Wi for robot links\n% I: inertia matrix for link i\n% Ji: Jacobian for link i\n% zeta: generalized "
+      "coordinates\n    Wi = zeros(6,6);\n    V0i = Ji*zeta;\n    v = V0i(1:3);\n    omega = V0i(4:6);\n    mI = I(1:3,"
+      "1:3); % Identity matrix times mass of link b\n    Ib = I(4:6,4:6); % Moment of inertia\n    mrgb = I(4:6,1:3); %"
+      " mass times skew symmetric r_g^b\n    dKv= mI*v - mrgb*omega;\n    dKomega = Ib*omega + mrgb*v;\n    Wi = [zeros"
+      "(3,3), skew(dKv) ; skew(dKv), skew(dKomega)];\nend\n\nfunction Jgi_dot=getJgi_dot(Kinematics, zeta,i)\n%#codegen"
+      "\n% the functions below is related to Jgi_dot\n    Jgi_dot = zeros(6,6+6);\n    n=6;\n    Jgi = Kinematics.Ji.Ji"
+      "(:,:,i);\n    omega = Jgi*zeta;\n    Rbi = Kinematics.Ti.Rbi(:,:,i);\n    pbi = Kinematics.Ti.pbi(:,i);\n    ome"
+      "gaib = getOmegaib(Kinematics,zeta,i);\n    dpbi =  getDpbi(Kinematics,zeta,i);\n        \n    dAdg_inv = [(Rbi')"
+      "*skew(omegaib) , -(Rbi')*skew(omegaib)*skew(pbi) + (Rbi')*skew(dpbi); ...\n                zeros(3,3) , (Rbi')*s"
+      "kew(omegaib) ];\n    dJi = zeros(6,6);\n    omega0b = zeta(4:6);\n    \n    % get d/dt(Ji)\n    Xii=[0,0,0,0,0,1"
+      "]';\n    for k=2:n\n       if k<=i\n            dpbk = getDpbi(Kinematics, zeta ,k-1);\n            Rbk= Kinemat"
+      "ics.Ti.Rbi(:,:,k-1);\n            omega0k = [zeros(3,3) , eye(3)]*Kinematics.Ji.Ji(:,:,k-1)*zeta;\n            o"
+      "megabk = omega0k - (Rbk')*omega0b;\n            dJi(:,k) = [zeros(3,3), skew(dpbk)*Rbk*skew(omegabk) ...\n      "
+      "          ; zeros(3,3) , (Rbk')*skew(omegabk)]*Xii;\n       end\n    end\n    Ji=getji(Kinematics.Ti, i);\n    A"
+      "dg_inv = Kinematics.Ti.Adgbi_inv(:,:,i);\n    Jgi_dot = [dAdg_inv, dAdg_inv*Ji + Adg_inv*dJi ];\nend\n\nfunction"
+      " omegaib = getOmegaib(Kinematics,zeta,i)\n%#codegen\n% returns angular rage of vehcile wrt frame i noted in vehi"
+      "cle frame\n    omegaib = zeros(3,1);\n    Rbi = Kinematics.Ti.Rbi(:,:,i);\n    Jgi = Kinematics.Ji.Ji(:,:,i);\n "
+      "   omega0b = zeta(4:6);\n    omegaib = omega0b - Rbi*[zeros(3,3), eye(3)]*Jgi*zeta;\nend\n\nfunction dpbi = getD"
+      "pbi( Kinematics, zeta,iter)\n%#codegen\n% returns time derivative of position vector of from frame b to frame i\n"
+      "    dpbi = zeros(3,1);\n    H = [eye(3), zeros(3,3)];\n    Rbi=Kinematics.Ti.Rbi(:,:,iter);\n    Adgbi_inv = Kin"
+      "ematics.Ti.Adgbi_inv(:,:,iter);\n    Ji = getji(Kinematics.Ti,iter);\n    qd=zeros(6,1);\n    qd(:,:)=zeta(7:12)"
+      ";\n    dpbi = Rbi*H*Adgbi_inv*Ji*qd;\nend\n\n\nfunction mat = getji(Ti,i)\n%#codegen\n% return matrix Ji (see re"
+      "port)\n    n=6;\n    mat=zeros(6,6);\n    Xii=[0,0,0,0,0,1]';\n    mat(:,1)=eye(6)*Xii;\n    for j=2:n\n        "
+      "if j<=i\n            mat(:,j) = Ti.Adgbi(:,:,j-1)*Xii;\n        end\n    end\nend\n\nfunction S = skew(v)\n%#cod"
+      "egen\n\n  S = [  0   -v(3)  v(2)\n       v(3)  0    -v(1)\n       -v(2) v(1)   0];\nend\n\n\n%% ----------------"
+      "--------------------------------------\n% D matrix \n%%-------------------------------------------------------\n"
+      "function D = getD(Kinematics, Kinetics_Parameters,zeta_r)\n%#codegen\n%\n% Returns the D matrix in the dynamics "
+      "equation. The total forces is based\n% on mappin the forces in each frame to the total generalized forces\n% thr"
+      "ough the jacoian: tau = J^T*F_i. The forces in frame i is calculated\n% from the forces in CG to CO through the "
+      "transformation matrix: F_co =\n% Hrg^T*F_cg\n%\n    %% init\n    n=6;\n    D=zeros(12,12);                      "
+      "                % init matrix size\n    HydroDynamics = Kinetics_Parameters.HydroDynamics;   % Hydrodynamics par"
+      "ameters\n    Jgis = Kinematics.Ji.Ji;                             % Jacobians\n    Hrgs = Kinetics_Parameters.Pe"
+      "rsistent.Hrg;           % Transformation matrix\n    \n    \n    %% vehicle\n    i=1;\n    Jbb=[eye(6), zeros(6)"
+      "];                               % Jacobian from frame 0 to frame b\n    Hrg = Hrgs(:,:,i);                     "
+      "               % Transformation matrix\n    Vcg = Hrg*Jbb*zeta_r;                                   % velocity i"
+      "n CG mapped from CO\n    Dcg =  HydroDynamics.Linear(:,:,i) + ...\n           HydroDynamics.Quadratic(:,:,i)*dia"
+      "g(abs(Vcg)); % Wrench in CG\n    Di = Hrg'*Dcg;                                        % Wrench in CO mapped fro"
+      "m CG    \n    D = Jbb'*Di*Jbb;                                      % Add contribution to the total matrix mappe"
+      "d from frame i \n                                                          % to generalized coordinates         "
+      "                          \n    \n    %% robot links\n    for i=1:n\n        Jgi = Jgis(:,:,i);                 "
+      "               % Jacobian from frame 0 to frame i \n        Hrg = Hrgs(:,:,i+1);                              % "
+      "Transformation matrix\n        Vcg = Hrg*Jgi*zeta_r;                               % velocity in CG\n        Dcg"
+      " = HydroDynamics.Linear(:,:,i+1)+... \n          HydroDynamics.Quadratic(:,:,i+1)*diag(abs(Vcg));% Wrench in CG "
+      "  \n        Di = Hrg'*Dcg;                                    % Wrench in CO    \n        D = D + Jgi'*Di*Jgi;  "
+      "                            % Add frame i's contribution to D matrix    \n    end\nend\n\n%% -------------------"
+      "-----------------------------------\n% Added Coriolis\n%%-------------------------------------------------------"
+      "\nfunction Ca = getCa(Kinematics,Kinetics_Parameters,zeta_r)\n%%#codegen ......................................."
+      ".......\n%\n%   This function calculates the added coriolis matrix\n%..........................................."
+      "............\n    n=6;\n    Ca=zeros(12,12);\n    Inertia=Kinetics_Parameters.AddedInertia;\n    Jis = Kinematic"
+      "s.Ji.Ji;\n    \n    % vehicle\n    Jgb = [eye(6), zeros(6,6)];\n    i=1;\n    Hi = Kinetics_Parameters.Persisten"
+      "t.Hrg(:,:,i+1);\n    Ii=Hi'*Inertia(:,:,i);\n    Wb = getWb(Ii,zeta_r);\n    Ca = - (Jgb')*Wb*Hi*Jgb;     % time"
+      " derivative of Jgb = 0  \n    \n    % manipulator links\n    for i=1:n\n        Hi = Kinetics_Parameters.Persist"
+      "ent.Hrg(:,:,i+1);\n        Ii=Hi'*Inertia(:,:,i+1);\n        Wi=getWi(Ii,Jis(:,:,i), zeta_r);\n        Jgi_dot=g"
+      "etJgi_dot(Kinematics, zeta_r,i);\n        Jgi = Jis(:,:,i);\n        Ca = Ca + (Jgi')*Ii*Hi*Jgi_dot - (Jgi')*Wi*"
+      "Hi*Jgi;\n    end\nend\n\n%% ------------------------------------------------------\n% Added Mass\n%%------------"
+      "-------------------------------------------\nfunction Ma = getMa(Kinematics,Kinetics_Parameters)\n%#codegen ...."
+      "......................\n%\n%  returns rest of the the added mass\n%  force matrix:\n%       Ma*H(xi,zeta)\n% ..."
+      "...............................\n    n=6;\n    i=1;\n    \n    %% get the total Added mass matrix\n    Ma = zero"
+      "s(12,12);\n    AddedInertia = Kinetics_Parameters.AddedInertia;\n    Jgb = [eye(6), zeros(6,6)];                "
+      "                 % Jacobian from vehicle \n    Ji=Jgb;\n    Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i);\n   "
+      " Ii=Hi'*( AddedInertia(:,:,1))*Hi;                           % Inertia of vehicle in CO\n    Ma=Ma+(Ji')*Ii*Ji;\n"
+      "    for i=1:n\n        Ji = Kinematics.Ji.Ji(:,:,i);                           % body jacobian\n        Hi =Kine"
+      "tics_Parameters.Persistent.Hrg(:,:,i+1);        % get Transformation matrix of link i\n        Ii=Hi'*(AddedIner"
+      "tia(:,:,i+1))*Hi;                      % Transform Inertia matrix from CG to CO\n        Ma=Ma+(Ji')*Ii*Ji;     "
+      "                                 % Add link i's inertia to total inertia\n    end\n end\n\n\n\n\n\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -9581,6 +9574,12 @@ Stateflow {
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1
-    linkNode		    [1 0 0]
+    linkNode		    [1 0 157]
+  }
+  target {
+    id			    157
+    name		    "rtw"
+    machine		    1
+    linkNode		    [1 156 0]
   }
 }

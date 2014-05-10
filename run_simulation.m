@@ -6,10 +6,13 @@
 %
 %-----------------------------------
 clear all; clc; close all;
+load_system('uvms_kinematics.mdl');
+disp('Loading uvms_kinematics');
+
 %% Mathematical parameters
 d2r=pi/180;
 r2d=180/pi;
-KINEMATICS_ONLY = false;
+KINEMATICS_ONLY = true;
 format compact;
 addpath './uvms_functions'
 init_kinematics;
@@ -19,7 +22,9 @@ load trajectory.mat;
 
 %% Global Simulation parameters
 global dt;
-dt=0.0003;
+dt = 0.01;
+%dt=0.0001;
+
 
 %% Create Data structures for simulation
 Measured_States = struct('dzeta',zeros(12,1), 'zeta',zeros(12,1),'xi',zeros(12,1));
@@ -67,16 +72,18 @@ endEffector_com_bus = slBus13;
 
 
 %%
+tic
 try
     if KINEMATICS_ONLY == true
-        sim('uvms_kinematics',20);
+        sim('uvms_kinematics',10);
     else
-        sim('uvms_sliding',20);
+        sim('uvms_sliding',10);
     end
 catch err
    error(err.message )
    disp('The simulation was aborted');
 end
+toc
 
 disp('Saving logged Data');
 %% get log data

@@ -42,8 +42,7 @@ if KINEMATICS_ONLY == true
     ee_pose = ee_pose_com;
 else
     q = q_mes;
-    xi = xi_mes;
-    
+    xi = xi_mes;   
 end
 
 
@@ -89,7 +88,6 @@ while j < length(q(:,1));
     %camlight(45,45); 
     %lighting phong 
     
-    outerCircleHandle = drawSphere(h(i),circleCenter,CircleProps.outerCircleRadius,'blue');   
     middleCircleHandle = drawSphere(h(i),circleCenter,CircleProps.middleCircleRadius,'green');
     innerCircleHandle = drawSphere(h(i),circleCenter,CircleProps.innerCircleRadius,'red');
     eeVecHandle = plot3([p0e(1), circleCenter(1)],[p0e(2) , circleCenter(2)],[p0e(3) , circleCenter(3)], '-r');
@@ -117,7 +115,6 @@ while j < length(q(:,1));
         step = abs (step - 2);
     elseif keyPressed == 'r'
         delete(rov_figure);
-        delete(outerCircleHandle);
         delete(middleCircleHandle);
         delete(innerCircleHandle);
         delete(eeVecHandle);
