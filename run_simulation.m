@@ -21,6 +21,7 @@ init_inputs;
 load trajectory.mat;
 
 %% Global Simulation parameters
+time_stop = 40;
 global dt;
 dt = 0.01;
 %dt=0.0001;
@@ -31,7 +32,7 @@ Measured_States = struct('dzeta',zeros(12,1), 'zeta',zeros(12,1),'xi',zeros(12,1
 Commanded_States = struct('dzeta',zeros(12,1), 'zeta',zeros(12,1),'xi',zeros(12,1));
 Error_States = struct('dzeta_tilde',zeros(12,1), 'zeta_tilde',zeros(12,1),'xi_tilde',zeros(12,1), 'integral_xi_tilde', zeros(12,1));
 VV_States = struct('StatusLinear',0, 'StatusAngular', 0 ,'Circle2EEVec',zeros(3,1), 'linearVehicleVelocity', zeros(6,1), ...
-                   'angularVehicleVelocity', zeros(6,1) , 'psibe',0, 'V_EE', zeros(6,1), 'VdotP',0);
+                   'angularVehicleVelocity', zeros(6,1) , 'psibe',0, 'V_EE', zeros(6,1), 'VdotP',0, 'insideWs', 0);
 End_Effector_Mes = struct('velocity', zeros(6,1), 'pose',zeros(6,1), 'pose_quaternion',zeros(7,1));
 End_Effector_Com = struct('velocity', zeros(6,1), 'pose',zeros(6,1), 'pose_quaternion',zeros(7,1));
 
@@ -70,19 +71,22 @@ endEffector_mes_bus = slBus12;
 End_Effector_com_bus = Simulink.Bus.createObject(End_Effector_Com);
 endEffector_com_bus = slBus13;
 
+WsProps_bus = Simulink.Bus.createObject( WsProps );
+wsProps_bus = slBus14;
+
 
 %%
 tic
-try
+%try
     if KINEMATICS_ONLY == true
-        sim('uvms_kinematics',10);
+        sim('uvms_kinematics',time_stop);
     else
-        sim('uvms_sliding',10);
+        sim('uvms_sliding',time_stop);
     end
-catch err
-   error(err.message )
-   disp('The simulation was aborted');
-end
+%catch err
+%   error(err.message )
+%   disp('The simulation was aborted');
+%end
 toc
 
 disp('Saving logged Data');
@@ -114,6 +118,7 @@ if KINEMATICS_ONLY == true
     VVStatusAngular(:) = VV_States_log.StatusAngular.Data(1,1,:);
     VVpsibe = zeros(length(VV_States_log.StatusLinear.Data),1);
     VVpsibe(:) = VV_States_log.psibe.Data;
+    VVisInsideWs = VV_States_log.insideWs.Data;
     VdotP = zeros(length(time), 1);
     VdotP(:) = VV_States_log.VdotP.Data;
 end

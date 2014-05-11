@@ -101,12 +101,17 @@ end
 
 
 %% circle properties - Inverse kinematics
+WsProps = struct('centerOfWs', zeros(3,1), 'XYZPoints', 0, 'XYZIndices',0);
+WsProps.centerOfWs = [1.5;0;-0.2];
+load wsMesh;
+WsProps.XYZPoints = XYZPoints;
+WsProps.XYZIndices = XYZIndices;
 CircleProps = struct('CenterInFrameB', zeros(3,1), 'outerCircleRadius', 0, 'middleCircleRadius',0,'innerCircleRadius',0, 'innerMiddelRadiusDelta', 0, 'psis',0, 'psii',0);
-CircleProps.CenterInFrameB = [1.7,0,0.2]';
+CircleProps.CenterInFrameB = [1.7,0,0.2]';  % center of ws and wi
 radFactor = 0.8;
 CircleProps.outerCircleRadius = 0.7*radFactor;
-CircleProps.middleCircleRadius = 0.6*radFactor;
-CircleProps.innerCircleRadius = 0.25*radFactor;
+CircleProps.middleCircleRadius = 0.65*radFactor;
+CircleProps.innerCircleRadius = 0.1*radFactor;
 CircleProps.innerMiddelRadiusDelta = CircleProps.outerCircleRadius - CircleProps.middleCircleRadius;
 
 CircleProps.psii = 10 * d2r;

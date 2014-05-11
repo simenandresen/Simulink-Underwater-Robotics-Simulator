@@ -1,6 +1,6 @@
 function  makePath()
     clc; clear all; close all;
-    scale = 1;
+    scale = 180;
     addpath './trajectory';
     addpath './uvms_functions/trajectory';
     disp('Click on points in the xy plane. finish by clicking the key s');
@@ -9,21 +9,21 @@ function  makePath()
     axis([-scale, scale, -scale , scale, -scale, scale]);
     grid on;
     hold on;
-    xlabel('x'); ylabel('y'); zlabel('z');
+    xlabel('\phi'); ylabel('\theta'); zlabel('\psi');
     
     hFig2d = figure(1);
     ax = axes;
     axis([-scale, scale, -scale , scale]);
     grid on;
     hold on;
-    xlabel('x'); ylabel('y');
+    xlabel('\phi'); ylabel('theta');
     
     
     plothandle2d = 1;
     plothandle3d = 1;
-    x = [];
-    y = [];
-    z = [];
+    phi = [];
+    theta = [];
+    psi = [];
     plot2d = 1;
     plot3d = 1;
     index = 1;
@@ -33,10 +33,10 @@ function  makePath()
     % set initial points in x y plane
     function mouseClick(hFig,~)
         pos = get(hFig,'CurrentPoint');
-        x(end+1) =  pos(1,1);
-        y(end+1) = pos(1,2);
-        z(end+1) = 0;
-        plothandle2d = plot(ax,x,y,'or');
+        phi(end+1) =  pos(1,1);
+        theta(end+1) = pos(1,2);
+        psi(end+1) = 0;
+        plothandle2d = plot(ax,phi,theta,'or');
         update3dPlot;
         figure(1);
     end
@@ -53,7 +53,7 @@ function  makePath()
     % input z x plane
     function handleZDirection()
         hold off;
-        z = 0*y;
+        psi = 0*theta;
         update2dPlot();
         set(ax,'ButtonDownFcn',@movePointInZDirection);
         update3dPlot();
@@ -63,7 +63,7 @@ function  makePath()
         pos  = get(ax,'CurrentPoint');
         xtemp = pos(1,1);
         ztemp = pos(1,2);
-        index = getIndexOfClosestPoint(xtemp, ztemp, x, z);
+        index = getIndexOfClosestPoint(xtemp, ztemp, phi, psi);
         set(hFig2d,'WindowButtonUpFcn',@setZDirectionPoint)
         set(hFig2d,'KeyPressFcn',@checkForExit)
         set(hFig3d,'KeyPressFcn',@checkForExit)
@@ -73,8 +73,8 @@ function  makePath()
     function checkForExit(src,event)
         if event.Character == 'q'
            disp('Finished Drawing Path');
-           myPath = [x;y;z];
-           save('drawnPath.mat', 'myPath');
+           orientationWaypoints = [phi;theta;psi];
+           save('waypointsOrientation.mat', 'orientationWaypoints');
            clc;
            close all;
         end
@@ -83,8 +83,8 @@ function  makePath()
 
     function setZDirectionPoint(hAxes, ~)
        pos  = get(ax,'CurrentPoint');
-       z(index) = pos(1,2);
-       x(index) = pos(1,1);
+       psi(index) = pos(1,2);
+       phi(index) = pos(1,1);
        update3dPlot();
        update2dPlot();
        set(ax,'ButtonDownFcn',@movePointInZDirection);
@@ -93,7 +93,7 @@ function  makePath()
     function update2dPlot()
         figure(1)
         hold off;
-        plot2d = plot(ax, x,z, 'og', 'ButtonDownFcn', @movePointInZDirection ); 
+        plot2d = plot(ax, phi,psi, 'og', 'ButtonDownFcn', @movePointInZDirection ); 
         axis([-scale, scale, -scale , scale]);
         grid on;
         hold on;
@@ -102,7 +102,7 @@ function  makePath()
     end
 
     function update3dPlot()
-        if length(x) > 4
+        if length(phi) > 4
             figure(2);
             Tension = 0;
             n = 10;
@@ -110,14 +110,14 @@ function  makePath()
             yy_c = [];
             zz_c = [];
             mat = [];
-            for k=1:length(x)-3
-                [mat]=crdatnplusoneval([x(k),y(k),z(k)],[x(k+1),y(k+1),z(k+1)],[x(k+2),y(k+2),z(k+2)],[x(k+3),y(k+3),z(k+3)],Tension,n);
+            for k=1:length(phi)-3
+                [mat]=crdatnplusoneval([phi(k),theta(k),psi(k)],[phi(k+1),theta(k+1),psi(k+1)],[phi(k+2),theta(k+2),psi(k+2)],[phi(k+3),theta(k+3),psi(k+3)],Tension,n);
                 xx_c = [xx_c, mat(1,:) ];
                 yy_c = [yy_c, mat(2,:) ];
                 zz_c = [zz_c, mat(3,:) ];
             end
-            l = length(x);
-            Y=[x; y; z];
+            l = length(phi);
+            Y=[phi; theta; psi];
             X = 0:1:(l-1);
             pp = spline(X,Y);
             yy = ppval(pp, linspace(0, l ,40));

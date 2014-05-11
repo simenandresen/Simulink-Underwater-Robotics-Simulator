@@ -323,6 +323,42 @@ if KINEMATICS_ONLY == false
     grid on;
 end % end KINEMATICS_ONLY == false
 
+%% check to make sure nothing is overwritten
+a= input('are you sure you want to go on. file may be overwritten ');
+if a == 0 
+   break; 
+end
+%% save plot files
+i=i+1;
+h(i)=figure(i);
+
+% plotH = plot(time, [eta1_com(:,:)]);
+% titH = title('Commanded vehicle position');
+% set(titH, 'FontSize', 14);
+% set(gca, 'FontSize', 14);
+% xlabel('time [s]'); ylabel('[m]');
+% leg=legend('x','y','z');
+% set(leg,'Interpreter','latex');
+% set(leg, 'Location', 'NorthWest');
+% set(leg,  'FontSize', 16);
+% grid on;
+
+plot(time, [ee_pose_com(:,1),ee_pose_com(:,2),ee_pose_com(:,3) ]);
+grid on;
+titH = title('End effector position');
+set(titH, 'FontSize', 14);
+set(gca, 'FontSize', 14);
+xlabel('time [s]'); ylabel('[m]');
+leg=legend('x','y','z');
+set(leg,'Interpreter','latex');
+set(leg, 'Location', 'NorthWest');
+set(leg,  'FontSize', 16);
+%filename = input('Save plot as: ', 's');
+filename = 'simWsPlot2.eps';
+filename = strcat('/home/simena/Dropbox/master_thesis/report/figures/', filename);
+print(h(i), '-depsc', filename );
+
+
 
 %%
 %figHandles = get(0,'Children');

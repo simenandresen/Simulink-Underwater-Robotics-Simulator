@@ -1,6 +1,6 @@
 function  makePath()
     clc; clear all; close all;
-    scale = 1;
+    scale = 3;
     addpath './trajectory';
     addpath './uvms_functions/trajectory';
     disp('Click on points in the xy plane. finish by clicking the key s');
@@ -73,8 +73,8 @@ function  makePath()
     function checkForExit(src,event)
         if event.Character == 'q'
            disp('Finished Drawing Path');
-           myPath = [x;y;z];
-           save('drawnPath.mat', 'myPath');
+           wayPoints = [x;y;z];
+           save('waypoints.mat', 'wayPoints');
            clc;
            close all;
         end

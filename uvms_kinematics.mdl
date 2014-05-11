@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.839"
+    ComputedModelVersion    "1.898"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri May 09 15:46:47 2014"
-  RTWModifiedTimeStamp	  321551206
-  ModelVersionFormat	  "1.%<AutoIncrement:839>"
+  LastModifiedDate	  "Sun May 11 13:12:20 2014"
+  RTWModifiedTimeStamp	  321711719
+  ModelVersionFormat	  "1.%<AutoIncrement:898>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -54,7 +54,7 @@ Model {
   StatusBar		  on
   BrowserShowLibraryLinks off
   BrowserLookUnderMasks	  off
-  SimulationMode	  "normal"
+  SimulationMode	  "accelerator"
   LinearizationMsg	  "none"
   Profile		  off
   ParamWorkspaceSource	  "MATLABWorkspace"
@@ -67,7 +67,6 @@ Model {
     $ObjectID		    1
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
     model_		    "uvms_kinematics"
-    signals_		    []
     overrideMode_	    [0.0]
     Array {
       Type		      "Cell"
@@ -151,8 +150,8 @@ Model {
 	  SolverMode		  "Auto"
 	  EnableConcurrentExecution off
 	  ConcurrentTasks	  off
-	  Solver		  "ode3"
-	  SolverName		  "ode3"
+	  Solver		  "ode4"
+	  SolverName		  "ode4"
 	  SolverJacobianMethodControl "auto"
 	  ShapePreserveControl	  "DisableAll"
 	  ZeroCrossControl	  "UseLocalSettings"
@@ -614,7 +613,7 @@ Model {
       }
       Name		      "Configuration"
       CurrentDlgPage	      "Solver"
-      ConfigPrmDlgPosition     [ 176, 497, 1084, 1141 ] 
+      ConfigPrmDlgPosition     [ 178, 497, 1094, 1145 ] 
     }
     PropName		    "ConfigurationSets"
   }
@@ -842,7 +841,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "125"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "303"
+    SIDHighWatermark	    "311"
     Block {
       BlockType		      SubSystem
       Name		      "Inverse Kinematics"
@@ -858,8 +857,8 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Inverse Kinematics"
-	Location		[2, 418, 1918, 1431]
-	Open			on
+	Location		[1922, 692, 3118, 1272]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -875,7 +874,7 @@ Model {
 	  BlockType		  Inport
 	  Name			  "Kinematics"
 	  SID			  "159"
-	  Position		  [120, 208, 150, 222]
+	  Position		  [390, 213, 420, 227]
 	  BackgroundColor	  "orange"
 	  IconDisplay		  "Port number"
 	}
@@ -883,7 +882,7 @@ Model {
 	  BlockType		  Inport
 	  Name			  "End_Effector_Com"
 	  SID			  "130"
-	  Position		  [120, 298, 150, 312]
+	  Position		  [390, 303, 420, 317]
 	  BackgroundColor	  "orange"
 	  Port			  "2"
 	  IconDisplay		  "Port number"
@@ -892,7 +891,7 @@ Model {
 	  BlockType		  Inport
 	  Name			  "States"
 	  SID			  "131"
-	  Position		  [120, 388, 150, 402]
+	  Position		  [390, 393, 420, 407]
 	  BackgroundColor	  "orange"
 	  Port			  "3"
 	  IconDisplay		  "Port number"
@@ -901,7 +900,7 @@ Model {
 	  BlockType		  Inport
 	  Name			  "End Effector_Mes"
 	  SID			  "246"
-	  Position		  [120, 483, 150, 497]
+	  Position		  [390, 488, 420, 502]
 	  BackgroundColor	  "orange"
 	  Port			  "4"
 	  IconDisplay		  "Port number"
@@ -910,7 +909,7 @@ Model {
 	  BlockType		  Constant
 	  Name			  "Qlimits"
 	  SID			  "126"
-	  Position		  [600, 245, 630, 275]
+	  Position		  [870, 250, 900, 280]
 	  ZOrder		  -5
 	  Value			  "QLimits"
 	  OutDataTypeStr	  "Bus: qlimits_bus"
@@ -920,7 +919,7 @@ Model {
 	  Name			  "To Workspace"
 	  SID			  "165"
 	  Ports			  [1]
-	  Position		  [910, 335, 970, 365]
+	  Position		  [1180, 340, 1240, 370]
 	  ZOrder		  -7
 	  VariableName		  "W_diag_log"
 	  MaxDataPoints		  "inf"
@@ -931,7 +930,7 @@ Model {
 	  BlockType		  UnitDelay
 	  Name			  "Unit Delay3"
 	  SID			  "124"
-	  Position		  [735, 583, 755, 607]
+	  Position		  [1005, 588, 1025, 612]
 	  ZOrder		  -21
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
@@ -944,8 +943,9 @@ Model {
 	  Name			  "Vee2Zeta"
 	  SID			  "123"
 	  Ports			  [7, 3]
-	  Position		  [670, 195, 820, 505]
+	  Position		  [940, 200, 1090, 510]
 	  ZOrder		  -4
+	  BackgroundColor	  "green"
 	  LibraryVersion	  "1.32"
 	  ErrorFcn		  "Stateflow.Translate.translate"
 	  PermitHierarchicalResolution "ExplicitOnly"
@@ -1202,7 +1202,8 @@ Model {
 	  Name			  "VehicleVelocity"
 	  SID			  "180"
 	  Ports			  [2, 1]
-	  Position		  [350, 324, 450, 371]
+	  Position		  [620, 329, 720, 376]
+	  BackgroundColor	  "green"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -1213,7 +1214,7 @@ Model {
 	  System {
 	    Name		    "VehicleVelocity"
 	    Location		    [2, 418, 1918, 1431]
-	    Open		    off
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -1244,7 +1245,7 @@ Model {
 	      BlockType		      SubSystem
 	      Name		      "Calculate VehcileVelocity"
 	      SID		      "170"
-	      Ports		      [4, 2]
+	      Ports		      [5, 2]
 	      Position		      [660, 227, 780, 433]
 	      ZOrder		      -4
 	      LibraryVersion	      "1.32"
@@ -1286,7 +1287,7 @@ Model {
 		TiledPageScale		1
 		ShowPageBoundaries	off
 		ZoomFactor		"100"
-		SIDHighWatermark	"31"
+		SIDHighWatermark	"32"
 		Block {
 		  BlockType		  Inport
 		  Name			  "Kinematics"
@@ -1314,11 +1315,20 @@ Model {
 		}
 		Block {
 		  BlockType		  Inport
+		  Name			  "WsProps"
+		  SID			  "170::32"
+		  Position		  [20, 206, 40, 224]
+		  ZOrder		  18
+		  Port			  "4"
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Inport
 		  Name			  "Prev_VV_States"
 		  SID			  "170::26"
-		  Position		  [20, 206, 40, 224]
+		  Position		  [20, 246, 40, 264]
 		  ZOrder		  12
-		  Port			  "4"
+		  Port			  "5"
 		  IconDisplay		  "Port number"
 		}
 		Block {
@@ -1335,11 +1345,11 @@ Model {
 		  Name			  " SFunction "
 		  SID			  "170::19"
 		  Tag			  "Stateflow S-Function uvms_kinematics 9"
-		  Ports			  [4, 3]
+		  Ports			  [5, 3]
 		  Position		  [180, 108, 230, 272]
 		  ZOrder		  5
 		  FunctionName		  "sf_sfun"
-		  PortCounts		  "[4 3]"
+		  PortCounts		  "[5 3]"
 		  EnableBusSupport	  on
 		  Port {
 		    PortNumber		    2
@@ -1396,10 +1406,16 @@ Model {
 		  DstPort		  3
 		}
 		Line {
-		  SrcBlock		  "Prev_VV_States"
+		  SrcBlock		  "WsProps"
 		  SrcPort		  1
 		  DstBlock		  " SFunction "
 		  DstPort		  4
+		}
+		Line {
+		  SrcBlock		  "Prev_VV_States"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  5
 		}
 		Line {
 		  Name			  "V_vehicle"
@@ -1441,6 +1457,15 @@ Model {
 	      OutDataTypeStr	      "Bus: circleProps_bus"
 	    }
 	    Block {
+	      BlockType		      Constant
+	      Name		      "CircleProps1"
+	      SID		      "311"
+	      Position		      [295, 391, 345, 429]
+	      ZOrder		      -5
+	      Value		      "WsProps"
+	      OutDataTypeStr	      "Bus: wsProps_bus"
+	    }
+	    Block {
 	      BlockType		      SubSystem
 	      Name		      "Reference system"
 	      SID		      "214"
@@ -1474,6 +1499,14 @@ Model {
 		  SID			  "215"
 		  Position		  [145, 438, 175, 452]
 		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Constant
+		  Name			  "Constant"
+		  SID			  "306"
+		  Position		  [320, 330, 350, 360]
+		  ZOrder		  -4
+		  Value			  "zeros(6,1)"
 		}
 		Block {
 		  BlockType		  Demux
@@ -1590,17 +1623,9 @@ Model {
 		Line {
 		  SrcBlock		  "In1"
 		  SrcPort		  1
-		  Points		  [175, 0; 0, 5]
-		  Branch {
-		    Points		    [0, -5]
-		    DstBlock		    "Demux"
-		    DstPort		    1
-		  }
-		  Branch {
-		    Points		    [0, 445]
-		    DstBlock		    "Unit Delay"
-		    DstPort		    1
-		  }
+		  Points		  [175, 0; 0, 450]
+		  DstBlock		  "Unit Delay"
+		  DstPort		  1
 		}
 		Line {
 		  SrcBlock		  "Unit Delay"
@@ -1681,6 +1706,13 @@ Model {
 		  DstBlock		  "Mux"
 		  DstPort		  6
 		}
+		Line {
+		  SrcBlock		  "Constant"
+		  SrcPort		  1
+		  Points		  [40, 0; 0, 100]
+		  DstBlock		  "Demux"
+		  DstPort		  1
+		}
 	      }
 	    }
 	    Block {
@@ -1728,25 +1760,28 @@ Model {
 	    Line {
 	      SrcBlock		      "CircleProps"
 	      SrcPort		      1
+	      Points		      [295, 0]
 	      DstBlock		      "Calculate VehcileVelocity"
 	      DstPort		      3
 	    }
 	    Line {
 	      SrcBlock		      "Unit Delay1"
 	      SrcPort		      1
-	      Points		      [-115, 0; 0, -115]
+	      Points		      [-115, 0; 0, -110]
 	      DstBlock		      "Calculate VehcileVelocity"
-	      DstPort		      4
+	      DstPort		      5
 	    }
 	    Line {
 	      SrcBlock		      "Kinematics"
 	      SrcPort		      1
+	      Points		      [305, 0]
 	      DstBlock		      "Calculate VehcileVelocity"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "End_Effector_Com"
 	      SrcPort		      1
+	      Points		      [305, 0]
 	      DstBlock		      "Calculate VehcileVelocity"
 	      DstPort		      2
 	    }
@@ -1784,6 +1819,13 @@ Model {
 		DstPort			1
 	      }
 	    }
+	    Line {
+	      SrcBlock		      "CircleProps1"
+	      SrcPort		      1
+	      Points		      [145, 0; 0, -40]
+	      DstBlock		      "Calculate VehcileVelocity"
+	      DstPort		      4
+	    }
 	  }
 	}
 	Block {
@@ -1791,7 +1833,7 @@ Model {
 	  Name			  "get ee pose error"
 	  SID			  "248"
 	  Ports			  [3, 1]
-	  Position		  [350, 425, 455, 505]
+	  Position		  [620, 430, 725, 510]
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -2218,7 +2260,7 @@ Model {
 	  BlockType		  Outport
 	  Name			  "zeta"
 	  SID			  "129"
-	  Position		  [960, 238, 990, 252]
+	  Position		  [1230, 243, 1260, 257]
 	  IconDisplay		  "Port number"
 	}
 	Line {
@@ -2326,7 +2368,7 @@ Model {
       BlockType		      SubSystem
       Name		      "Path generator"
       SID		      "133"
-      Ports		      [1, 1]
+      Ports		      [0, 1]
       Position		      [80, 236, 235, 304]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
@@ -2351,14 +2393,6 @@ Model {
 	ShowPageBoundaries	off
 	ZoomFactor		"125"
 	Block {
-	  BlockType		  Inport
-	  Name			  "Kinematics"
-	  SID			  "303"
-	  Position		  [220, 313, 250, 327]
-	  BackgroundColor	  "orange"
-	  IconDisplay		  "Port number"
-	}
-	Block {
 	  BlockType		  Clock
 	  Name			  "Clock"
 	  SID			  "135"
@@ -2369,8 +2403,8 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "End Effector2"
 	  SID			  "259"
-	  Ports			  [1, 1]
-	  Position		  [720, 344, 915, 406]
+	  Ports			  [1, 2]
+	  Position		  [720, 352, 915, 443]
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -2684,7 +2718,7 @@ Model {
 	      LibraryVersion	      "1.260"
 	      SourceBlock	      "simulink/Signal\nRouting/Manual Switch"
 	      SourceType	      "Manual Switch"
-	      sw		      "0"
+	      sw		      "1"
 	      action		      "0"
 	      varsize		      off
 	    }
@@ -2693,7 +2727,7 @@ Model {
 	      Name		      "To Workspace1"
 	      SID		      "149"
 	      Ports		      [1]
-	      Position		      [950, 224, 1060, 286]
+	      Position		      [1035, 224, 1145, 286]
 	      ZOrder		      -7
 	      VariableName	      "Ee_pose_com_log"
 	      MaxDataPoints	      "inf"
@@ -3356,10 +3390,19 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
+	      Name		      "ee_pose"
+	      SID		      "304"
+	      Position		      [970, 178, 1000, 192]
+	      ZOrder		      -23
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Outport
 	      Name		      "End Effector"
 	      SID		      "279"
 	      Position		      [935, 118, 965, 132]
 	      ZOrder		      -23
+	      Port		      "2"
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
@@ -3424,8 +3467,16 @@ Model {
 	    Line {
 	      SrcBlock		      "Manual Switch"
 	      SrcPort		      1
-	      DstBlock		      "To Workspace1"
-	      DstPort		      1
+	      Points		      [25, 0]
+	      Branch {
+		DstBlock		"To Workspace1"
+		DstPort			1
+	      }
+	      Branch {
+		Points			[0, -70]
+		DstBlock		"ee_pose"
+		DstPort			1
+	      }
 	    }
 	    Line {
 	      SrcBlock		      "MATLAB Function2"
@@ -3440,14 +3491,14 @@ Model {
 	  BlockType		  FromWorkspace
 	  Name			  "From\nWorkspace"
 	  SID			  "301"
-	  Position		  [200, 363, 265, 387]
+	  Position		  [155, 373, 220, 397]
 	  ZOrder		  -10
 	  VariableName		  "ee_traj_input"
 	  SampleTime		  "0"
 	  ZeroCross		  on
 	  Port {
 	    PortNumber		    1
-	    Name		    "v_ee_c"
+	    Name		    "v_ee_c_0"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
@@ -3695,142 +3746,6 @@ Model {
 	  }
 	}
 	Block {
-	  BlockType		  SubSystem
-	  Name			  "MATLAB Function2"
-	  SID			  "302"
-	  Ports			  [2, 1]
-	  Position		  [355, 339, 425, 386]
-	  ZOrder		  -4
-	  LibraryVersion	  "1.32"
-	  ErrorFcn		  "Stateflow.Translate.translate"
-	  PermitHierarchicalResolution "ExplicitOnly"
-	  TreatAsAtomicUnit	  on
-	  MinAlgLoopOccurrences	  off
-	  PropExecContextOutsideSubsystem off
-	  RTWSystemCode		  "Auto"
-	  FunctionWithSeparateData off
-	  Opaque		  off
-	  RequestExecContextInheritance	off
-	  MaskHideContents	  off
-	  SFBlockType		  "MATLAB Function"
-	  MaskType		  "Stateflow"
-	  MaskDescription	  "Embedded MATLAB block"
-	  MaskSelfModifiable	  on
-	  MaskDisplay		  "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('private/"
-	  "eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'fcn']);"
-	  MaskIconFrame		  on
-	  MaskIconOpaque	  off
-	  MaskIconRotate	  "none"
-	  MaskPortRotate	  "default"
-	  MaskIconUnits		  "normalized"
-	  System {
-	    Name		    "MATLAB Function2"
-	    Location		    [257, 457, 812, 717]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "23"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "Kinematics"
-	      SID		      "302::23"
-	      Position		      [20, 101, 40, 119]
-	      ZOrder		      9
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "V"
-	      SID		      "302::1"
-	      Position		      [20, 136, 40, 154]
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Demux
-	      Name		      " Demux "
-	      SID		      "302::20"
-	      Ports		      [1, 1]
-	      Position		      [270, 160, 320, 200]
-	      ZOrder		      6
-	      Outputs		      "1"
-	    }
-	    Block {
-	      BlockType		      S-Function
-	      Name		      " SFunction "
-	      SID		      "302::19"
-	      Tag		      "Stateflow S-Function uvms_kinematics 22"
-	      Ports		      [2, 2]
-	      Position		      [180, 100, 230, 160]
-	      ZOrder		      5
-	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[2 2]"
-	      EnableBusSupport	      on
-	      Port {
-		PortNumber		2
-		Name			"Vout"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
-	    }
-	    Block {
-	      BlockType		      Terminator
-	      Name		      " Terminator "
-	      SID		      "302::22"
-	      Position		      [460, 171, 480, 189]
-	      ZOrder		      8
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "Vout"
-	      SID		      "302::5"
-	      Position		      [460, 101, 480, 119]
-	      IconDisplay	      "Port number"
-	    }
-	    Line {
-	      SrcBlock		      "Kinematics"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "V"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      2
-	    }
-	    Line {
-	      Name		      "Vout"
-	      Labels		      [0, 0]
-	      SrcBlock		      " SFunction "
-	      SrcPort		      2
-	      DstBlock		      "Vout"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      " Demux "
-	      SrcPort		      1
-	      DstBlock		      " Terminator "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      " SFunction "
-	      SrcPort		      1
-	      DstBlock		      " Demux "
-	      DstPort		      1
-	    }
-	  }
-	}
-	Block {
 	  BlockType		  Reference
 	  Name			  "Manual Switch"
 	  SID			  "137"
@@ -3862,18 +3777,154 @@ Model {
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
+	  BlockType		  SubSystem
+	  Name			  "inertial to body velocities"
+	  SID			  "302"
+	  Ports			  [2, 1]
+	  Position		  [345, 317, 425, 408]
+	  ZOrder		  -4
+	  LibraryVersion	  "1.32"
+	  ErrorFcn		  "Stateflow.Translate.translate"
+	  PermitHierarchicalResolution "ExplicitOnly"
+	  TreatAsAtomicUnit	  on
+	  MinAlgLoopOccurrences	  off
+	  PropExecContextOutsideSubsystem off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  Opaque		  off
+	  RequestExecContextInheritance	off
+	  MaskHideContents	  off
+	  SFBlockType		  "MATLAB Function"
+	  MaskType		  "Stateflow"
+	  MaskDescription	  "Embedded MATLAB block"
+	  MaskSelfModifiable	  on
+	  MaskDisplay		  "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('private/"
+	  "eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'fcn']);"
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  off
+	  MaskIconRotate	  "none"
+	  MaskPortRotate	  "default"
+	  MaskIconUnits		  "normalized"
+	  System {
+	    Name		    "inertial to body velocities"
+	    Location		    [257, 457, 812, 717]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    SIDHighWatermark	    "23"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "pose"
+	      SID		      "302::23"
+	      Position		      [20, 101, 40, 119]
+	      ZOrder		      9
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "V0"
+	      SID		      "302::1"
+	      Position		      [20, 136, 40, 154]
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      SID		      "302::20"
+	      Ports		      [1, 1]
+	      Position		      [270, 160, 320, 200]
+	      ZOrder		      6
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      S-Function
+	      Name		      " SFunction "
+	      SID		      "302::19"
+	      Tag		      "Stateflow S-Function uvms_kinematics 22"
+	      Ports		      [2, 2]
+	      Position		      [180, 100, 230, 160]
+	      ZOrder		      5
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[2 2]"
+	      EnableBusSupport	      on
+	      Port {
+		PortNumber		2
+		Name			"Vb"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      SID		      "302::22"
+	      Position		      [460, 171, 480, 189]
+	      ZOrder		      8
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "Vb"
+	      SID		      "302::5"
+	      Position		      [460, 101, 480, 119]
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "pose"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "V0"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      Name		      "Vb"
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "Vb"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
 	  BlockType		  Outport
 	  Name			  "End_Effector_Com"
 	  SID			  "147"
-	  Position		  [1180, 368, 1210, 382]
+	  Position		  [1175, 413, 1205, 427]
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  Name			  "v_ee_c"
+	  Name			  "v_ee_c_0"
 	  Labels		  [0, 0]
 	  SrcBlock		  "From\nWorkspace"
 	  SrcPort		  1
-	  DstBlock		  "MATLAB Function2"
+	  DstBlock		  "inertial to body velocities"
 	  DstPort		  2
 	}
 	Line {
@@ -3915,26 +3966,27 @@ Model {
 	  Labels		  [0, 0]
 	  SrcBlock		  "Manual Switch"
 	  SrcPort		  1
+	  Points		  [65, 0]
 	  DstBlock		  "End Effector2"
 	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "End Effector2"
-	  SrcPort		  1
+	  SrcPort		  2
 	  DstBlock		  "End_Effector_Com"
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "MATLAB Function2"
+	  SrcBlock		  "inertial to body velocities"
 	  SrcPort		  1
 	  DstBlock		  "Manual Switch"
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "Kinematics"
+	  SrcBlock		  "End Effector2"
 	  SrcPort		  1
-	  Points		  [40, 0; 0, 30]
-	  DstBlock		  "MATLAB Function2"
+	  Points		  [0, -70; -590, 0]
+	  DstBlock		  "inertial to body velocities"
 	  DstPort		  1
 	}
       }
@@ -4225,7 +4277,7 @@ Model {
 		  MaskHideContents	  off
 		  System {
 		    Name		    "Reference system"
-		    Location		    [108, 548, 465, 666]
+		    Location		    [1922, 788, 3118, 1368]
 		    Open		    off
 		    ModelBrowserVisibility  off
 		    ModelBrowserWidth	    200
@@ -4266,7 +4318,7 @@ Model {
 		    LibraryVersion	    "1.260"
 		    SourceBlock		    "simulink/Signal\nRouting/Manual Switch"
 		    SourceType		    "Manual Switch"
-		    sw			    "0"
+		    sw			    "1"
 		    action		    "0"
 		    varsize		    off
 		    }
@@ -4287,7 +4339,7 @@ Model {
 		    SID			    "31"
 		    Position		    [710, 42, 770, 78]
 		    ZOrder		    -9
-		    Denominator		    "[0.1 1]"
+		    Denominator		    "[0.5 1]"
 		    }
 		    Block {
 		    BlockType		    TransferFcn
@@ -6910,28 +6962,6 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "model"
-      SrcPort		      1
-      Points		      [0, -65; -430, 0]
-      Branch {
-	DstBlock		"Inverse Kinematics"
-	DstPort			1
-      }
-      Branch {
-	Points			[-285, 0]
-	DstBlock		"Path generator"
-	DstPort			1
-      }
-    }
-    Line {
-      Labels		      [2, 0]
-      SrcBlock		      "model"
-      SrcPort		      3
-      Points		      [1, 96; -431, 0]
-      DstBlock		      "Inverse Kinematics"
-      DstPort		      4
-    }
-    Line {
       SrcBlock		      "Path generator"
       SrcPort		      1
       DstBlock		      "Inverse Kinematics"
@@ -6939,10 +6969,24 @@ Model {
     }
     Line {
       SrcBlock		      "model"
+      SrcPort		      1
+      Points		      [60, 0; 0, -50; -490, 0]
+      DstBlock		      "Inverse Kinematics"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "model"
       SrcPort		      2
-      Points		      [30, 0; 0, 140; -470, 0; 0, -125]
+      Points		      [126, 0; 0, 171; -596, 0; 0, -156]
       DstBlock		      "Inverse Kinematics"
       DstPort		      3
+    }
+    Line {
+      SrcBlock		      "model"
+      SrcPort		      3
+      Points		      [106, 0; 0, 96; -531, 0; 0, -81]
+      DstBlock		      "Inverse Kinematics"
+      DstPort		      4
     }
     Annotation {
       SID		      "289"
@@ -6963,7 +7007,7 @@ Stateflow {
     name		    "uvms_kinematics"
     created		    "26-Mar-2014 13:39:42"
     isLibrary		    0
-    firstTarget		    189
+    firstTarget		    190
     sfVersion		    76014001.00040001
   }
   chart {
@@ -7434,7 +7478,6 @@ Stateflow {
     firstJunction	    27
     viewObj		    25
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    13
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -7470,7 +7513,7 @@ Stateflow {
       ") * JsInv * Vs;\n    W_diag = diag(W);\nend\n\n% ---------------------------------------------------------------"
       "-----------\n%   Returns the weighting matrix for use in the weighted pseudo inverse\n% ------------------------"
       "--------------------------------------------------\nfunction [W, DH] = getW(q, previousDH,QLimits)\n%#codegen   "
-      " \n% link joints\n    DH =diag([ones(1,6)*2000,zeros(1,6)]); % derivative of H matrix\n    qmin = QLimits.qmin;\n"
+      " \n% link joints\n    DH =diag([ones(1,6)*7000,zeros(1,6)]); % derivative of H matrix\n    qmin = QLimits.qmin;\n"
       "    qmax = QLimits.qmax;\n    for i=1:6\n        temp = abs((((qmax(i)-qmin(i)).^2)*(2*q(i)-qmax(i)-qmin(i))) ./"
       " ((4*(qmax(i)-q(i)).^2) * ((q(i)-qmin(i)).^2)));\n        if (temp-previousDH(i+6,i+6)) < 0 \n            DH(i+6"
       ",i+6)=abs(temp); % 0;\n        else\n            DH(i+6,i+6)=abs(temp);\n        end\n    end\n   W = eye(12);\n"
@@ -7741,7 +7784,6 @@ Stateflow {
     firstJunction	    42
     viewObj		    40
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    5
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -7990,7 +8032,6 @@ Stateflow {
     firstJunction	    56
     viewObj		    54
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    6
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -8260,7 +8301,7 @@ Stateflow {
     firstJunction	    71
     viewObj		    69
     machine		    1
-    ssIdHighWaterMark	    13
+    ssIdHighWaterMark	    14
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    73
@@ -8284,70 +8325,95 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function [V_vehicle , VV_States] = getVehicleVelocity(Kinematics,End_Effector_Com, CircleProps, P"
-      "rev_VV_States)\n%#codegen \n    %% set initial parameters\n    VV_States = struct('StatusLinear',0, 'StatusAngul"
-      "ar', 0 ,'Circle2EEVec',zeros(3,1), ...\n                'linearVehicleVelocity', zeros(6,1), 'angularVehicleVelo"
-      "city', zeros(6,1) , 'psibe',0, 'V_EE', zeros(6,1), 'VdotP', 0);\n    V_vehicle = zeros(6,1);\n    VV_States.V_EE"
-      " = End_Effector_Com.velocity;\n    VV_States.Circle2EEVec = getPCircle(Kinematics,CircleProps);    % vector from"
-      " center of circle to EE\n    VV_States.VdotP = ( Kinematics.Ti.Rbe * VV_States.V_EE(1:3) )' * VV_States.Circle2E"
-      "EVec;\n    VV_States.psibe = getPsibe( Kinematics);\n    \n    %% Get the status of the vehicle velocity assigne"
-      "r\n    StatusLinear = getStatusLinear(Prev_VV_States,VV_States,CircleProps);\n    StatusAngular = getStatusAngul"
-      "ar(Prev_VV_States, VV_States, CircleProps); \n    \n    %% act on the different StatusLinear\n    if StatusLinea"
-      "r == 0 \n        V_vehicle = zeros(6,1);\n    elseif StatusLinear == 1\n        V_vehicle = getLinearVelocitySam"
-      "eAsEE( VV_States, CircleProps, Kinematics);         \n    elseif StatusLinear == 2\n        V_vehicle = zeros(6,"
-      "1);\n    elseif StatusLinear == 3\n        V_vehicle = getReturnToInnerCircleVelocity(VV_States,CircleProps, Kin"
-      "ematics);\n    else\n        error('something went wrong in linear states');\n    end\n    linearVelocity = V_ve"
-      "hicle;\n    \n    %% act on the different StatusAngular\n    if StatusAngular == 0\n        V_vehicle = zeros(6,"
-      "1);\n    elseif StatusAngular == 1 \n        V_vehicle = getReturnToInnerpsibe(Kinematics, VV_States);\n    else"
-      "\n        error('something went wrong in angular states');\n    end\n    angularVelocity = V_vehicle;\n    \n   "
-      " %% set the statuses and the commanded vehicle\n    V_vehicle = angularVelocity + linearVelocity;        \n    V"
-      "V_States.StatusLinear = StatusLinear;\n    VV_States.StatusAngular = StatusAngular;\n    VV_States.linearVehicle"
-      "Velocity = linearVelocity;\n    VV_States.angularVehicleVelocity = angularVelocity;       \nend\n\n%------------"
-      "------------------------------------------------------------------------------------------------------\nfunction"
-      " V_vehicle = getReturnToInnerpsibe(Kinematics, VV_States)\n    psibe = VV_States.psibe;\n    k_ang = 1;\n    Vee"
-      " = VV_States.V_EE;\n    omegabe = Vee(4:6);\n    Rbe = Kinematics.Ti.Rbe;\n    ybe = Kinematics.Ti.pbe(2);\n    "
-      "xbe = Kinematics.Ti.pbe(1);\n    % angular velocity of ee around z axis vehicle\n    rb0e = [0,0,1] * Rbe * omeg"
-      "abe;\n    V_vehicle = [ybe ; -xbe ; 0 ; 0 ; 0 ; 1] * ( rb0e + k_ang * psibe  ) ;    \n   \nend\n\n%-------------"
-      "-----------------------------------------------------------------------------------------------------\nfunction "
-      "V_vehicle = getLinearVelocitySameAsEE(VV_States, CircleProps,Kinematics)\n    Vee = VV_States.V_EE;\n    Rbe = K"
-      "inematics.Ti.Rbe;\n    x = norm(VV_States.Circle2EEVec )  - CircleProps.middleCircleRadius;\n    radiusDelta = C"
-      "ircleProps.innerMiddelRadiusDelta;\n    V_vehicle = zeros(6,1);\n    V_vehicle(1:3) = Rbe*Vee(1:3)*(x/radiusDelt"
-      "a);\nend\n\n%---------------------------------------------------------------------------------------------------"
-      "---------------\nfunction V_vehicle = getAngularSameAsEE(VV_States, Kinematics)\n    Vee = VV_States.V_EE;\n    "
-      "omegabe = Vee(4:6);\n    Rbe = Kinematics.Ti.Rbe;\n    ybe = Kinematics.Ti.pbe(2);\n    xbe = Kinematics.Ti.pbe("
-      "1);\n    % angular velocity of ee around z axis vehicle\n    rb0e = [0,0,1] * Rbe * omegabe;\n    V_vehicle = [y"
-      "be ; -xbe ; 0 ; 0 ; 0 ; 1] * rb0e ;    \nend\n\n%---------------------------------------------------------------"
-      "---------------------------------------------------\n% get the yaw angle by transforming the forward direction o"
-      "f the end\n% effector (z) to the frame of the vehicle, and take the dot product\nfunction psibe  = getPsibe( Kin"
-      "ematics)\n    Rbe = Kinematics.Ti.Rbe;\n    re = [0,0,1]';\n    rb = Rbe * re;\n    rb2 = rb(1:2);\n    psibe = "
-      "atan2 ( rb2(2) , rb2(1) );\nend\n\n\n\n%------------------------------------------------------------------------"
-      "------------------------------------------\n%   create a smooth velocity for the vehicle to make EE return to th"
-      "e inner\n%   circle. \nfunction V_vehicle = getReturnToInnerCircleVelocity(VV_States , CircleProps, Kinematics)\n"
-      "    Vee = VV_States.V_EE;\n    ir = CircleProps.innerCircleRadius;\n    mr = CircleProps.middleCircleRadius;\n  "
-      "  ve = Vee(1:3);\n    Rbe = Kinematics.Ti.Rbe;\n    c = ir + (mr - ir)./2;      % point between the two radiuses"
-      "\n    K = 0.6;\n    V_vehicle = zeros(6,1);\n    V_vehicle(1:3) = Rbe*ve +  K*VV_States.Circle2EEVec./norm( VV_S"
-      "tates.Circle2EEVec );\n\nend\n\n\n%-----------------------------------------------------------------------------"
-      "-------------------------------------\n%  get the angular status \n%\nfunction StatusAngular = getStatusAngular("
-      "Prev_VV_States, VV_States, CircleProps)\n    PrevStatus = Prev_VV_States.StatusAngular;\n    psibe = VV_States.p"
-      "sibe;\n    prev_psibe = Prev_VV_States.psibe;\n    \n    if  PrevStatus == 0 && abs(psibe) >= CircleProps.psis\n"
-      "        StatusAngular = 1;\n    elseif abs( psibe ) < CircleProps.psii\n        StatusAngular = 0;\n    else\n  "
-      "      StatusAngular = PrevStatus;\n    end\nend\n\n%------------------------------------------------------------"
-      "------------------------------------------------------\n%   the different states are as follows:\n%   0 = vehicl"
-      "e steady \n%   1 = outside middle circle - integrating deviation of vector\n%   2 = inside middle circle on the "
-      "way back to optimal area \nfunction StatusLinear = getStatusLinear(Prev_VV_States, VV_States, CircleProps)\n    "
-      "PrevStatus = Prev_VV_States.StatusLinear;\n    prevCircle2EEVec = Prev_VV_States.Circle2EEVec;\n    VdotP = VV_S"
-      "tates.VdotP; \n     Circle2EEVec = VV_States.Circle2EEVec;\n    \n    if ( PrevStatus == 0 || PrevStatus == 2 ) "
-      "&& norm (Circle2EEVec) > CircleProps.middleCircleRadius && VdotP > 0     \n       StatusLinear = 1;\n    elseif "
-      "(PrevStatus == 1 ||  PrevStatus == 2 ) && norm (Circle2EEVec) > CircleProps.middleCircleRadius && VdotP < 0\n   "
-      "     StatusLinear = 3;\n    elseif (PrevStatus == 1 || PrevStatus == 2) && norm(Circle2EEVec) < CircleProps.midd"
-      "leCircleRadius\n        StatusLinear = 3;\n    elseif (PrevStatus == 3 || PrevStatus == 2) && norm(Circle2EEVec)"
-      " < CircleProps.innerCircleRadius\n        StatusLinear = 0;\n    else\n        StatusLinear = PrevStatus;\n    e"
-      "nd\nend\n\n%----------------------------------------------------------------------------------------------------"
-      "--------------\n% get the vector to the center of the circle denoted in the\n% frame of the center of the circle"
-      "\nfunction pCircle2EEinFrameC = getPCircle(Kinematics, CircleProps)  \n    g0b = Kinematics.Ti.g0b;\n    gbe = K"
-      "inematics.Ti.gbe;\n    circleCenterInFrame0 = g0b(1:3,4) + g0b(1:3,1:3)*CircleProps.CenterInFrameB;\n    pVehicl"
-      "e2EEinFrameB = gbe(1:3,4);\n    pCircle2EEinFrameC = pVehicle2EEinFrameB - CircleProps.CenterInFrameB;\nend\n\n\n"
-      "\n\n\n"
+      script		      "function [V_vehicle , VV_States] = getVehicleVelocity(Kinematics,End_Effector_Com, CircleProps, W"
+      "sProps , Prev_VV_States)\n%#codegen \n    %% set initial parameters\n    VV_States = struct('StatusLinear',0, 'S"
+      "tatusAngular', 0 ,'Circle2EEVec',zeros(3,1), ...\n                'linearVehicleVelocity', zeros(6,1), 'angularV"
+      "ehicleVelocity', zeros(6,1) , 'psibe',0, 'V_EE', zeros(6,1), 'VdotP', 0, 'insideWs', 0);\n    V_vehicle = zeros("
+      "6,1);\n    VV_States.V_EE = End_Effector_Com.velocity;\n    VV_States.Circle2EEVec = getPCircle(Kinematics,Circl"
+      "eProps);    % vector from center of circle to EE\n    VV_States.VdotP = ( Kinematics.Ti.Rbe * VV_States.V_EE(1:3"
+      ") )' * VV_States.Circle2EEVec;\n    VV_States.psibe = getPsibe( Kinematics);    \n    \n    %% check if ee is in"
+      "side Ws\n    p = getEErelativeWs(Kinematics, WsProps);\n    VV_States.insideWs = checkIfPointIsInsideMesh( WsPro"
+      "ps.XYZIndices, WsProps.XYZPoints, p);\n    \n    %% Get the status of the vehicle velocity assigner\n    StatusL"
+      "inear = getStatusLinear(Prev_VV_States,VV_States,CircleProps);\n    StatusAngular = getStatusAngular(Prev_VV_Sta"
+      "tes, VV_States, CircleProps ); \n    \n    %% act on the different StatusLinear\n    if StatusLinear == 0 \n    "
+      "    V_vehicle = zeros(6,1);\n    elseif StatusLinear == 1\n        V_vehicle = getLinearVelocitySameAsEE( VV_Sta"
+      "tes, CircleProps, Kinematics);         \n    elseif StatusLinear == 2\n        V_vehicle = zeros(6,1);\n    else"
+      "if StatusLinear == 3\n        V_vehicle = getReturnToInnerCircleVelocity(VV_States,CircleProps, Kinematics);\n  "
+      "  else\n        error('something went wrong in linear states');\n    end\n    linearVelocity = V_vehicle;\n    \n"
+      "    %% act on the different StatusAngular\n    if StatusAngular == 0\n        V_vehicle = zeros(6,1);\n    elsei"
+      "f StatusAngular == 1 \n        V_vehicle = getReturnToInnerpsibe(Kinematics, VV_States);\n    else\n        erro"
+      "r('something went wrong in angular states');\n    end\n    angularVelocity = V_vehicle;\n    \n    %% control th"
+      "eta and psi to zero\n    R = Kinematics.Ti.R0b;\n    phi   = atan2(R(3,2),R(3,3));\n    theta = -asin(R(3,1));\n"
+      "    p = -phi;\n    q = - theta;\n    Kphitheta = diag([3,3]);\n    angularVelocity(4:5) = Kphitheta*[p;q];\n    "
+      "\n    %% set the statuses and the commanded vehicle\n    V_vehicle = angularVelocity + linearVelocity;        \n"
+      "    VV_States.StatusLinear = StatusLinear;\n    VV_States.StatusAngular = StatusAngular;\n    VV_States.linearVe"
+      "hicleVelocity = linearVelocity;\n    VV_States.angularVehicleVelocity = angularVelocity;       \nend\n\n%-------"
+      "-----------------------------------------------------------------------------------------------------------\nfun"
+      "ction V_vehicle = getReturnToInnerpsibe(Kinematics, VV_States)\n    psibe = VV_States.psibe;\n    k_ang = 1;\n  "
+      "  Vee = VV_States.V_EE;\n    omegabe = Vee(4:6);\n    Rbe = Kinematics.Ti.Rbe;\n    ybe = Kinematics.Ti.pbe(2);\n"
+      "    xbe = Kinematics.Ti.pbe(1);\n    % angular velocity of ee around z axis vehicle\n    rb0e = [0,0,1] * Rbe * "
+      "omegabe;\n    V_vehicle = [ybe ; -xbe ; 0 ; 0 ; 0 ; 1] * ( rb0e + k_ang * psibe  ) ;    \n   \nend\n\n%---------"
+      "---------------------------------------------------------------------------------------------------------\nfunct"
+      "ion V_vehicle = getLinearVelocitySameAsEE(VV_States, CircleProps,Kinematics)\n    Vee = VV_States.V_EE;\n    Rbe"
+      " = Kinematics.Ti.Rbe;\n    x = norm(VV_States.Circle2EEVec )  - CircleProps.middleCircleRadius;\n    radiusDelta"
+      " = CircleProps.innerMiddelRadiusDelta;\n    V_vehicle = zeros(6,1);\n    V_vehicle(1:3) = Rbe*Vee(1:3)*(x/radius"
+      "Delta);\nend\n\n%-----------------------------------------------------------------------------------------------"
+      "-------------------\nfunction V_vehicle = getAngularSameAsEE(VV_States, Kinematics)\n    Vee = VV_States.V_EE;\n"
+      "    omegabe = Vee(4:6);\n    Rbe = Kinematics.Ti.Rbe;\n    ybe = Kinematics.Ti.pbe(2);\n    xbe = Kinematics.Ti."
+      "pbe(1);\n    % angular velocity of ee around z axis vehicle\n    rb0e = [0,0,1] * Rbe * omegabe;\n    V_vehicle "
+      "= [ybe ; -xbe ; 0 ; 0 ; 0 ; 1] * rb0e ;    \nend\n\n%-----------------------------------------------------------"
+      "-------------------------------------------------------\n% get the yaw angle by transforming the forward directi"
+      "on of the end\n% effector (z) to the frame of the vehicle, and take the dot product\nfunction psibe  = getPsibe("
+      " Kinematics)\n    Rbe = Kinematics.Ti.Rbe;\n    re = [0,0,1]';\n    rb = Rbe * re;\n    rb2 = rb(1:2);\n    psib"
+      "e = atan2 ( rb2(2) , rb2(1) );\nend\n\n\n\n%--------------------------------------------------------------------"
+      "----------------------------------------------\n%   create a smooth velocity for the vehicle to make EE return t"
+      "o the inner\n%   circle. \nfunction V_vehicle = getReturnToInnerCircleVelocity(VV_States , CircleProps, Kinemati"
+      "cs)\n    Vee = VV_States.V_EE;\n    ir = CircleProps.innerCircleRadius;\n    mr = CircleProps.middleCircleRadius"
+      ";\n    ve = Vee(1:3);\n    Rbe = Kinematics.Ti.Rbe;\n    c = ir + (mr - ir)./2;      % point between the two rad"
+      "iuses\n    K = 0.6;\n    V_vehicle = zeros(6,1);\n    V_vehicle(1:3) = Rbe*ve +  K*VV_States.Circle2EEVec./norm("
+      " VV_States.Circle2EEVec );\n\nend\n\n\n%------------------------------------------------------------------------"
+      "------------------------------------------\n%  get the angular status \n%\nfunction StatusAngular = getStatusAng"
+      "ular(Prev_VV_States, VV_States, CircleProps)\n    PrevStatus = Prev_VV_States.StatusAngular;\n    psibe = VV_Sta"
+      "tes.psibe;\n    prev_psibe = Prev_VV_States.psibe;\n    \n    if  PrevStatus == 0 && abs(psibe) >= CircleProps.p"
+      "sis\n        StatusAngular = 1;\n    elseif abs( psibe ) < CircleProps.psii\n        StatusAngular = 0;\n    els"
+      "e\n        StatusAngular = PrevStatus;\n    end\nend\n\n%-------------------------------------------------------"
+      "-----------------------------------------------------------\n%   the different states are as follows:\n%   0 = v"
+      "ehicle steady \n%   1 = outside middle circle - integrating deviation of vector\n%   2 = inside middle circle on"
+      " the way back to optimal area \nfunction StatusLinear = getStatusLinear(Prev_VV_States, VV_States, CircleProps)\n"
+      "    PrevStatus = Prev_VV_States.StatusLinear;\n    prevCircle2EEVec = Prev_VV_States.Circle2EEVec;\n    VdotP = "
+      "VV_States.VdotP; \n    Circle2EEVec = VV_States.Circle2EEVec;\n           \n    if ( PrevStatus == 0 || PrevStat"
+      "us == 2 ) && VV_States.insideWs == 0 && VdotP > 0     \n       StatusLinear = 1;\n    elseif (PrevStatus == 1 ||"
+      "  PrevStatus == 2 ) && VV_States.insideWs == 0 && VdotP < 0\n        StatusLinear = 3;\n    elseif (PrevStatus ="
+      "= 1 || PrevStatus == 2) && VV_States.insideWs == 1\n        StatusLinear = 3;\n    elseif (PrevStatus == 3 || Pr"
+      "evStatus == 2) && norm(Circle2EEVec) < CircleProps.innerCircleRadius\n        StatusLinear = 0;\n    else\n     "
+      "   StatusLinear = PrevStatus;\n    end\nend\n\n%----------------------------------------------------------------"
+      "--------------------------------------------------\n% get the end effectors position relative to the homepositio"
+      "n of Ws\n%\nfunction p = getEErelativeWs(Kinematics, WsProps)\n    pbeInBframe = Kinematics.Ti.gbe(1:3,4);\n    "
+      "p = pbeInBframe - WsProps.centerOfWs;\nend\n\n%-----------------------------------------------------------------"
+      "-------------------------------------------------\n% get the vector to the center of the circle denoted in the\n"
+      "% frame of the center of the circle\nfunction pCircle2EEinFrameC = getPCircle(Kinematics, CircleProps)  \n    g0"
+      "b = Kinematics.Ti.g0b;\n    gbe = Kinematics.Ti.gbe;\n    circleCenterInFrame0 = g0b(1:3,4) + g0b(1:3,1:3)*Circl"
+      "eProps.CenterInFrameB;\n    pVehicle2EEinFrameB = gbe(1:3,4);\n    pCircle2EEinFrameC = pVehicle2EEinFrameB - Ci"
+      "rcleProps.CenterInFrameB;\nend\n\n%-----------------------------------------------------------------------------"
+      "-------------------------------------\n% check if end effector is inside Ws mesh\nfunction isInside = checkIfPoi"
+      "ntIsInsideMesh (indices, XYZ, point)\n    X = XYZ(1,:)';\n    Y = XYZ(2,:)';\n    Z = XYZ(3,:)';\n    idx = indi"
+      "ces;\n    intersections = 0;\n    for i=1:size(indices,1)\n        v1 = [ X(idx(i,1)) ; Y(idx(i,1)); Z(idx(i,1))"
+      " ]; \n        v2 = [ X(idx(i,2)) ; Y(idx(i,2)); Z(idx(i,2)) ]; \n        v3 = [ X(idx(i,3)) ; Y(idx(i,3)); Z(idx"
+      "(i,3)) ];\n        %intersections = intersections + rayIntersectsTriangle(v1,v2,v3 , point);\n        [flag, u, "
+      "v, t, ray] = rayTriangleIntersection (point,  v1, v2, v3);\n        if flag == 1\n            intersections = in"
+      "tersections + 1;\n        end\n    end\n    if mod(intersections , 2 ) == 0\n       isInside = 0;\n    else\n   "
+      "    isInside = 1;\n    end\nend\n\n%----------------------------------------------------------------------------"
+      "--------------------------------------\n% Ray/triangle intersection using the algorithm proposed by Möller and "
+      "Trumbore (1997).\nfunction [flag, u, v, t, ray] = rayTriangleIntersection (o, p0, p1, p2)\n    % direction of th"
+      "e ray from the point o\n    d = [4,4,4]';\n    epsilon = 0.000001;\n    e1 = p1-p0;\n    e2 = p2-p0;\n    q  = c"
+      "ross(d,e2);\n    a  = dot(e1,q); % determinant of the matrix M\n    if (a>-epsilon && a<epsilon) \n        % the"
+      " vector is parallel to the plane (the intersection is at infinity)\n        [flag, u, v, t,ray] = deal(0,0,0,0,0"
+      ");\n        return;\n    end;\n    f = 1/a;\n    s = o-p0;\n    u = f*dot(s,q);\n    if (u<0.0)\n        % the i"
+      "ntersection is outside of the triangle\n        [flag, u, v, t, ray] = deal(0,0,0,0,0);\n        return;        "
+      "  \n    end;\n    r = cross(s,e1);\n    v = f*dot(d,r);\n    if (v<0.0 || u+v>1.0)\n        % the intersection i"
+      "s outside of the triangle\n        [flag, u, v, t, ray] = deal(0,0,0,0,0);\n        return;\n    end;\n    t = f"
+      "*dot(e2,r); % verified! \n    if t > epsilon\n        flag = 1;\n        ray = d;\n        return;\n    else\n  "
+      "      [flag, u, v, t, ray] = deal(0,0,0,0,0);\n        return\n    end\nend\n\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -8446,9 +8512,31 @@ Stateflow {
   }
   data {
     id			    76
+    ssIdNumber		    14
+    name		    "WsProps"
+    linkNode		    [69 75 77]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    77
     ssIdNumber		    5
     name		    "V_vehicle"
-    linkNode		    [69 75 77]
+    linkNode		    [69 76 78]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -8465,10 +8553,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    77
+    id			    78
     ssIdNumber		    9
     name		    "Prev_VV_States"
-    linkNode		    [69 76 78]
+    linkNode		    [69 77 79]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -8488,10 +8576,10 @@ Stateflow {
     dataType		    "Bus: vehicleVelocityStates_bus"
   }
   data {
-    id			    78
+    id			    79
     ssIdNumber		    11
     name		    "VV_States"
-    linkNode		    [69 77 0]
+    linkNode		    [69 78 0]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -8511,27 +8599,26 @@ Stateflow {
     dataType		    "Bus: vehicleVelocityStates_bus"
   }
   instance {
-    id			    79
+    id			    80
     name		    "Inverse Kinematics/VehicleVelocity/Calculate VehcileVelocity"
     machine		    1
     chart		    69
   }
   chart {
-    id			    80
+    id			    81
     name		    "Path generator/MATLAB Function1"
     windowPosition	    [405.75 173.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 81 0 0]
-    firstTransition	    83
-    firstJunction	    82
-    viewObj		    80
+    treeNode		    [0 82 0 0]
+    firstTransition	    84
+    firstJunction	    83
+    viewObj		    81
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    5
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    84
+    firstData		    85
     chartFileNumber	    10
     disableImplicitCasting  1
     eml {
@@ -8539,14 +8626,14 @@ Stateflow {
     }
   }
   state {
-    id			    81
+    id			    82
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    80
-    treeNode		    [80 0 0 0]
+    chart		    81
+    treeNode		    [81 0 0 0]
     superState		    SUBCHART
-    subviewer		    80
+    subviewer		    81
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -8557,16 +8644,16 @@ Stateflow {
     }
   }
   junction {
-    id			    82
+    id			    83
     position		    [23.5747 49.5747 7]
-    chart		    80
-    linkNode		    [80 0 0]
-    subviewer		    80
+    chart		    81
+    linkNode		    [81 0 0]
+    subviewer		    81
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    83
+    id			    84
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -8574,23 +8661,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      82
+      id		      83
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    80
-    linkNode		    [80 0 0]
+    chart		    81
+    linkNode		    [81 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    80
+    subviewer		    81
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    84
+    id			    85
     ssIdNumber		    4
     name		    "t"
-    linkNode		    [80 0 85]
+    linkNode		    [81 0 86]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -8606,10 +8693,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    85
+    id			    86
     ssIdNumber		    5
     name		    "gain"
-    linkNode		    [80 84 0]
+    linkNode		    [81 85 0]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -8626,27 +8713,26 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    86
+    id			    87
     name		    "Path generator/MATLAB Function1"
     machine		    1
-    chart		    80
+    chart		    81
   }
   chart {
-    id			    87
+    id			    88
     name		    "Path generator/End Effector2/MATLAB Function1"
     windowPosition	    [390.75 188.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 88 0 0]
-    firstTransition	    90
-    firstJunction	    89
-    viewObj		    87
+    treeNode		    [0 89 0 0]
+    firstTransition	    91
+    firstJunction	    90
+    viewObj		    88
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    91
+    firstData		    92
     chartFileNumber	    11
     disableImplicitCasting  1
     eml {
@@ -8654,14 +8740,14 @@ Stateflow {
     }
   }
   state {
-    id			    88
+    id			    89
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    87
-    treeNode		    [87 0 0 0]
+    chart		    88
+    treeNode		    [88 0 0 0]
     superState		    SUBCHART
-    subviewer		    87
+    subviewer		    88
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -8674,16 +8760,16 @@ Stateflow {
     }
   }
   junction {
-    id			    89
+    id			    90
     position		    [23.5747 49.5747 7]
-    chart		    87
-    linkNode		    [87 0 0]
-    subviewer		    87
+    chart		    88
+    linkNode		    [88 0 0]
+    subviewer		    88
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    90
+    id			    91
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -8691,23 +8777,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      89
+      id		      90
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    87
-    linkNode		    [87 0 0]
+    chart		    88
+    linkNode		    [88 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    87
+    subviewer		    88
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    91
+    id			    92
     ssIdNumber		    4
     name		    "velocity"
-    linkNode		    [87 0 92]
+    linkNode		    [88 0 93]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -8723,10 +8809,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    92
+    id			    93
     ssIdNumber		    5
     name		    "End_Effector_Com"
-    linkNode		    [87 91 93]
+    linkNode		    [88 92 94]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -8744,10 +8830,10 @@ Stateflow {
     dataType		    "Bus: endEffector_com_bus"
   }
   data {
-    id			    93
+    id			    94
     ssIdNumber		    6
     name		    "pose"
-    linkNode		    [87 92 94]
+    linkNode		    [88 93 95]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -8766,10 +8852,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    94
+    id			    95
     ssIdNumber		    7
     name		    "pose_quaternion"
-    linkNode		    [87 93 0]
+    linkNode		    [88 94 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -8788,27 +8874,26 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    95
+    id			    96
     name		    "Path generator/End Effector2/MATLAB Function1"
     machine		    1
-    chart		    87
+    chart		    88
   }
   chart {
-    id			    96
+    id			    97
     name		    "model/End Effector2/MATLAB Function1"
     windowPosition	    [375.75 203.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 97 0 0]
-    firstTransition	    99
-    firstJunction	    98
-    viewObj		    96
+    treeNode		    [0 98 0 0]
+    firstTransition	    100
+    firstJunction	    99
+    viewObj		    97
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    100
+    firstData		    101
     chartFileNumber	    12
     disableImplicitCasting  1
     eml {
@@ -8816,14 +8901,14 @@ Stateflow {
     }
   }
   state {
-    id			    97
+    id			    98
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    96
-    treeNode		    [96 0 0 0]
+    chart		    97
+    treeNode		    [97 0 0 0]
     superState		    SUBCHART
-    subviewer		    96
+    subviewer		    97
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -8836,16 +8921,16 @@ Stateflow {
     }
   }
   junction {
-    id			    98
+    id			    99
     position		    [23.5747 49.5747 7]
-    chart		    96
-    linkNode		    [96 0 0]
-    subviewer		    96
+    chart		    97
+    linkNode		    [97 0 0]
+    subviewer		    97
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    99
+    id			    100
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -8853,23 +8938,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      98
+      id		      99
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    96
-    linkNode		    [96 0 0]
+    chart		    97
+    linkNode		    [97 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    96
+    subviewer		    97
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    100
+    id			    101
     ssIdNumber		    4
     name		    "velocity"
-    linkNode		    [96 0 101]
+    linkNode		    [97 0 102]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -8885,10 +8970,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    101
+    id			    102
     ssIdNumber		    5
     name		    "End_Effector_Mes"
-    linkNode		    [96 100 102]
+    linkNode		    [97 101 103]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -8906,10 +8991,10 @@ Stateflow {
     dataType		    "Bus: endEffector_mes_bus"
   }
   data {
-    id			    102
+    id			    103
     ssIdNumber		    6
     name		    "pose"
-    linkNode		    [96 101 103]
+    linkNode		    [97 102 104]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -8928,10 +9013,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    103
+    id			    104
     ssIdNumber		    7
     name		    "pose_quaternion"
-    linkNode		    [96 102 0]
+    linkNode		    [97 103 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -8950,27 +9035,26 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    104
+    id			    105
     name		    "model/End Effector2/MATLAB Function1"
     machine		    1
-    chart		    96
+    chart		    97
   }
   chart {
-    id			    105
+    id			    106
     name		    "Inverse Kinematics/get ee pose error/MATLAB Function1"
     windowPosition	    [390.75 188.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 106 0 0]
-    firstTransition	    108
-    firstJunction	    107
-    viewObj		    105
+    treeNode		    [0 107 0 0]
+    firstTransition	    109
+    firstJunction	    108
+    viewObj		    106
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    8
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    109
+    firstData		    110
     chartFileNumber	    13
     disableImplicitCasting  1
     eml {
@@ -8978,14 +9062,14 @@ Stateflow {
     }
   }
   state {
-    id			    106
+    id			    107
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    105
-    treeNode		    [105 0 0 0]
+    chart		    106
+    treeNode		    [106 0 0 0]
     superState		    SUBCHART
-    subviewer		    105
+    subviewer		    106
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -9001,16 +9085,16 @@ Stateflow {
     }
   }
   junction {
-    id			    107
+    id			    108
     position		    [23.5747 49.5747 7]
-    chart		    105
-    linkNode		    [105 0 0]
-    subviewer		    105
+    chart		    106
+    linkNode		    [106 0 0]
+    subviewer		    106
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    108
+    id			    109
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -9018,23 +9102,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      107
+      id		      108
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    105
-    linkNode		    [105 0 0]
+    chart		    106
+    linkNode		    [106 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    105
+    subviewer		    106
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    109
+    id			    110
     ssIdNumber		    8
     name		    "Kinematics"
-    linkNode		    [105 0 110]
+    linkNode		    [106 0 111]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9053,10 +9137,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    110
+    id			    111
     ssIdNumber		    4
     name		    "End_Effector_Com"
-    linkNode		    [105 109 111]
+    linkNode		    [106 110 112]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9072,10 +9156,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    111
+    id			    112
     ssIdNumber		    5
     name		    "e"
-    linkNode		    [105 110 112]
+    linkNode		    [106 111 113]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -9092,10 +9176,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    112
+    id			    113
     ssIdNumber		    6
     name		    "End_Effector_Mes"
-    linkNode		    [105 111 0]
+    linkNode		    [106 112 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9114,26 +9198,26 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    113
+    id			    114
     name		    "Inverse Kinematics/get ee pose error/MATLAB Function1"
     machine		    1
-    chart		    105
+    chart		    106
   }
   chart {
-    id			    114
+    id			    115
     name		    "model/Commanded States/commanded states/Measure States"
     windowPosition	    [405.75 173.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 115 0 0]
-    firstTransition	    117
-    firstJunction	    116
-    viewObj		    114
+    treeNode		    [0 116 0 0]
+    firstTransition	    118
+    firstJunction	    117
+    viewObj		    115
     machine		    1
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    118
+    firstData		    119
     chartFileNumber	    14
     disableImplicitCasting  1
     eml {
@@ -9141,14 +9225,14 @@ Stateflow {
     }
   }
   state {
-    id			    115
+    id			    116
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    114
-    treeNode		    [114 0 0 0]
+    chart		    115
+    treeNode		    [115 0 0 0]
     superState		    SUBCHART
-    subviewer		    114
+    subviewer		    115
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -9160,16 +9244,16 @@ Stateflow {
     }
   }
   junction {
-    id			    116
+    id			    117
     position		    [23.5747 49.5747 7]
-    chart		    114
-    linkNode		    [114 0 0]
-    subviewer		    114
+    chart		    115
+    linkNode		    [115 0 0]
+    subviewer		    115
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    117
+    id			    118
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -9177,23 +9261,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      116
+      id		      117
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    114
-    linkNode		    [114 0 0]
+    chart		    115
+    linkNode		    [115 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    114
+    subviewer		    115
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    118
+    id			    119
     ssIdNumber		    4
     name		    "dzeta"
-    linkNode		    [114 0 119]
+    linkNode		    [115 0 120]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9209,10 +9293,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    119
+    id			    120
     ssIdNumber		    5
     name		    "Commanded_States"
-    linkNode		    [114 118 120]
+    linkNode		    [115 119 121]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -9230,10 +9314,10 @@ Stateflow {
     dataType		    "Bus: commanded_states_bus"
   }
   data {
-    id			    120
+    id			    121
     ssIdNumber		    6
     name		    "zeta"
-    linkNode		    [114 119 121]
+    linkNode		    [115 120 122]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9252,10 +9336,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    121
+    id			    122
     ssIdNumber		    7
     name		    "xi"
-    linkNode		    [114 120 0]
+    linkNode		    [115 121 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9274,26 +9358,26 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    122
+    id			    123
     name		    "model/Commanded States/commanded states/Measure States"
     machine		    1
-    chart		    114
+    chart		    115
   }
   chart {
-    id			    123
+    id			    124
     name		    "model/Commanded States/commanded states/zeta2xi/body2eulervel"
     windowPosition	    [525.75 53.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 124 0 0]
-    firstTransition	    126
-    firstJunction	    125
-    viewObj		    123
+    treeNode		    [0 125 0 0]
+    firstTransition	    127
+    firstJunction	    126
+    viewObj		    124
     machine		    1
     ssIdHighWaterMark	    8
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    127
+    firstData		    128
     chartFileNumber	    15
     disableImplicitCasting  1
     eml {
@@ -9301,14 +9385,14 @@ Stateflow {
     }
   }
   state {
-    id			    124
+    id			    125
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    123
-    treeNode		    [123 0 0 0]
+    chart		    124
+    treeNode		    [124 0 0 0]
     superState		    SUBCHART
-    subviewer		    123
+    subviewer		    124
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -9329,16 +9413,16 @@ Stateflow {
     }
   }
   junction {
-    id			    125
+    id			    126
     position		    [23.5747 49.5747 7]
-    chart		    123
-    linkNode		    [123 0 0]
-    subviewer		    123
+    chart		    124
+    linkNode		    [124 0 0]
+    subviewer		    124
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    126
+    id			    127
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -9346,23 +9430,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      125
+      id		      126
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    123
-    linkNode		    [123 0 0]
+    chart		    124
+    linkNode		    [124 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    123
+    subviewer		    124
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    127
+    id			    128
     ssIdNumber		    4
     name		    "zeta"
-    linkNode		    [123 0 128]
+    linkNode		    [124 0 129]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9378,10 +9462,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    128
+    id			    129
     ssIdNumber		    5
     name		    "dq"
-    linkNode		    [123 127 129]
+    linkNode		    [124 128 130]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -9398,10 +9482,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    129
+    id			    130
     ssIdNumber		    7
     name		    "dp"
-    linkNode		    [123 128 130]
+    linkNode		    [124 129 131]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -9420,10 +9504,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    130
+    id			    131
     ssIdNumber		    6
     name		    "deuler"
-    linkNode		    [123 129 131]
+    linkNode		    [124 130 132]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -9442,10 +9526,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    131
+    id			    132
     ssIdNumber		    8
     name		    "euler"
-    linkNode		    [123 130 0]
+    linkNode		    [124 131 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9464,26 +9548,26 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    132
+    id			    133
     name		    "model/Commanded States/commanded states/zeta2xi/body2eulervel"
     machine		    1
-    chart		    123
+    chart		    124
   }
   chart {
-    id			    133
+    id			    134
     name		    "model/End Effector2/twist2pose_quaternions/body2quat"
     windowPosition	    [480.75 98.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 134 0 0]
-    firstTransition	    136
-    firstJunction	    135
-    viewObj		    133
+    treeNode		    [0 135 0 0]
+    firstTransition	    137
+    firstJunction	    136
+    viewObj		    134
     machine		    1
     ssIdHighWaterMark	    6
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    137
+    firstData		    138
     chartFileNumber	    16
     disableImplicitCasting  1
     eml {
@@ -9491,14 +9575,14 @@ Stateflow {
     }
   }
   state {
-    id			    134
+    id			    135
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    133
-    treeNode		    [133 0 0 0]
+    chart		    134
+    treeNode		    [134 0 0 0]
     superState		    SUBCHART
-    subviewer		    133
+    subviewer		    134
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -9519,16 +9603,16 @@ Stateflow {
     }
   }
   junction {
-    id			    135
+    id			    136
     position		    [23.5747 49.5747 7]
-    chart		    133
-    linkNode		    [133 0 0]
-    subviewer		    133
+    chart		    134
+    linkNode		    [134 0 0]
+    subviewer		    134
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    136
+    id			    137
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -9536,23 +9620,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      135
+      id		      136
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    133
-    linkNode		    [133 0 0]
+    chart		    134
+    linkNode		    [134 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    133
+    subviewer		    134
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    137
+    id			    138
     ssIdNumber		    4
     name		    "ee_velocity_twist"
-    linkNode		    [133 0 138]
+    linkNode		    [134 0 139]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9568,10 +9652,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    138
+    id			    139
     ssIdNumber		    5
     name		    "ee_rates"
-    linkNode		    [133 137 139]
+    linkNode		    [134 138 140]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -9588,10 +9672,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    139
+    id			    140
     ssIdNumber		    6
     name		    "quat"
-    linkNode		    [133 138 0]
+    linkNode		    [134 139 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9610,26 +9694,26 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    140
+    id			    141
     name		    "model/End Effector2/twist2pose_quaternions/body2quat"
     machine		    1
-    chart		    133
+    chart		    134
   }
   chart {
-    id			    141
+    id			    142
     name		    "Path generator/End Effector2/twist2pose_euler/body2eulervel"
     windowPosition	    [480.75 98.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 142 0 0]
-    firstTransition	    144
-    firstJunction	    143
-    viewObj		    141
+    treeNode		    [0 143 0 0]
+    firstTransition	    145
+    firstJunction	    144
+    viewObj		    142
     machine		    1
     ssIdHighWaterMark	    6
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    145
+    firstData		    146
     chartFileNumber	    17
     disableImplicitCasting  1
     eml {
@@ -9637,14 +9721,14 @@ Stateflow {
     }
   }
   state {
-    id			    142
+    id			    143
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    141
-    treeNode		    [141 0 0 0]
+    chart		    142
+    treeNode		    [142 0 0 0]
     superState		    SUBCHART
-    subviewer		    141
+    subviewer		    142
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -9664,16 +9748,16 @@ Stateflow {
     }
   }
   junction {
-    id			    143
+    id			    144
     position		    [23.5747 49.5747 7]
-    chart		    141
-    linkNode		    [141 0 0]
-    subviewer		    141
+    chart		    142
+    linkNode		    [142 0 0]
+    subviewer		    142
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    144
+    id			    145
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -9681,23 +9765,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      143
+      id		      144
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    141
-    linkNode		    [141 0 0]
+    chart		    142
+    linkNode		    [142 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    141
+    subviewer		    142
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    145
+    id			    146
     ssIdNumber		    4
     name		    "ee_velocity_twist"
-    linkNode		    [141 0 146]
+    linkNode		    [142 0 147]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9713,10 +9797,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    146
+    id			    147
     ssIdNumber		    5
     name		    "ee_rates"
-    linkNode		    [141 145 147]
+    linkNode		    [142 146 148]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -9733,10 +9817,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    147
+    id			    148
     ssIdNumber		    6
     name		    "euler_angles_ee"
-    linkNode		    [141 146 0]
+    linkNode		    [142 147 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9755,26 +9839,26 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    148
+    id			    149
     name		    "Path generator/End Effector2/twist2pose_euler/body2eulervel"
     machine		    1
-    chart		    141
+    chart		    142
   }
   chart {
-    id			    149
+    id			    150
     name		    "Path generator/End Effector2/twist2pose_quaternions/body2quat"
     windowPosition	    [495.75 83.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 150 0 0]
-    firstTransition	    152
-    firstJunction	    151
-    viewObj		    149
+    treeNode		    [0 151 0 0]
+    firstTransition	    153
+    firstJunction	    152
+    viewObj		    150
     machine		    1
     ssIdHighWaterMark	    6
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    153
+    firstData		    154
     chartFileNumber	    18
     disableImplicitCasting  1
     eml {
@@ -9782,14 +9866,14 @@ Stateflow {
     }
   }
   state {
-    id			    150
+    id			    151
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    149
-    treeNode		    [149 0 0 0]
+    chart		    150
+    treeNode		    [150 0 0 0]
     superState		    SUBCHART
-    subviewer		    149
+    subviewer		    150
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -9810,16 +9894,16 @@ Stateflow {
     }
   }
   junction {
-    id			    151
+    id			    152
     position		    [23.5747 49.5747 7]
-    chart		    149
-    linkNode		    [149 0 0]
-    subviewer		    149
+    chart		    150
+    linkNode		    [150 0 0]
+    subviewer		    150
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    152
+    id			    153
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -9827,23 +9911,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      151
+      id		      152
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    149
-    linkNode		    [149 0 0]
+    chart		    150
+    linkNode		    [150 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    149
+    subviewer		    150
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    153
+    id			    154
     ssIdNumber		    4
     name		    "ee_velocity_twist"
-    linkNode		    [149 0 154]
+    linkNode		    [150 0 155]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9859,10 +9943,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    154
+    id			    155
     ssIdNumber		    5
     name		    "ee_rates"
-    linkNode		    [149 153 155]
+    linkNode		    [150 154 156]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -9879,10 +9963,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    155
+    id			    156
     ssIdNumber		    6
     name		    "quat"
-    linkNode		    [149 154 0]
+    linkNode		    [150 155 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -9901,27 +9985,26 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    156
+    id			    157
     name		    "Path generator/End Effector2/twist2pose_quaternions/body2quat"
     machine		    1
-    chart		    149
+    chart		    150
   }
   chart {
-    id			    157
+    id			    158
     name		    "model/End Effector2/twist2pose_quaternions/MATLAB Function"
     windowPosition	    [375.75 203.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 158 0 0]
-    firstTransition	    160
-    firstJunction	    159
-    viewObj		    157
+    treeNode		    [0 159 0 0]
+    firstTransition	    161
+    firstJunction	    160
+    viewObj		    158
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    161
+    firstData		    162
     chartFileNumber	    19
     disableImplicitCasting  1
     eml {
@@ -9929,14 +10012,14 @@ Stateflow {
     }
   }
   state {
-    id			    158
+    id			    159
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    157
-    treeNode		    [157 0 0 0]
+    chart		    158
+    treeNode		    [158 0 0 0]
     superState		    SUBCHART
-    subviewer		    157
+    subviewer		    158
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -9948,16 +10031,16 @@ Stateflow {
     }
   }
   junction {
-    id			    159
+    id			    160
     position		    [23.5747 49.5747 7]
-    chart		    157
-    linkNode		    [157 0 0]
-    subviewer		    157
+    chart		    158
+    linkNode		    [158 0 0]
+    subviewer		    158
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    160
+    id			    161
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -9965,23 +10048,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      159
+      id		      160
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    157
-    linkNode		    [157 0 0]
+    chart		    158
+    linkNode		    [158 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    157
+    subviewer		    158
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    161
+    id			    162
     ssIdNumber		    4
     name		    "pose"
-    linkNode		    [157 0 162]
+    linkNode		    [158 0 163]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -9991,28 +10074,6 @@ Stateflow {
       type {
 	method			SF_INHERITED_TYPE
 	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    162
-    ssIdNumber		    6
-    name		    "quaternion"
-    linkNode		    [157 161 163]
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
       frame		      SF_FRAME_NO
@@ -10021,9 +10082,31 @@ Stateflow {
   }
   data {
     id			    163
+    ssIdNumber		    6
+    name		    "quaternion"
+    linkNode		    [158 162 164]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    164
     ssIdNumber		    7
     name		    "poseIn"
-    linkNode		    [157 162 0]
+    linkNode		    [158 163 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -10042,27 +10125,26 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    164
+    id			    165
     name		    "model/End Effector2/twist2pose_quaternions/MATLAB Function"
     machine		    1
-    chart		    157
+    chart		    158
   }
   chart {
-    id			    165
+    id			    166
     name		    "Path generator/End Effector2/twist2pose_quaternions/MATLAB Function"
     windowPosition	    [390.75 188.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 166 0 0]
-    firstTransition	    168
-    firstJunction	    167
-    viewObj		    165
+    treeNode		    [0 167 0 0]
+    firstTransition	    169
+    firstJunction	    168
+    viewObj		    166
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    7
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    169
+    firstData		    170
     chartFileNumber	    20
     disableImplicitCasting  1
     eml {
@@ -10070,14 +10152,14 @@ Stateflow {
     }
   }
   state {
-    id			    166
+    id			    167
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    165
-    treeNode		    [165 0 0 0]
+    chart		    166
+    treeNode		    [166 0 0 0]
     superState		    SUBCHART
-    subviewer		    165
+    subviewer		    166
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -10089,16 +10171,16 @@ Stateflow {
     }
   }
   junction {
-    id			    167
+    id			    168
     position		    [23.5747 49.5747 7]
-    chart		    165
-    linkNode		    [165 0 0]
-    subviewer		    165
+    chart		    166
+    linkNode		    [166 0 0]
+    subviewer		    166
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    168
+    id			    169
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -10106,23 +10188,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      167
+      id		      168
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    165
-    linkNode		    [165 0 0]
+    chart		    166
+    linkNode		    [166 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    165
+    subviewer		    166
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    169
+    id			    170
     ssIdNumber		    4
     name		    "pose"
-    linkNode		    [165 0 170]
+    linkNode		    [166 0 171]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -10139,10 +10221,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    170
+    id			    171
     ssIdNumber		    6
     name		    "quaternion"
-    linkNode		    [165 169 171]
+    linkNode		    [166 170 172]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -10161,10 +10243,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    171
+    id			    172
     ssIdNumber		    7
     name		    "poseIn"
-    linkNode		    [165 170 0]
+    linkNode		    [166 171 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -10183,27 +10265,26 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    172
+    id			    173
     name		    "Path generator/End Effector2/twist2pose_quaternions/MATLAB Function"
     machine		    1
-    chart		    165
+    chart		    166
   }
   chart {
-    id			    173
+    id			    174
     name		    "Inverse Kinematics/get ee pose error/MATLAB Function2"
     windowPosition	    [405.75 173.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 174 0 0]
-    firstTransition	    176
-    firstJunction	    175
-    viewObj		    173
+    treeNode		    [0 175 0 0]
+    firstTransition	    177
+    firstJunction	    176
+    viewObj		    174
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    8
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    177
+    firstData		    178
     chartFileNumber	    21
     disableImplicitCasting  1
     eml {
@@ -10211,14 +10292,14 @@ Stateflow {
     }
   }
   state {
-    id			    174
+    id			    175
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    173
-    treeNode		    [173 0 0 0]
+    chart		    174
+    treeNode		    [174 0 0 0]
     superState		    SUBCHART
-    subviewer		    173
+    subviewer		    174
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -10230,16 +10311,16 @@ Stateflow {
     }
   }
   junction {
-    id			    175
+    id			    176
     position		    [23.5747 49.5747 7]
-    chart		    173
-    linkNode		    [173 0 0]
-    subviewer		    173
+    chart		    174
+    linkNode		    [174 0 0]
+    subviewer		    174
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    176
+    id			    177
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -10247,23 +10328,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      175
+      id		      176
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    173
-    linkNode		    [173 0 0]
+    chart		    174
+    linkNode		    [174 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    173
+    subviewer		    174
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    177
+    id			    178
     ssIdNumber		    4
     name		    "End_Effector_Com"
-    linkNode		    [173 0 178]
+    linkNode		    [174 0 179]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -10279,10 +10360,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    178
+    id			    179
     ssIdNumber		    5
     name		    "e"
-    linkNode		    [173 177 179]
+    linkNode		    [174 178 180]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -10299,10 +10380,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    179
+    id			    180
     ssIdNumber		    6
     name		    "End_Effector_Mes"
-    linkNode		    [173 178 0]
+    linkNode		    [174 179 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -10321,27 +10402,26 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    180
+    id			    181
     name		    "Inverse Kinematics/get ee pose error/MATLAB Function2"
     machine		    1
-    chart		    173
+    chart		    174
   }
   chart {
-    id			    181
-    name		    "Path generator/MATLAB Function2"
+    id			    182
+    name		    "Path generator/inertial to body velocities"
     windowPosition	    [375.75 203.25 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 3120 1920 1.25]
-    treeNode		    [0 182 0 0]
-    firstTransition	    184
-    firstJunction	    183
-    viewObj		    181
+    treeNode		    [0 183 0 0]
+    firstTransition	    185
+    firstJunction	    184
+    viewObj		    182
     machine		    1
-    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    6
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    185
+    firstData		    186
     chartFileNumber	    22
     disableImplicitCasting  1
     eml {
@@ -10349,35 +10429,42 @@ Stateflow {
     }
   }
   state {
-    id			    182
+    id			    183
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    181
-    treeNode		    [181 0 0 0]
+    chart		    182
+    treeNode		    [182 0 0 0]
     superState		    SUBCHART
-    subviewer		    181
+    subviewer		    182
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function Vout = fcn(Kinematics, V)\n%#codegen\nAdg0e_inv = Kinematics.Ti.Adg0e_inv ;\nRe0 = Kinem"
-      "atics.Ti.R0e';\nVout = [Re0, zeros(3,3) ; zeros(3,3) , Re0] * V;\n\nend"
+      script		      "function Vb= fcn(pose, V0)\n%#codegen\n    euler_angles_ee = pose(4:6);\n    phi=euler_angles_ee("
+      "1);\n    theta=euler_angles_ee(2);\n    psi=euler_angles_ee(3);\n        \n    cphi = cos(phi);\n    sphi = sin("
+      "phi);\n    cth  = cos(theta);\n    sth  = sin(theta);\n    R = Rzyx(phi,theta,psi);\n    if cth==0, error('J2 is"
+      " singular for theta = +-90 degrees'); end\n    T_inv = [...\n        1,0,-sth;\n        0,cphi,cth*sphi;\n      "
+      "  0,-sphi,cth*cphi\n    ];\n    J = [ R' , zeros(3,3);\n          zeros(3,3), T_inv ];\n    Vb=J*V0;\nend\n\n\n\n"
+      "function R = Rzyx(phi,theta,psi)\n    cphi = cos(phi);\n    sphi = sin(phi);\n    cth  = cos(theta);\n    sth  ="
+      " sin(theta);\n    cpsi = cos(psi);\n    spsi = sin(psi);\n\n    R = [...\n       cpsi*cth  -spsi*cphi+cpsi*sth*s"
+      "phi  spsi*sphi+cpsi*cphi*sth\n       spsi*cth  cpsi*cphi+sphi*sth*spsi   -cpsi*sphi+sth*spsi*cphi\n       -sth  "
+      "    cth*sphi                  cth*cphi ];\nend\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
   junction {
-    id			    183
+    id			    184
     position		    [23.5747 49.5747 7]
-    chart		    181
-    linkNode		    [181 0 0]
-    subviewer		    181
+    chart		    182
+    linkNode		    [182 0 0]
+    subviewer		    182
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    184
+    id			    185
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -10385,23 +10472,23 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      183
+      id		      184
       intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    181
-    linkNode		    [181 0 0]
+    chart		    182
+    linkNode		    [182 0 0]
     dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    181
+    subviewer		    182
     drawStyle		    SMART
     executionOrder	    1
     ssIdNumber		    2
   }
   data {
-    id			    185
+    id			    186
     ssIdNumber		    6
-    name		    "Kinematics"
-    linkNode		    [181 0 186]
+    name		    "pose"
+    linkNode		    [182 0 187]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -10420,10 +10507,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    186
+    id			    187
     ssIdNumber		    4
-    name		    "V"
-    linkNode		    [181 185 187]
+    name		    "V0"
+    linkNode		    [182 186 188]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -10439,10 +10526,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    187
+    id			    188
     ssIdNumber		    5
-    name		    "Vout"
-    linkNode		    [181 186 0]
+    name		    "Vb"
+    linkNode		    [182 187 0]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -10459,13 +10546,13 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    188
-    name		    "Path generator/MATLAB Function2"
+    id			    189
+    name		    "Path generator/inertial to body velocities"
     machine		    1
-    chart		    181
+    chart		    182
   }
   target {
-    id			    189
+    id			    190
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1
