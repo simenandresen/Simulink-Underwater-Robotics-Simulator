@@ -6,6 +6,7 @@
 %
 %-----------------------------------
 clear all; clc; close all;
+
 load_system('uvms_kinematics.mdl');
 disp('Loading uvms_kinematics');
 
@@ -18,13 +19,14 @@ addpath './uvms_functions'
 init_kinematics;
 init_kinetics;
 init_inputs;
-load trajectory.mat;
+trajfile = read_config('data_folder', 'string');
+trajfile = strcat(trajfile, '/trajectory.mat');
+load( trajfile );
 
 %% Global Simulation parameters
-time_stop = 40;
+time_stop = read_config('time_stop', 'number');
 global dt;
-dt = 0.01;
-%dt=0.0001;
+dt = read_config('dt', 'number');
 
 
 %% Create Data structures for simulation
@@ -79,6 +81,7 @@ wsProps_bus = slBus14;
 tic
 %try
     if KINEMATICS_ONLY == true
+        disp('running kinematics only');
         sim('uvms_kinematics',time_stop);
     else
         sim('uvms_sliding',time_stop);

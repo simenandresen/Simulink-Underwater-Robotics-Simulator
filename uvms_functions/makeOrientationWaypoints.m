@@ -1,22 +1,21 @@
 function  makePath()
     clc; clear all; close all;
     scale = 180;
-    addpath './trajectory';
-    addpath './uvms_functions/trajectory';
+    folder = read_config('data_folder', 'string');
     disp('Click on points in the xy plane. finish by clicking the key s');
     hFig3d = figure(2);
     ax3d = axes;
     axis([-scale, scale, -scale , scale, -scale, scale]);
     grid on;
     hold on;
-    xlabel('\phi'); ylabel('\theta'); zlabel('\psi');
+    xlabel('\phi'); ylabel('\psi'); zlabel('\theta');
     
     hFig2d = figure(1);
     ax = axes;
     axis([-scale, scale, -scale , scale]);
     grid on;
     hold on;
-    xlabel('\phi'); ylabel('theta');
+    xlabel('\phi'); ylabel('\psi');
     
     
     plothandle2d = 1;
@@ -30,30 +29,30 @@ function  makePath()
     set(ax,'ButtonDownFcn',@mouseClick); 
     set(hFig2d,'KeyPressFcn',@handleKey)
 
-    % set initial points in x y plane
+    % set initial points in phi psi plane
     function mouseClick(hFig,~)
         pos = get(hFig,'CurrentPoint');
         phi(end+1) =  pos(1,1);
-        theta(end+1) = pos(1,2);
-        psi(end+1) = 0;
-        plothandle2d = plot(ax,phi,theta,'or');
+        psi(end+1) = pos(1,2);
+        theta(end+1) = 0;
+        plothandle2d = plot(ax,phi,psi,'or');
         update3dPlot;
         figure(1);
     end
     
-    % change to x - z plane
+    % change to phi - theta plane
     function handleKey(src,event)
         if event.Character == 's'
-           disp('Manipulate the points in the xz plane');
+           disp('Manipulate the points in the phi theta plane');
            disp('Press q to end drawing');
-           handleZDirection();
+           handleThetaDirection();
         end
     end
 
     % input z x plane
-    function handleZDirection()
+    function handleThetaDirection()
         hold off;
-        psi = 0*theta;
+        theta = 0*psi;
         update2dPlot();
         set(ax,'ButtonDownFcn',@movePointInZDirection);
         update3dPlot();
@@ -63,7 +62,7 @@ function  makePath()
         pos  = get(ax,'CurrentPoint');
         xtemp = pos(1,1);
         ztemp = pos(1,2);
-        index = getIndexOfClosestPoint(xtemp, ztemp, phi, psi);
+        index = getIndexOfClosestPoint(xtemp, ztemp, phi, theta);
         set(hFig2d,'WindowButtonUpFcn',@setZDirectionPoint)
         set(hFig2d,'KeyPressFcn',@checkForExit)
         set(hFig3d,'KeyPressFcn',@checkForExit)
@@ -74,7 +73,7 @@ function  makePath()
         if event.Character == 'q'
            disp('Finished Drawing Path');
            orientationWaypoints = [phi;theta;psi];
-           save('waypointsOrientation.mat', 'orientationWaypoints');
+           save(strcat(folder, '/waypointsOrientation.mat'), 'orientationWaypoints');
            clc;
            close all;
         end
@@ -84,7 +83,7 @@ function  makePath()
     function setZDirectionPoint(hAxes, ~)
        pos  = get(ax,'CurrentPoint');
        psi(index) = pos(1,2);
-       phi(index) = pos(1,1);
+       theta(index) = pos(1,1);
        update3dPlot();
        update2dPlot();
        set(ax,'ButtonDownFcn',@movePointInZDirection);
@@ -93,11 +92,11 @@ function  makePath()
     function update2dPlot()
         figure(1)
         hold off;
-        plot2d = plot(ax, phi,psi, 'og', 'ButtonDownFcn', @movePointInZDirection ); 
+        plot2d = plot(ax, phi,theta, 'og', 'ButtonDownFcn', @movePointInZDirection ); 
         axis([-scale, scale, -scale , scale]);
         grid on;
         hold on;
-        xlabel('x'); ylabel('y');
+        xlabel('\phi'); ylabel('\theta');
         set(plot2d,'LineWidth' , 3);
     end
 

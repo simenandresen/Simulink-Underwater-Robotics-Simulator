@@ -33,10 +33,11 @@ legend('u','v','w','p','q','r');
 grid on;
 
 subplot(3,2,1);
-plot(time, [eta1_com(:,:), r2d*eta2_com(:,:)]);
+plot(time, [eta1_com(:,:)]);
 title('Commanded vehicle position');
-xlabel('time [s]'); ylabel('[m, deg]');
-leg=legend('x','y','z','$\phi$','$\theta$','$\psi$');
+xlabel('time [s]'); ylabel('[m]');
+%leg=legend('x','y','z','$\phi$','$\theta$','$\psi$');
+leg=legend('x','y','z');
 set(leg,'Interpreter','latex');
 grid on;
 
@@ -58,12 +59,21 @@ set(leg,'Interpreter','latex');
 grid on;
 
 subplot(3,2,5);
-plot(time, dzeta_com(1:6, :));
-title('Commanded vehichle body acceleration');
-xlabel('time [s]'); ylabel('[m/s , deg/s]');
-leg=legend('$\dot{u}_1$','$\dot v_2$','$\dot w_3$', '$\dot p_4$', '$\dot q_5$', '$\dot r_6$');
-set(leg,'Interpreter','latex')
+plot(time, [r2d*eta2_com(:,:)]);
+title('Commanded vehicle attitude');
+xlabel('time [s]'); ylabel('[ deg]');
+leg=legend('$\phi$','$\theta$','$\psi$');
+set(leg,'Interpreter','latex');
 grid on;
+
+
+
+% plot(time, dzeta_com(1:6, :));
+% title('Commanded vehichle body acceleration');
+% xlabel('time [s]'); ylabel('[m/s , deg/s]');
+% leg=legend('$\dot{u}_1$','$\dot v_2$','$\dot w_3$', '$\dot p_4$', '$\dot q_5$', '$\dot r_6$');
+% set(leg,'Interpreter','latex')
+% grid on;
 
 if KINEMATICS_ONLY == true 
     %% ---------- end effector --------------------------------
@@ -323,40 +333,62 @@ if KINEMATICS_ONLY == false
     grid on;
 end % end KINEMATICS_ONLY == false
 
-%% check to make sure nothing is overwritten
-a= input('are you sure you want to go on. file may be overwritten ');
-if a == 0 
-   break; 
-end
-%% save plot files
-i=i+1;
-h(i)=figure(i);
-
-% plotH = plot(time, [eta1_com(:,:)]);
-% titH = title('Commanded vehicle position');
-% set(titH, 'FontSize', 14);
-% set(gca, 'FontSize', 14);
-% xlabel('time [s]'); ylabel('[m]');
-% leg=legend('x','y','z');
-% set(leg,'Interpreter','latex');
-% set(leg, 'Location', 'NorthWest');
-% set(leg,  'FontSize', 16);
+% %% check to make sure nothing is overwritten
+% a= input('are you sure you want to go on. file may be overwritten, press 1 for going further ');
+% if a == 0 
+%    disp('ending plotting');
+%    break;
+% elseif a~=1
+%     disp('ending plotting');
+%     break;
+% end
+% %% save plot files
+% i=i+1;
+% h(i)=figure(i);
+% 
+% % plotH = plot(time, [eta2_com(:,:)*r2d]);
+% % titH = title('Commanded vehicle attitude');
+% % set(titH, 'FontSize', 8);
+% % set(gca, 'FontSize', 8);
+% % xlabel('time [s]'); ylabel('[deg]');
+% % leg=legend('\phi','\theta','\psi');
+% % %set(leg,'Interpreter','latex');
+% % set(leg, 'Location', 'NorthWest');
+% % %set(leg,  'FontSize', 10);
+% % grid on;
+% 
+% plot(time, VVpsibe*r2d);
+% titH = title('Angle \psi_{be}');
+% %set(titH, 'Interpreter', 'latex')
 % grid on;
-
-plot(time, [ee_pose_com(:,1),ee_pose_com(:,2),ee_pose_com(:,3) ]);
-grid on;
-titH = title('End effector position');
-set(titH, 'FontSize', 14);
-set(gca, 'FontSize', 14);
-xlabel('time [s]'); ylabel('[m]');
-leg=legend('x','y','z');
-set(leg,'Interpreter','latex');
-set(leg, 'Location', 'NorthWest');
-set(leg,  'FontSize', 16);
-%filename = input('Save plot as: ', 's');
-filename = 'simWsPlot2.eps';
-filename = strcat('/home/simena/Dropbox/master_thesis/report/figures/', filename);
-print(h(i), '-depsc', filename );
+% leg = legend('\psi_{be}');
+% %set(leg,'Interpreter','latex');
+% %set(leg, 'Location', 'NorthWest');
+% set(leg,  'FontSize', 10);
+% set(titH, 'FontSize', 8);
+% set(gca, 'FontSize', 8);
+% xlabel('time [s]'); ylabel('[deg]');
+% 
+% % plot(time, [ee_pose_com(:,4),ee_pose_com(:,5),ee_pose_com(:,6) ]*r2d);
+% % grid on;
+% % titH = title('End effector attitude');
+% % set(titH, 'FontSize', 8);
+% % set(gca, 'FontSize', 8);
+% % xlabel('time [s]'); ylabel('[deg]');
+% % leg=legend('\phi','\theta','\psi');
+% % %set(leg,'Interpreter','latex');
+% % set(leg, 'Location', 'NorthWest');
+% % set(leg,  'FontSize', 10);
+% 
+% set(gcf, 'PaperPositionMode', 'manual');
+% set(gcf, 'PaperUnits', 'inches');
+% set(gcf, 'PaperPosition', [2.5 2.5 6.3 2.2]); % last 2 are width/height.
+% 
+% 
+% %filename = input('Save plot as: ', 's');
+% filename = 'simPsisPlot10.eps';
+% filename = strcat('/home/simena/Dropbox/master_thesis/report/figures/', filename);
+% print(h(i), '-depsc', filename );
 
 
 

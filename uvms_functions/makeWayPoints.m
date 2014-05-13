@@ -1,8 +1,7 @@
 function  makePath()
     clc; clear all; close all;
     scale = 3;
-    addpath './trajectory';
-    addpath './uvms_functions/trajectory';
+    folder = read_config('data_folder', 'string');
     disp('Click on points in the xy plane. finish by clicking the key s');
     hFig3d = figure(2);
     ax3d = axes;
@@ -74,7 +73,7 @@ function  makePath()
         if event.Character == 'q'
            disp('Finished Drawing Path');
            wayPoints = [x;y;z];
-           save('waypoints.mat', 'wayPoints');
+           save( strcat(folder,'/waypoints.mat'), 'wayPoints');
            clc;
            close all;
         end

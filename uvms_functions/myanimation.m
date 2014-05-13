@@ -63,59 +63,63 @@ centerOfWs = WsProps.centerOfWs;
 
 %for j=1:step:length(q(:,1))
 j=1;
+
+%% run animation
 while j < length(q(:,1)); 
+    
+    %% write info text in side view
     annotationHandle=annotation('textbox', [0, 0.6, 0, 0], 'string', ... 
                     sprintf('Time %f,  insideWs: %d , Status linear: %d, Status angular %d,  yawAngle %f, yawAngle rate %f', time(j), VVisInsideWs(:,:,j) , VVStatusLinear(j), VVStatusAngular(j) , VVpsibe(j)*r2d ));
+    
+    %% plot robot manipulator
     g0b=genCordinates2Matrix(xi(1:3,j) , xi(4:6,j));
     new_mat=homtrans(g0b,rov_vertices_init');
-    six_link.plot (q(j,:),'noshadow','noname');
+    six_link.plot (q(j,:),'noshadow','noname', 'nojaxes');
     six_link.base = g0b;
     six_link.tool = g6e;
     
-      
-    
-    
-    
-    % find coordinate of end effector
+    %% find coordinate of end effector
     g0e = six_link.fkine(q(j,:));
     p0e = g0e(1:3,4);
     
+    %% delete plots from last iteration
     if j>1
         delete(rov_figure);
         delete(eeVecHandle);
         delete(surfH);
     end
     
-    %% vehicle
+    %% plot of vehicle
     rov_figure=patch('Vertices', new_mat', 'Faces', my_faces, 'FaceColor', 'g');
     %set(rov_figure,'facealpha',0.5);
     %camlight(45,45); 
     %lighting phong 
     
-    %% transform ws mesh
+    %% plot of Ws
     gbs = genCordinates2Matrix(centerOfWs, [0;0;0]);
     g0s = g0b * gbs;
-    meshVertices = homtrans( g0s,XYZPoints );
+    meshVertices = homtrans( g0b,XYZPoints );
     surfH = trisurf(XYZIndices , meshVertices(1,:),meshVertices(2,:),meshVertices(3,:), 'FaceColor', 'cyan');
-    set(surfH, 'facealpha',0.15, 'EdgeColor', [0.88,0.88,0.88]);
-        
-    eeVecHandle = plot3([p0e(1), g0s(1,4)],[p0e(2) , g0s(2,4)],[p0e(3) , g0s(3,4)], '-r');
-    axis([-ws*0.6, ws, -ws, ws , -ws, ws]);  
+    set(surfH, 'facealpha',0.15, 'EdgeColor', 'none');
+    %set(surfH, 'facealpha',0.15, 'EdgeColor', [0.7,0.7,0.88], 'EdgeAlpha' , 0.1);
     
-    % end effector trajectory
+    %% plot vector from center of Ws to EE
+    eeVecHandle = plot3([p0e(1), g0s(1,4)],[p0e(2) , g0s(2,4)],[p0e(3) , g0s(3,4)], '-r');
+    axis([-ws*0.9, ws, -ws*0.8, 0.9*ws , -ws, ws]);  
+    
+    %% plot end effector trajectory
     ee_traj(end+1,:)=ee_pose(j,:);
     %trajPlotHandle = plot3(ee_traj(:,1),ee_traj(:,2),ee_traj(:,3), '-.m');
     trajPlotHandle = plot3(ee_pose(:,1),ee_pose(:,2),ee_pose(:,3), '-m');
     j = j + step;
     
-    % interface
+    %% handle user interface
     delete(annotationHandle);
     keyPressed = get(h(i),'currentcharacter');
     if isempty(keyPressed)
         pause(0.5);
         set(h(i), 'currentch', 'z');
     end
-    
     if keyPressed == '+'
         step = step + 2;
     elseif keyPressed == '-'
@@ -129,27 +133,29 @@ while j < length(q(:,1));
         j=1;
         pause(1);
     elseif keyPressed == 'p'
-        disp('saving current frame ');
-        if strcmp(filename, 'NA')
-            picnr = 1;
-            initFilename = input('name of file: ', 's');
-            filename = strcat('/home/simena/Dropbox/master_thesis/report/figures/png/', initFilename, num2str(picnr), '.png');
-            print(h(i), '-dpng', filename );
-        else
-            picnr = picnr+1;
-            filename = strcat(initFilename, num2str(picnr), '.png');
-            filename = strcat('/home/simena/Dropbox/master_thesis/report/figures/png/', filename);
-            print(h(i), '-dpng', filename );
-        end    
+%         disp('removing Ws');
+%         delete(surfH);
+%         disp('saving current frame ');
+%         if strcmp(filename, 'NA')
+%             picnr = 1;
+%             initFilename = input('name of file: ', 's');
+%             filename = strcat('/home/simena/Dropbox/master_thesis/report/figures/png/', initFilename, num2str(picnr), '.png');
+%             print(h(i), '-depsc', filename );
+%             
+%         else
+%             picnr = picnr+1;
+%             filename = strcat(initFilename, num2str(picnr), '.png');
+%             filename = strcat('/home/simena/Dropbox/master_thesis/report/figures/png/', filename);
+%             print(h(i), '-dpng', filename );
+%         end    
     elseif keyPressed == 'q'
-        pause(0.7);
          clc;
-         a=input('save figure to png, 1=yes 0=no: ')
-         if a==1
-            filename = input('name of file: ', 's');
-            filename = strcat('/home/simena/Dropbox/master_thesis/report/figures/png/', filename);
-            print(h(i), '-dpng', filename );
-         end
+%          a = input('save figure to png, 1=yes 0=no: ');
+%          if a==1
+%             filename = input('name of file: ', 's');
+%             filename = strcat('/home/simena/Dropbox/master_thesis/report/figures/png/', filename);
+%             print(h(i), '-dpng', filename );
+%          end
          break;
     end
     set(h(i), 'currentch', 'z');
