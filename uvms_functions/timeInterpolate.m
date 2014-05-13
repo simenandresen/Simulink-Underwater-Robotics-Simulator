@@ -33,6 +33,7 @@ for i = 2:length(x)
     interval = norm([x(i) - x(i-1), y(i) - y(i-1), z(i) - z(i-1)]);
     timex(i) = timex(i-1) + interval;
 end
+timex = linspace(0,time_stop, length(x));
 
 % scale time to time_stop:
 timex = (time_stop / timex(end) )* timex;
@@ -74,10 +75,11 @@ for i = 2:length(x)
     timephi(i) = timephi(i-1) + interval;
 end
 
+
 timephi = linspace(0,time_stop, length(phi));
-pphi = spline(timephi , phi );
-ptheta = spline(timephi , theta );
-ppsi = spline(timephi , psi );
+pphi = spline(timephi , [0, phi, 0] );
+ptheta = spline(timephi , [0, theta, 0] );
+ppsi = spline(timephi , [0, psi, 0] );
 
 phitime = linspace(timephi(1), timephi(end), Length) ;
 PHI = ppval(pphi, phitime);
@@ -100,50 +102,50 @@ dpsi(:) = fnval(pdpsi, phitime );
 
 
 %% plotting linear
-% hinterp(1) = figure(2);
-% subplot(2,2,1);
-% plot(ptime, [XX; YY ;ZZ]);
-% title('Trajectory');
-% legend('x','y','z');
-% xlabel('time [s]');
-% ylabel('distance [m]')
-% grid on;
-% 
-% subplot(2,2,2);
-% plot3(XX,YY,ZZ, '-or');
-% title('3D trajectory')
-% xlabel('x');
-% ylabel('y');
-% zlabel('z');
-% axis equal
-% grid on;
-% 
-% subplot(2,2,3);
-% plot(ptime, [dx, dy , dz, speed]');
-% title('Linear Velocity');
-% legend('dx', 'dy' ,'dz', 'speed');
-% xlabel('time [s]');
-% ylabel('velocity [m/s]');
-% grid on;
-% 
-% %% plotting angular
-% hinterp(2) = figure(3);
-% subplot(2,1,1);
-% plot(phitime, r2d*[PHI; THETA ;PSI]);
-% title('attitude trajectory');
-% legend('\phi', '\theta', '\psi')
-% xlabel('time [s]');
-% ylabel('angle [deg]')
-% grid on;
-% 
-% 
-% 
-% subplot(2,1,2);
-% plot(phitime, [dphi, dtheta , dpsi]');
-% title('Euler angle rates');
-% xlabel('time [s]');
-% ylabel('angular velocity [deg/s]');
-% grid on;
+hinterp(1) = figure(2);
+subplot(2,2,1);
+plot(ptime, [XX; YY ;ZZ]);
+title('Trajectory');
+legend('x','y','z');
+xlabel('time [s]');
+ylabel('distance [m]')
+grid on;
+
+subplot(2,2,2);
+plot3(XX,YY,ZZ, '-or');
+title('3D trajectory')
+xlabel('x');
+ylabel('y');
+zlabel('z');
+axis equal
+grid on;
+
+subplot(2,2,3);
+plot(ptime, [dx, dy , dz, speed]');
+title('Linear Velocity');
+legend('dx', 'dy' ,'dz', 'speed');
+xlabel('time [s]');
+ylabel('velocity [m/s]');
+grid on;
+
+%% plotting angular
+hinterp(2) = figure(3);
+subplot(2,1,1);
+plot(phitime, r2d*[PHI; THETA ;PSI]);
+title('attitude trajectory');
+legend('\phi', '\theta', '\psi')
+xlabel('time [s]');
+ylabel('angle [deg]')
+grid on;
+
+
+
+subplot(2,1,2);
+plot(phitime, [dphi, dtheta , dpsi]');
+title('Euler angle rates');
+xlabel('time [s]');
+ylabel('angular velocity [deg/s]');
+grid on;
 
 %% set angular velocities
 % p = zeros(length(ptime),1);

@@ -90,6 +90,7 @@ while j < length(q(:,1));
     end
     
     %% plot of vehicle
+    figure(i);
     rov_figure=patch('Vertices', new_mat', 'Faces', my_faces, 'FaceColor', 'g');
     %set(rov_figure,'facealpha',0.5);
     %camlight(45,45); 
@@ -98,6 +99,7 @@ while j < length(q(:,1));
     %% plot of Ws
     gbs = genCordinates2Matrix(centerOfWs, [0;0;0]);
     g0s = g0b * gbs;
+    figure(i);
     meshVertices = homtrans( g0b,XYZPoints );
     surfH = trisurf(XYZIndices , meshVertices(1,:),meshVertices(2,:),meshVertices(3,:), 'FaceColor', 'cyan');
     set(surfH, 'facealpha',0.15, 'EdgeColor', 'none');
@@ -110,6 +112,7 @@ while j < length(q(:,1));
     %% plot end effector trajectory
     ee_traj(end+1,:)=ee_pose(j,:);
     %trajPlotHandle = plot3(ee_traj(:,1),ee_traj(:,2),ee_traj(:,3), '-.m');
+    figure(i);
     trajPlotHandle = plot3(ee_pose(:,1),ee_pose(:,2),ee_pose(:,3), '-m');
     j = j + step;
     

@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.954"
+    ComputedModelVersion    "1.984"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue May 13 13:04:05 2014"
+  LastModifiedDate	  "Tue May 13 16:07:54 2014"
   RTWModifiedTimeStamp	  321884738
-  ModelVersionFormat	  "1.%<AutoIncrement:954>"
+  ModelVersionFormat	  "1.%<AutoIncrement:984>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -858,7 +858,7 @@ Model {
       System {
 	Name			"Inverse Kinematics"
 	Location		[2, 418, 1918, 1431]
-	Open			on
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1214,7 +1214,7 @@ Model {
 	  System {
 	    Name		    "VehicleVelocity Kinematic Control"
 	    Location		    [2, 418, 1918, 1431]
-	    Open		    off
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -1501,14 +1501,6 @@ Model {
 		  IconDisplay		  "Port number"
 		}
 		Block {
-		  BlockType		  Constant
-		  Name			  "Constant"
-		  SID			  "306"
-		  Position		  [320, 330, 350, 360]
-		  ZOrder		  -4
-		  Value			  "zeros(6,1)"
-		}
-		Block {
 		  BlockType		  Demux
 		  Name			  "Demux"
 		  SID			  "216"
@@ -1529,7 +1521,7 @@ Model {
 		  LibraryVersion	  "1.260"
 		  SourceBlock		  "simulink/Signal\nRouting/Manual Switch"
 		  SourceType		  "Manual Switch"
-		  sw			  "0"
+		  sw			  "1"
 		  action		  "0"
 		  varsize		  off
 		}
@@ -1550,7 +1542,7 @@ Model {
 		  SID			  "219"
 		  Position		  [695, 187, 755, 223]
 		  ZOrder		  -9
-		  Denominator		  "[0.1 1]"
+		  Denominator		  "[0.5 1]"
 		}
 		Block {
 		  BlockType		  TransferFcn
@@ -1558,7 +1550,7 @@ Model {
 		  SID			  "220"
 		  Position		  [695, 282, 755, 318]
 		  ZOrder		  -9
-		  Denominator		  "[0.1 1]"
+		  Denominator		  "[0.5 1]"
 		}
 		Block {
 		  BlockType		  TransferFcn
@@ -1623,9 +1615,16 @@ Model {
 		Line {
 		  SrcBlock		  "In1"
 		  SrcPort		  1
-		  Points		  [175, 0; 0, 450]
-		  DstBlock		  "Unit Delay"
-		  DstPort		  1
+		  Points		  [175, 0]
+		  Branch {
+		    Points		    [0, 450]
+		    DstBlock		    "Unit Delay"
+		    DstPort		    1
+		  }
+		  Branch {
+		    DstBlock		    "Demux"
+		    DstPort		    1
+		  }
 		}
 		Line {
 		  SrcBlock		  "Unit Delay"
@@ -1705,13 +1704,6 @@ Model {
 		  SrcPort		  1
 		  DstBlock		  "Mux"
 		  DstPort		  6
-		}
-		Line {
-		  SrcBlock		  "Constant"
-		  SrcPort		  1
-		  Points		  [40, 0; 0, 100]
-		  DstBlock		  "Demux"
-		  DstPort		  1
 		}
 	      }
 	    }
@@ -4343,7 +4335,7 @@ Model {
 		    SID			    "32"
 		    Position		    [710, 112, 770, 148]
 		    ZOrder		    -9
-		    Denominator		    "[0.1 1]"
+		    Denominator		    "[0.5 1]"
 		    }
 		    Block {
 		    BlockType		    TransferFcn
@@ -7358,9 +7350,9 @@ Stateflow {
       "en    \n% link joints\n    DH =diag([zeros(1,6),zeros(1,6)]); % derivative of H matrix\n    qmin = QLimits.qmin;"
       "\n    qmax = QLimits.qmax;\n    for i=1:6\n        temp = (((qmax(i)-qmin(i)).^2)*(2*q(i)-qmax(i)-qmin(i))) ./ ("
       "(4*(qmax(i)-q(i)).^2) * ((q(i)-qmin(i)).^2));\n        if (temp-previousDH(i+6,i+6)) < 0 \n            DH(i+6,i+"
-      "6) =  0;\n        else\n            DH(i+6,i+6) = temp;\n        end\n    end\n   % vehicle weights\n   Kv = 700"
-      "0;\n   for i=1:6\n      DH(i,i) =  Kv ;\n   end\n   DH(12,12) = 10; % no joint limit in last joint\n   W = eye(1"
-      "2);\n   W = W + abs(DH);\n   \nend"
+      "6) =  0.99 * previousDH(i+6, i+6);\n            previousDH;\n        else\n            DH(i+6,i+6) = temp;\n    "
+      "    end\n    end\n   % vehicle weights\n   Kv = 7000;\n   for i=1:6\n      DH(i,i) =  Kv ;\n   end\n   %DH(12,12"
+      ") = 10; % no joint limit in last joint\n   W = eye(12);\n   W = W + abs(DH);\n   \nend"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -7909,92 +7901,91 @@ Stateflow {
       "sProps , Prev_VV_States)\n%#codegen \n    %% set initial parameters\n    VV_States = struct('StatusLinear',0, 'S"
       "tatusAngular', 0 ,'Circle2EEVec',zeros(3,1), ...\n                'linearVehicleVelocity', zeros(6,1), 'angularV"
       "ehicleVelocity', zeros(6,1) , 'psibe',0, 'V_EE', zeros(6,1), 'VdotP', 0, 'insideWs', 0);\n    V_vehicle = zeros("
-      "6,1);\n    VV_States.V_EE = End_Effector_Com.velocity;\n    VV_States.Circle2EEVec = getPCircle(Kinematics,Circl"
-      "eProps);    % vector from center of circle to EE\n    VV_States.VdotP = ( Kinematics.Ti.Rbe * VV_States.V_EE(1:3"
-      ") )' * VV_States.Circle2EEVec;\n    VV_States.psibe = getPsibe( Kinematics);    \n    \n    %% check if ee is in"
-      "side Ws\n    p = getEErelativeWs(Kinematics, WsProps);\n    p = Kinematics.Ti.gbe(1:3,4);\n    VV_States.insideW"
-      "s = checkIfPointIsInsideMesh( WsProps.XYZIndices, WsProps.XYZPoints, p);\n    \n    %% Get the status of the veh"
-      "icle velocity assigner\n    StatusLinear = getStatusLinear(Prev_VV_States,VV_States,CircleProps);\n    StatusAng"
-      "ular = getStatusAngular(Prev_VV_States, VV_States, CircleProps ); \n    \n    %% act on the different StatusLine"
-      "ar\n    if StatusLinear == 0 \n        V_vehicle = zeros(6,1);\n    elseif StatusLinear == 1\n        V_vehicle "
-      "= getLinearVelocitySameAsEE( VV_States, CircleProps, Kinematics);         \n    elseif StatusLinear == 2\n      "
-      "  V_vehicle = zeros(6,1);\n    elseif StatusLinear == 3\n        V_vehicle = getReturnToInnerCircleVelocity(VV_S"
-      "tates,CircleProps, Kinematics);\n    else\n        error('something went wrong in linear states');\n    end\n   "
-      " linearVelocity = V_vehicle;\n    \n    %% act on the different StatusAngular\n    if StatusAngular == 0\n      "
-      "  V_vehicle = zeros(6,1);\n    elseif StatusAngular == 1 \n        V_vehicle = getReturnToInnerpsibe(Kinematics,"
-      " VV_States);\n    else\n        error('something went wrong in angular states');\n    end\n    angularVelocity ="
-      " V_vehicle;\n    \n    %% control theta and psi to zero\n    R = Kinematics.Ti.R0b;\n    phi   = atan2(R(3,2),R("
-      "3,3));\n    theta = -asin(R(3,1));\n    p = - phi;\n    q = - theta;\n    Kphitheta = diag([3,3]);\n    angularV"
-      "elocity(4:5) = Kphitheta*[p;q];\n    \n    %% set the statuses and the commanded vehicle\n    V_vehicle = angula"
-      "rVelocity + linearVelocity;        \n    VV_States.StatusLinear = StatusLinear;\n    VV_States.StatusAngular = S"
-      "tatusAngular;\n    VV_States.linearVehicleVelocity = linearVelocity;\n    VV_States.angularVehicleVelocity = ang"
-      "ularVelocity;       \nend\n\n%----------------------------------------------------------------------------------"
-      "--------------------------------\nfunction V_vehicle = getReturnToInnerpsibe(Kinematics, VV_States)\n    psibe ="
-      " VV_States.psibe;\n    k_ang = 1;\n    Vee = VV_States.V_EE;\n    omegabe = Vee(4:6);\n    Rbe = Kinematics.Ti.R"
-      "be;\n    ybe = Kinematics.Ti.pbe(2);\n    xbe = Kinematics.Ti.pbe(1);\n    % angular velocity of ee around z axi"
-      "s vehicle\n    rb0e = [0,0,1] * Rbe * omegabe;\n    V_vehicle = [ybe ; -xbe ; 0 ; 0 ; 0 ; 1] * ( rb0e + k_ang * "
-      "psibe  ) ;    \n   \nend\n\n%-----------------------------------------------------------------------------------"
-      "-------------------------------\nfunction V_vehicle = getLinearVelocitySameAsEE(VV_States, CircleProps,Kinematic"
-      "s)\n    Vee = VV_States.V_EE;\n    Rbe = Kinematics.Ti.Rbe;\n    x = norm(VV_States.Circle2EEVec )  - CircleProp"
-      "s.middleCircleRadius;\n    radiusDelta = CircleProps.innerMiddelRadiusDelta;\n    V_vehicle = zeros(6,1);\n    V"
-      "_vehicle(1:3) = Rbe*Vee(1:3)*(x/radiusDelta);\nend\n\n%---------------------------------------------------------"
-      "---------------------------------------------------------\nfunction V_vehicle = getAngularSameAsEE(VV_States, Ki"
-      "nematics)\n    Vee = VV_States.V_EE;\n    omegabe = Vee(4:6);\n    Rbe = Kinematics.Ti.Rbe;\n    ybe = Kinematic"
-      "s.Ti.pbe(2);\n    xbe = Kinematics.Ti.pbe(1);\n    % angular velocity of ee around z axis vehicle\n    rb0e = [0"
-      ",0,1] * Rbe * omegabe;\n    V_vehicle = [ybe ; -xbe ; 0 ; 0 ; 0 ; 1] * rb0e ;    \nend\n\n%---------------------"
-      "---------------------------------------------------------------------------------------------\n% get the yaw ang"
-      "le by transforming the forward direction of the end\n% effector (z) to the frame of the vehicle, and take the do"
-      "t product\nfunction psibe  = getPsibe( Kinematics)\n    Rbe = Kinematics.Ti.Rbe;\n    re = [0,0,1]';\n    rb = R"
-      "be * re;\n    rb2 = rb(1:2);\n    psibe = atan2 ( rb2(2) , rb2(1) );\nend\n\n\n\n%------------------------------"
-      "------------------------------------------------------------------------------------\n%   create a smooth veloci"
-      "ty for the vehicle to make EE return to the inner\n%   circle. \nfunction V_vehicle = getReturnToInnerCircleVelo"
-      "city(VV_States , CircleProps, Kinematics)\n    Vee = VV_States.V_EE;\n    ir = CircleProps.innerCircleRadius;\n "
-      "   mr = CircleProps.middleCircleRadius;\n    ve = Vee(1:3);\n    Rbe = Kinematics.Ti.Rbe;\n    c = ir + (mr - ir"
-      ")./2;      % point between the two radiuses\n    K = 0.7;\n    V_vehicle = zeros(6,1);\n    V_vehicle(1:3) = Rbe"
-      "*ve +  K*VV_States.Circle2EEVec./norm( VV_States.Circle2EEVec );\n\nend\n\n\n%----------------------------------"
-      "--------------------------------------------------------------------------------\n%  get the angular status \n%\n"
-      "function StatusAngular = getStatusAngular(Prev_VV_States, VV_States, CircleProps)\n    PrevStatus = Prev_VV_Stat"
-      "es.StatusAngular;\n    psibe = VV_States.psibe;\n    prev_psibe = Prev_VV_States.psibe;\n    \n    if  PrevStatu"
-      "s == 0 && abs(psibe) >= CircleProps.psis\n        StatusAngular = 1;\n    elseif abs( psibe ) < CircleProps.psii"
-      "\n        StatusAngular = 0;\n    else\n        StatusAngular = PrevStatus;\n    end\nend\n\n%------------------"
-      "------------------------------------------------------------------------------------------------\n%   the differ"
-      "ent states are as follows:\n%   0 = vehicle steady \n%   1 = outside middle circle - integrating deviation of ve"
-      "ctor\n%   2 = inside middle circle on the way back to optimal area \nfunction StatusLinear = getStatusLinear(Pre"
-      "v_VV_States, VV_States, CircleProps)\n    PrevStatus = Prev_VV_States.StatusLinear;\n    prevCircle2EEVec = Prev"
-      "_VV_States.Circle2EEVec;\n    VdotP = VV_States.VdotP; \n    Circle2EEVec = VV_States.Circle2EEVec;\n           "
-      "\n    if ( PrevStatus == 0 || PrevStatus == 2 ) && VV_States.insideWs == 0 && VdotP > 0     \n       StatusLinea"
-      "r = 1;\n    elseif (PrevStatus == 1 ||  PrevStatus == 2 ) && VV_States.insideWs == 0 && VdotP < 0\n        Statu"
-      "sLinear = 3;\n    elseif (PrevStatus == 1 || PrevStatus == 2) && VV_States.insideWs == 1\n        StatusLinear ="
-      " 3;\n    elseif (PrevStatus == 3 || PrevStatus == 2) && norm(Circle2EEVec) < CircleProps.innerCircleRadius\n    "
-      "    StatusLinear = 0;\n    else\n        StatusLinear = PrevStatus;\n    end\nend\n\n%--------------------------"
-      "----------------------------------------------------------------------------------------\n% get the end effector"
-      "s position relative to the homeposition of Ws\n%\nfunction p = getEErelativeWs(Kinematics, WsProps)\n    pbeInBf"
-      "rame = Kinematics.Ti.gbe(1:3,4);\n    p = pbeInBframe - WsProps.centerOfWs;\nend\n\n%---------------------------"
-      "---------------------------------------------------------------------------------------\n% get the vector to the"
-      " center of the circle denoted in the\n% frame of the center of the circle\nfunction pCircle2EEinFrameC = getPCir"
-      "cle(Kinematics, CircleProps)  \n    g0b = Kinematics.Ti.g0b;\n    gbe = Kinematics.Ti.gbe;\n    circleCenterInFr"
-      "ame0 = g0b(1:3,4) + g0b(1:3,1:3)*CircleProps.CenterInFrameB;\n    pVehicle2EEinFrameB = gbe(1:3,4);\n    pCircle"
-      "2EEinFrameC = pVehicle2EEinFrameB - CircleProps.CenterInFrameB;\nend\n\n%---------------------------------------"
-      "---------------------------------------------------------------------------\n% check if end effector is inside W"
-      "s mesh\nfunction isInside = checkIfPointIsInsideMesh (indices, XYZ, point)\n    X = XYZ(1,:)';\n    Y = XYZ(2,:)"
-      "';\n    Z = XYZ(3,:)';\n    idx = indices;\n    intersections = 0;\n    for i=1:size(indices,1)\n        v1 = [ "
-      "X(idx(i,1)) ; Y(idx(i,1)); Z(idx(i,1)) ]; \n        v2 = [ X(idx(i,2)) ; Y(idx(i,2)); Z(idx(i,2)) ]; \n        v"
-      "3 = [ X(idx(i,3)) ; Y(idx(i,3)); Z(idx(i,3)) ];\n        %intersections = intersections + rayIntersectsTriangle("
-      "v1,v2,v3 , point);\n        [flag, u, v, t, ray] = rayTriangleIntersection (point,  v1, v2, v3);\n        if fla"
-      "g == 1\n            intersections = intersections + 1;\n        end\n    end\n    if mod(intersections , 2 ) == "
-      "0\n       isInside = 0;\n    else\n       isInside = 1;\n    end\nend\n\n%--------------------------------------"
-      "----------------------------------------------------------------------------\n% Ray/triangle intersection using "
-      "the algorithm proposed by Möller and Trumbore (1997).\nfunction [flag, u, v, t, ray] = rayTriangleIntersection "
-      "(o, p0, p1, p2)\n    % direction of the ray from the point o\n    d = [4,4,4]';\n    epsilon = 0.000001;\n    e1"
-      " = p1-p0;\n    e2 = p2-p0;\n    q  = cross(d,e2);\n    a  = dot(e1,q); % determinant of the matrix M\n    if (a>"
-      "-epsilon && a<epsilon) \n        % the vector is parallel to the plane (the intersection is at infinity)\n      "
-      "  [flag, u, v, t,ray] = deal(0,0,0,0,0);\n        return;\n    end;\n    f = 1/a;\n    s = o-p0;\n    u = f*dot("
-      "s,q);\n    if (u<0.0)\n        % the intersection is outside of the triangle\n        [flag, u, v, t, ray] = dea"
-      "l(0,0,0,0,0);\n        return;          \n    end;\n    r = cross(s,e1);\n    v = f*dot(d,r);\n    if (v<0.0 || "
-      "u+v>1.0)\n        % the intersection is outside of the triangle\n        [flag, u, v, t, ray] = deal(0,0,0,0,0);"
-      "\n        return;\n    end;\n    t = f*dot(e2,r); % verified! \n    if t > epsilon\n        flag = 1;\n        r"
-      "ay = d;\n        return;\n    else\n        [flag, u, v, t, ray] = deal(0,0,0,0,0);\n        return\n    end\nen"
-      "d\n\n\n\n"
+      "6,1);\n    VV_States.V_EE = End_Effector_Com.velocity;\n    VV_States.Circle2EEVec = getPCircle(Kinematics , Cir"
+      "cleProps);    % vector from center of circle to EE\n    VV_States.VdotP = ( Kinematics.Ti.Rbe * VV_States.V_EE(1"
+      ":3) )' * VV_States.Circle2EEVec;\n    VV_States.psibe = getPsibe( Kinematics);    \n    \n    %% check if ee is "
+      "inside Ws\n    p = getEErelativeWs(Kinematics, WsProps);\n    p = Kinematics.Ti.gbe(1:3,4);\n    VV_States.insid"
+      "eWs = checkIfPointIsInsideMesh( WsProps.XYZIndices, WsProps.XYZPoints, p);\n    \n    %% Get the status of the v"
+      "ehicle velocity assigner\n    StatusLinear = getStatusLinear(Prev_VV_States,VV_States,CircleProps);\n    StatusA"
+      "ngular = getStatusAngular(Prev_VV_States, VV_States, CircleProps ); \n    \n    %% act on the different StatusLi"
+      "near\n    if StatusLinear == 0 \n        V_vehicle = zeros(6,1);\n    elseif StatusLinear == 1\n        V_vehicl"
+      "e = getLinearVelocitySameAsEE( VV_States, CircleProps, Kinematics);         \n    elseif StatusLinear == 2\n    "
+      "    V_vehicle = getReturnToInnerCircleVelocity(VV_States,CircleProps, Kinematics);\n    else\n        error('som"
+      "ething went wrong in linear states');\n    end\n    linearVelocity = V_vehicle;\n    \n    %% act on the differe"
+      "nt StatusAngular\n    if StatusAngular == 0\n        V_vehicle = zeros(6,1);\n    elseif StatusAngular == 1 \n  "
+      "      V_vehicle = getReturnToInnerpsibe(Kinematics, VV_States);\n    else\n        error('something went wrong i"
+      "n angular states');\n    end\n    angularVelocity = V_vehicle;\n    \n    %% control theta and psi to zero\n    "
+      "R = Kinematics.Ti.R0b;\n    phi   = atan2(R(3,2),R(3,3));\n    theta = -asin(R(3,1));\n    p = - phi;\n    q = -"
+      " theta;\n    Kphitheta = diag([3,3]) ;\n    angularVelocity(4:5) = Kphitheta*[p;q];\n    \n    %% set the status"
+      "es and the commanded vehicle\n    V_vehicle = angularVelocity + linearVelocity;        \n    VV_States.StatusLin"
+      "ear = StatusLinear;\n    VV_States.StatusAngular = StatusAngular;\n    VV_States.linearVehicleVelocity = linearV"
+      "elocity;\n    VV_States.angularVehicleVelocity = angularVelocity;       \nend\n\n%------------------------------"
+      "------------------------------------------------------------------------------------\nfunction V_vehicle = getRe"
+      "turnToInnerpsibe(Kinematics, VV_States)\n    psibe = VV_States.psibe;\n    k_ang = 1;\n    Vee = VV_States.V_EE;"
+      "\n    omegabe = Vee(4:6);\n    Rbe = Kinematics.Ti.Rbe;\n    ybe = Kinematics.Ti.pbe(2);\n    xbe = Kinematics.T"
+      "i.pbe(1);\n    % angular velocity of ee around z axis vehicle\n    rb0e = [0,0,1] * Rbe * omegabe;\n    V_vehicl"
+      "e = [ybe ; -xbe ; 0 ; 0 ; 0 ; 1] * ( rb0e + k_ang * psibe  ) ;    \n   \nend\n\n%-------------------------------"
+      "-----------------------------------------------------------------------------------\nfunction V_vehicle = getLin"
+      "earVelocitySameAsEE(VV_States, CircleProps,Kinematics)\n    Vee = VV_States.V_EE;\n    Rbe = Kinematics.Ti.Rbe;\n"
+      "    x = norm(VV_States.Circle2EEVec )  - CircleProps.middleCircleRadius;\n    radiusDelta = CircleProps.innerMid"
+      "delRadiusDelta;\n    V_vehicle = zeros(6,1);\n    V_vehicle(1:3) = Rbe*Vee(1:3)*(x/radiusDelta);\nend\n\n%------"
+      "------------------------------------------------------------------------------------------------------------\nfu"
+      "nction V_vehicle = getAngularSameAsEE(VV_States, Kinematics)\n    Vee = VV_States.V_EE;\n    omegabe = Vee(4:6);"
+      "\n    Rbe = Kinematics.Ti.Rbe;\n    ybe = Kinematics.Ti.pbe(2);\n    xbe = Kinematics.Ti.pbe(1);\n    % angular "
+      "velocity of ee around z axis vehicle\n    rb0e = [0,0,1] * Rbe * omegabe;\n    V_vehicle = [ybe ; -xbe ; 0 ; 0 ;"
+      " 0 ; 1] * rb0e ;    \nend\n\n%----------------------------------------------------------------------------------"
+      "--------------------------------\n% get the yaw angle by transforming the forward direction of the end\n% effect"
+      "or (z) to the frame of the vehicle, and take the dot product\nfunction psibe  = getPsibe( Kinematics)\n    Rbe ="
+      " Kinematics.Ti.Rbe;\n    re = [0,0,1]';\n    rb = Rbe * re;\n    rb2 = rb(1:2);\n    psibe = atan2 ( rb2(2) , rb"
+      "2(1) );\nend\n\n\n\n%-------------------------------------------------------------------------------------------"
+      "-----------------------\n%   create a smooth velocity for the vehicle to make EE return to the inner\n%   circle"
+      ". \nfunction V_vehicle = getReturnToInnerCircleVelocity(VV_States , CircleProps, Kinematics)\n    Vee = VV_State"
+      "s.V_EE;\n    ir = CircleProps.innerCircleRadius;\n    mr = CircleProps.middleCircleRadius;\n    ve = Vee(1:3);\n"
+      "    Rbe = Kinematics.Ti.Rbe;\n    c = ir + (mr - ir)./2;      % point between the two radiuses\n    K = 0.6;\n  "
+      "  V_vehicle = zeros(6,1);\n    V_vehicle(1:3) = Rbe*ve +  K*VV_States.Circle2EEVec./norm( VV_States.Circle2EEVec"
+      " );\n\nend\n\n\n%-----------------------------------------------------------------------------------------------"
+      "-------------------\n%  get the angular status \n%\nfunction StatusAngular = getStatusAngular(Prev_VV_States, VV"
+      "_States, CircleProps)\n    PrevStatus = Prev_VV_States.StatusAngular;\n    psibe = VV_States.psibe;\n    prev_ps"
+      "ibe = Prev_VV_States.psibe;\n    \n    if  PrevStatus == 0 && abs(psibe) >= CircleProps.psis\n        StatusAngu"
+      "lar = 1;\n    elseif abs( psibe ) < CircleProps.psii\n        StatusAngular = 0;\n    else\n        StatusAngula"
+      "r = PrevStatus;\n    end\nend\n\n%------------------------------------------------------------------------------"
+      "------------------------------------\n%   the different states are as follows:\n%   0 = vehicle steady \n%   1 ="
+      " outside middle circle - integrating deviation of vector\n%   2 = inside middle circle on the way back to optima"
+      "l area \nfunction StatusLinear = getStatusLinear(Prev_VV_States, VV_States, CircleProps)\n    PrevStatus = Prev_"
+      "VV_States.StatusLinear;\n    prevCircle2EEVec = Prev_VV_States.Circle2EEVec;\n    VdotP = VV_States.VdotP; \n   "
+      " Circle2EEVec = VV_States.Circle2EEVec;\n    \n    %elseif (PrevStatus == 1 || PrevStatus == 2) && norm(Circle2E"
+      "EVec) <  % CircleProps.innerCircleRadius\n    if norm(Circle2EEVec) < 0.2  % CircleProps.innerCircleRadius\n    "
+      "    StatusLinear = 0;\n    elseif ( PrevStatus == 0 ) && VV_States.insideWs == 0 && VdotP > 0     \n       Statu"
+      "sLinear = 1;\n    elseif (PrevStatus == 1 ||  PrevStatus == 2 ) && VV_States.insideWs == 0 && VdotP < 0\n       "
+      " StatusLinear = 2;\n    elseif (PrevStatus == 1 || PrevStatus == 2) && VV_States.insideWs == 1\n        StatusLi"
+      "near = 2;\n    else\n        StatusLinear = PrevStatus;\n    end\nend\n\n%--------------------------------------"
+      "----------------------------------------------------------------------------\n% get the end effectors position r"
+      "elative to the homeposition of Ws\n%\nfunction p = getEErelativeWs(Kinematics, WsProps)\n    pbeInBframe = Kinem"
+      "atics.Ti.gbe(1:3,4);\n    p = pbeInBframe - WsProps.centerOfWs;\nend\n\n%---------------------------------------"
+      "---------------------------------------------------------------------------\n% get the vector to the center of t"
+      "he circle denoted in the\n% frame of the center of the circle\nfunction pCircle2EEinFrameC = getPCircle(Kinemati"
+      "cs, CircleProps)  \n    g0b = Kinematics.Ti.g0b;\n    gbe = Kinematics.Ti.gbe;\n    circleCenterInFrame0 = g0b(1"
+      ":3,4) + g0b(1:3,1:3)*CircleProps.CenterInFrameB;\n    pVehicle2EEinFrameB = gbe(1:3,4);\n    pCircle2EEinFrameC "
+      "= pVehicle2EEinFrameB - CircleProps.CenterInFrameB;\nend\n\n%---------------------------------------------------"
+      "---------------------------------------------------------------\n% check if end effector is inside Ws mesh\nfunc"
+      "tion isInside = checkIfPointIsInsideMesh (indices, XYZ, point)\n    X = XYZ(1,:)';\n    Y = XYZ(2,:)';\n    Z = "
+      "XYZ(3,:)';\n    idx = indices;\n    intersections = 0;\n    for i=1:size(indices,1)\n        v1 = [ X(idx(i,1)) "
+      "; Y(idx(i,1)); Z(idx(i,1)) ]; \n        v2 = [ X(idx(i,2)) ; Y(idx(i,2)); Z(idx(i,2)) ]; \n        v3 = [ X(idx("
+      "i,3)) ; Y(idx(i,3)); Z(idx(i,3)) ];\n        %intersections = intersections + rayIntersectsTriangle(v1,v2,v3 , p"
+      "oint);\n        [flag, u, v, t, ray] = rayTriangleIntersection (point,  v1, v2, v3);\n        if flag == 1\n    "
+      "        intersections = intersections + 1;\n        end\n    end\n    if mod(intersections , 2 ) == 0\n       is"
+      "Inside = 0;\n    else\n       isInside = 1;\n    end\nend\n\n%--------------------------------------------------"
+      "----------------------------------------------------------------\n% Ray/triangle intersection using the algorith"
+      "m proposed by Möller and Trumbore (1997).\nfunction [flag, u, v, t, ray] = rayTriangleIntersection (o, p0, p1, "
+      "p2)\n    % direction of the ray from the point o\n    d = [4,4,4]';\n    epsilon = 0.000001;\n    e1 = p1-p0;\n "
+      "   e2 = p2-p0;\n    q  = cross(d,e2);\n    a  = dot(e1,q); % determinant of the matrix M\n    if (a>-epsilon && "
+      "a<epsilon) \n        % the vector is parallel to the plane (the intersection is at infinity)\n        [flag, u, "
+      "v, t,ray] = deal(0,0,0,0,0);\n        return;\n    end;\n    f = 1/a;\n    s = o-p0;\n    u = f*dot(s,q);\n    i"
+      "f (u<0.0)\n        % the intersection is outside of the triangle\n        [flag, u, v, t, ray] = deal(0,0,0,0,0)"
+      ";\n        return;          \n    end;\n    r = cross(s,e1);\n    v = f*dot(d,r);\n    if (v<0.0 || u+v>1.0)\n  "
+      "      % the intersection is outside of the triangle\n        [flag, u, v, t, ray] = deal(0,0,0,0,0);\n        re"
+      "turn;\n    end;\n    t = f*dot(e2,r); % verified! \n    if t > epsilon\n        flag = 1;\n        ray = d;\n   "
+      "     return;\n    else\n        [flag, u, v, t, ray] = deal(0,0,0,0,0);\n        return\n    end\nend\n\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }

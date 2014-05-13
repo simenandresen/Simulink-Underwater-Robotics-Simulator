@@ -15,7 +15,7 @@ z_rov = 1;
 % definded by:
 % Ai = Rot_z(theta)Trans_z(d)Trans_x(a)Rot_x(alpha)
 DH = struct('a',zeros(n,1),'d',zeros(n,1),'alpha',zeros(n,1), 'g6e', zeros(4,4));
-DH.a(1) = 0.2;
+DH.a(1) = 0.15;
 DH.a(2) = 1;
 DH.a(3) = 0.6;
 DH.a(4) = 0.4;
@@ -48,8 +48,8 @@ DH.g6e = g6e;
 %% joint limits - global parameters 
 QLimits = struct('qmin',zeros(n,1), 'qmax',zeros(n,1));
 
-QLimits.qmin(1) = -87*(pi/180);
-QLimits.qmax(1) = 87*(pi/180);
+QLimits.qmin(1) = -90*(pi/180);
+QLimits.qmax(1) = 90*(pi/180);
 
 QLimits.qmin(2) = -96*(pi/180);
 QLimits.qmax(2) = 97*(pi/180);
@@ -117,7 +117,7 @@ if exist(file, 'file')
     radFactor = 0.8;
     CircleProps.outerCircleRadius = 0.7*radFactor;
     CircleProps.middleCircleRadius = 0.65*radFactor;
-    CircleProps.innerCircleRadius = 0.1;
+    CircleProps.innerCircleRadius = 0.2;
     CircleProps.innerMiddelRadiusDelta = CircleProps.outerCircleRadius - CircleProps.middleCircleRadius;
 
     CircleProps.psii = 10 * d2r;

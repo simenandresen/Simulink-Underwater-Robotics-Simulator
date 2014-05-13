@@ -15,8 +15,8 @@ six_link = SerialLink(l,'name','six link');
 %% sampling intervals
 s = cell(6,1);
 stepsize = 0.2;
-s{1} = -65*d2r : stepsize : 65*d2r;
-s{2} = -65 * d2r : stepsize : 65*d2r;
+s{1} = -61*d2r : stepsize : 61*d2r;
+s{2} = -61 * d2r : stepsize : 61*d2r;
 s{3} = 0;
 s{4} = 0;
 s{5} = pi/2;
@@ -80,7 +80,7 @@ end
 
 s = cell(6,1);
 angle = -pi : 0.2 : pi-0.2 ;
-radius = 0 : 0.2 : 1.7 ;
+radius = 0 : 0.2 : 1.66 ;
 nrOfPoints = length(angle) * length(radius);
 
 PxMiddle = zeros(nrOfPoints, 1);
@@ -91,7 +91,7 @@ k = 1;
 
 for i = 1:length(angle)
     for j = 1:length(radius)
-        x = 0.3;
+        x = 0.46;
         y = radius(j) * cos(angle(i));
         z = radius(j) * sin( angle (i));
         
@@ -120,7 +120,7 @@ ZZ = dt.X(:,3);
 %% transform mesh
 radius_inner = 1.1;
 for i = 1:size(XX,1)
-    if (YY(i)^2 + ZZ(i)^2 ) < radius_inner^2 && XX(i) < 0.4
+    if (YY(i)^2 + ZZ(i)^2 ) < radius_inner^2 && XX(i) < 0.48
        XX(i) = sqrt( radius_inner^2 - YY(i)^2 - ZZ(i)^2) ; 
     end
 end

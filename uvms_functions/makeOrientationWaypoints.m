@@ -101,37 +101,16 @@ function  makePath()
     end
 
     function update3dPlot()
-        if length(phi) > 4
-            figure(2);
-            Tension = 0;
-            n = 10;
-            xx_c = [];
-            yy_c = [];
-            zz_c = [];
-            mat = [];
-            for k=1:length(phi)-3
-                [mat]=crdatnplusoneval([phi(k),theta(k),psi(k)],[phi(k+1),theta(k+1),psi(k+1)],[phi(k+2),theta(k+2),psi(k+2)],[phi(k+3),theta(k+3),psi(k+3)],Tension,n);
-                xx_c = [xx_c, mat(1,:) ];
-                yy_c = [yy_c, mat(2,:) ];
-                zz_c = [zz_c, mat(3,:) ];
-            end
-            l = length(phi);
-            Y=[phi; theta; psi];
-            X = 0:1:(l-1);
-            pp = spline(X,Y);
-            yy = ppval(pp, linspace(0, l ,40));
-            hold off;
-            [az,el]=view;
-            plot3(xx_c,yy_c,zz_c, '-r');
-            view([az,el]);
-            axis([-scale, scale, -scale , scale, -scale , scale]);
-            grid on;
-            hold on;
-            xlabel('x'); ylabel('y'); zlabel('z');
-        end
+        figure(2);
+        hold off;
+        [az,el]=view;
+        plot3(phi,theta,psi, '-r');
+        view([az,el]);
+        axis([-scale, scale, -scale , scale, -scale , scale]);
+        grid on;
+        hold on;
+        xlabel('x'); ylabel('y'); zlabel('z');
     end
-
-
 end
 
 %% get the index of point closest to the one pointed on by mouse
