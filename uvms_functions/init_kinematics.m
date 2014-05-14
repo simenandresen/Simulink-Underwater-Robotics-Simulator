@@ -17,7 +17,7 @@ z_rov = 1;
 DH = struct('a',zeros(n,1),'d',zeros(n,1),'alpha',zeros(n,1), 'g6e', zeros(4,4));
 DH.a(1) = 0.15;
 DH.a(2) = 1;
-DH.a(3) = 0.6;
+DH.a(3) = 0.7;
 DH.a(4) = 0.4;
 DH.a(5) = 0;
 DH.a(6) = 0;
@@ -102,7 +102,7 @@ end
 
 %% circle properties - Inverse kinematics
 WsProps = struct('centerOfWs', zeros(3,1), 'XYZPoints', 0, 'XYZIndices',0);
-WsProps.centerOfWs = [1.5;0;-0.2];
+WsProps.centerOfWs = [1.35;0;-0.2];
 
 % mesh file
 folder = read_config('data_folder','string');
@@ -113,11 +113,11 @@ if exist(file, 'file')
     WsProps.XYZPoints = XYZPoints;
     WsProps.XYZIndices = XYZIndices;
     CircleProps = struct('CenterInFrameB', zeros(3,1), 'outerCircleRadius', 0, 'middleCircleRadius',0,'innerCircleRadius',0, 'innerMiddelRadiusDelta', 0, 'psis',0, 'psii',0);
-    CircleProps.CenterInFrameB = [1.4,0,0]';  % center of ws and wi
+    CircleProps.CenterInFrameB = [4.2,0,0]';  % center of ws and wi
     radFactor = 0.8;
     CircleProps.outerCircleRadius = 0.7*radFactor;
     CircleProps.middleCircleRadius = 0.65*radFactor;
-    CircleProps.innerCircleRadius = 0.2;
+    CircleProps.innerCircleRadius = 0.13;
     CircleProps.innerMiddelRadiusDelta = CircleProps.outerCircleRadius - CircleProps.middleCircleRadius;
 
     CircleProps.psii = 10 * d2r;

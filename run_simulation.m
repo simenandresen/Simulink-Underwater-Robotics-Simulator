@@ -113,8 +113,15 @@ if KINEMATICS_ONLY == true
     vs_com = V_vehicle_com_log.Data;
     ee_v_com = EE_V_log.Data;
     W_diag = W_diag_log.Data;
+    
     Circle2EEVec = zeros(3,VV_States_log.Circle2EEVec.TimeInfo.Length);
     Circle2EEVec(:,:) = VV_States_log.Circle2EEVec.Data(:,1,:);
+    
+    VVLinearVelocity = zeros(6,VV_States_log.Circle2EEVec.TimeInfo.Length);
+    VVLinearVelocity(:,:) = VV_States_log.linearVehicleVelocity.Data(:,1,:);
+    VV_EE_Velocity = zeros(6,VV_States_log.Circle2EEVec.TimeInfo.Length);
+    VV_EE_Velocity(:,:) = VV_States_log.V_EE.Data(:,1,:);
+
     VVStatusLinear = zeros(length(VV_States_log.StatusLinear.Data),1);
     VVStatusLinear(:) = VV_States_log.StatusLinear.Data(1,1,:);
     VVStatusAngular = zeros(length(VV_States_log.StatusAngular.Data),1);
