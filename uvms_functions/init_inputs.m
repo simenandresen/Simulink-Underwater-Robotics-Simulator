@@ -7,17 +7,21 @@ q_dot = [-0.1,0,0,0,0.2,0];
 vbb = [0,0.1,0,0.1,0,0.1];
 
 %% set initial configuration of system
-xi_init = [0,0,0,0,0,0 ...
+xi_euler_init = [0,0,0,0,0,0 ...
        ,0,pi/2.8,-pi/1.3,pi/3,-pi/2 ,0];
+xi_init = [0,0,0, ...
+       1,0,0,0, ...
+       0,pi/2.8,-pi/1.3,pi/3,-pi/2 ,0
+       ];
 
-q_init = xi_init(7:12);
-vpose_init = xi_init(1:6);
-vpose_quaternion_init = [xi_init(1:3), euler2q(xi_init(4),xi_init(5),xi_init(6))'];
+q_init = xi_init(8:13);
+vpose_euler_init = xi_euler_init(1:6);
+vehicle_quaternion_init = [ euler2q(xi_euler_init(4),xi_euler_init(5),xi_euler_init(6))'];
 vehicle_position_init = xi_init(1:3);
-vehicle_euler_init = xi_init(4:6);
+vehicle_euler_init = xi_euler_init(4:6);
 
 % initial vehicle
-[g0b_init , R0b_init] = genCordinates2Matrix(vpose_init(1:3), vpose_init(4:6));
+[g0b_init , R0b_init] = genCordinates2Matrix(vehicle_position_init, vehicle_euler_init);
 
 %--------------------------------------------------------------
 % initial manipulator
@@ -40,19 +44,13 @@ ee_pose_init = [g0e_init(1:3,4)',phi,theta,psi];
 
 ee_pose_quaternion_init = [g0e_init(1:3,4)', q'];
 
-
-
-%% Control inputs
-tau_c = zeros(12,1);
-
 %% Current
-V_current = [0,0.05,0,0,0,0]';
+V_current = [0.3,0.1,0,0,0,0]';
 
 %% Commanded states
-
 commanded_zeta = zeros(12,1);
-commanded_zeta(1)=0.1;
-commanded_zeta(8)=0;
+commanded_zeta(1) = 0.1;
+commanded_zeta(8) = 0;
 
 %% Commanded End effector
 

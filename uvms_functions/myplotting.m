@@ -59,7 +59,7 @@ set(leg,'Interpreter','latex');
 grid on;
 
 subplot(3,2,5);
-plot(time, [r2d*eta2_com(:,:)]);
+plot(time, [r2d* commanded_vehicle_euler(:,:)]);
 title('Commanded vehicle attitude');
 xlabel('time [s]'); ylabel('[ deg]');
 leg=legend('$\phi$','$\theta$','$\psi$');
@@ -210,10 +210,10 @@ if KINEMATICS_ONLY == false
     grid on;
 
     subplot(3,2,3);
-    plot(time, [eta1_mes(:,:), r2d*eta2_mes(:,:)]);
+    plot(time, [eta1_mes(:,:)]);
     title('Measured vehicle position');
     xlabel('time [s]'); ylabel('[m, deg]');
-    leg=legend('x','y','z','$\phi$','$\theta$','$\psi$');
+    leg=legend('x','y','z');
     set(leg,'Interpreter','latex');
     grid on;
 
@@ -228,11 +228,11 @@ if KINEMATICS_ONLY == false
 
 
     subplot(3,2,5);
-    plot(time, dzeta_mes(7:12, :));
-    title('Measured manipulator joint acceleration');
-    xlabel('time [s]'); ylabel('[m/s]');
-    leg=legend('$\ddot{q}_1$','$\ddot q_2$','$\ddot q_3$', '$\ddot q_4$', '$\ddot q_5$', '$\ddot q_6$');
-    set(leg,'Interpreter','latex');
+    plot(time, measured_vehicle_euler*r2d);
+    title('Measured vehicle attitude');
+    xlabel('time [s]'); ylabel('[deg]');
+    leg=legend('\phi','\theta','\psi');
+    %set(leg,'Interpreter','latex');
     grid on;
 
     subplot(3,2,6);
@@ -277,16 +277,16 @@ if KINEMATICS_ONLY == false
     set(h(i), 'name', 'Fig: Error States','NumberTitle','off');
 
 
-    subplot(2,2,1);
-    plot(time, zeta_tilde(1:6,:));
+    subplot(3,2,1);
+    plot(time, error_zeta(1:6,:));
     title('Error vehicle velocity');
     xlabel('time [s]'); ylabel('[m/s]');
     legend('u','v','w','p','q','r');
     grid on;
 
 
-    subplot(2,2,2);
-    plot(time, zeta_tilde(7:12,:));
+    subplot(3,2,2);
+    plot(time, error_zeta(7:12,:));
     title('Error Manipulator velocity');
     xlabel('time [s]'); ylabel('[m/s]');
     leg=legend('$\dot{q}_1$','$\dot q_2$','$\dot q_3$', '$\dot q_4$', '$\dot q_5$', '$\dot q_6$');
@@ -294,8 +294,8 @@ if KINEMATICS_ONLY == false
     grid on;
 
 
-    subplot(2,2,3);
-    plot(time, [xi_tilde(1:3,:); r2d*xi_tilde(4:6,:)]);
+    subplot(3,2,3);
+    plot(time, [error_vehicle_position ; r2d*error_vehicle_rotation_euler ]);
     title('Error vehicle position');
     xlabel('time [s]'); ylabel('[m, deg]');
     leg=legend('x','y','z','$\phi$','$\theta$','$\psi$');
@@ -303,34 +303,57 @@ if KINEMATICS_ONLY == false
     grid on;
 
 
-    subplot(2,2,4);
-    plot(time, r2d*xi_tilde(7:12,:));
+    subplot(3,2,4);
+    plot(time, r2d*error_manipulator);
     title('Error joint angle');
     xlabel('time [s]'); ylabel('angle [deg]');
     leg=legend('$q_1$','$q_2$','$q_3$','$q_4$','$q_5$','$q_6$');
     set(leg,'Interpreter','latex');
     grid on;
-
-    %% --------------- specific forces  ---------------------
-    i=i+1;
-    h(i)=figure(i);
-    set(h(i), 'name', 'Fig: Specific Forces','NumberTitle','off');
-
-    subplot(2,1,1);
-    plot(time, specific_forces(1:6,:));
-    title('Specific forces vehicle )');
-    xlabel('time [s]'); ylabel('[m/s]');
-    leg=legend('$\tau_1$','$\tau_2$','$\tau_3$', '$\tau_4$', '$\tau_5$', '$\tau_6$');
-    set(leg,'Interpreter','latex')
+    
+    subplot(3,2,5);
+    plot(time, xi_mes(1:3,:) );
+    hold on
+    plot(time, xi_com(1:3,:), '-.');
+    title('Error vehicle position');
+    xlabel('time [s]'); ylabel('[m, deg]');
+    leg=legend('x','y','z','x_d', 'y_d', 'z_d');
+    %set(leg,'Interpreter','latex');
     grid on;
-
-    subplot(2,1,2);
-    plot(time, specific_forces(7:12,:));
-    title('Specific forces - Manipulator');
-    xlabel('time [s]'); ylabel('[m/s]');
-    leg=legend('$\tau_7$','$\tau_8$','$\tau_9$', '$\tau_{10}$', '$\tau_{11}$', '$\tau_{12}$');
-    set(leg,'Interpreter','latex')
+    
+    subplot(3,2,6);
+    plot(time, measured_vehicle_euler );
+    hold on;
+    plot(time, commanded_vehicle_euler , '-.' );
+    title('Error vehicle orientation');
+    leg=legend('$\phi$','$\theta$','$\psi$', '$\phi_d$','$\theta_d$','$\psi_d$');
+    set(leg,'Interpreter','latex');
     grid on;
+    xlabel('time [s]');
+    ylabel('angle [deg]');
+    
+    
+
+    % --------------- specific forces  ---------------------
+%     i=i+1;
+%     h(i)=figure(i);
+%     set(h(i), 'name', 'Fig: Specific Forces','NumberTitle','off');
+% 
+%     subplot(2,1,1);
+%     plot(time, specific_forces(1:6,:));
+%     title('Specific forces vehicle )');
+%     xlabel('time [s]'); ylabel('[m/s]');
+%     leg=legend('$\tau_1$','$\tau_2$','$\tau_3$', '$\tau_4$', '$\tau_5$', '$\tau_6$');
+%     set(leg,'Interpreter','latex')
+%     grid on;
+% 
+%     subplot(2,1,2);
+%     plot(time, specific_forces(7:12,:));
+%     title('Specific forces - Manipulator');
+%     xlabel('time [s]'); ylabel('[m/s]');
+%     leg=legend('$\tau_7$','$\tau_8$','$\tau_9$', '$\tau_{10}$', '$\tau_{11}$', '$\tau_{12}$');
+%     set(leg,'Interpreter','latex')
+%     grid on;
 end % end KINEMATICS_ONLY == false
 
 % %% check to make sure nothing is overwritten

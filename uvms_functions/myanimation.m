@@ -46,7 +46,8 @@ if KINEMATICS_ONLY == true
     ee_pose = ee_pose_mes;
 else
     q = q_mes;
-    xi = xi_mes;   
+    xi = xi_mes;
+    ee_pose = ee_pose_mes;
 end
 
 
@@ -60,7 +61,6 @@ disp('Press q to stop animation');
 set(h(i), 'currentch', 'z');
 centerOfWs = WsProps.centerOfWs;
 
-
 %for j=1:step:length(q(:,1))
 j=1;
 
@@ -68,11 +68,12 @@ j=1;
 while j < length(q(:,1)); 
     
     %% write info text in side view
-    annotationHandle=annotation('textbox', [0, 0.6, 0, 0], 'string', ... 
+    if KINEMATICS_ONLY == true
+        annotationHandle=annotation('textbox', [0, 0.6, 0, 0], 'string', ... 
                     sprintf('Time %f,  insideWs: %d , Status linear: %d, Status angular %d,  yawAngle %f, yawAngle rate %f', time(j), VVisInsideWs(:,:,j) , VVStatusLinear(j), VVStatusAngular(j) , VVpsibe(j)*r2d ));
-    
+    end
     %% plot robot manipulator
-    g0b=genCordinates2Matrix(xi(1:3,j) , xi(4:6,j));
+    g0b=genCordinates2MatrixQuaternion(xi(1:3,j) , xi(4:7,j));
     new_mat=homtrans(g0b,rov_vertices_init');
     six_link.plot (q(j,:),'noshadow','noname', 'nojaxes');
     six_link.base = g0b;
@@ -117,7 +118,7 @@ while j < length(q(:,1));
     j = j + step;
     
     %% handle user interface
-    delete(annotationHandle);
+    if KINEMATICS_ONLY == true ,     delete(annotationHandle); end
     keyPressed = get(h(i),'currentcharacter');
     if isempty(keyPressed)
         pause(0.5);

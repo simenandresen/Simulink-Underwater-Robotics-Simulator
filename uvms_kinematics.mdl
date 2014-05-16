@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.1026"
+    ComputedModelVersion    "1.1027"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed May 14 11:57:01 2014"
-  RTWModifiedTimeStamp	  321884738
-  ModelVersionFormat	  "1.%<AutoIncrement:1026>"
+  LastModifiedDate	  "Thu May 15 13:59:22 2014"
+  RTWModifiedTimeStamp	  322062980
+  ModelVersionFormat	  "1.%<AutoIncrement:1027>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -67,6 +67,7 @@ Model {
     $ObjectID		    1
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
     model_		    "uvms_kinematics"
+    signals_		    []
     overrideMode_	    [0.0]
     Array {
       Type		      "Cell"
@@ -826,7 +827,7 @@ Model {
   System {
     Name		    "uvms_kinematics"
     Location		    [2, 418, 1918, 1431]
-    Open		    off
+    Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
     ScreenColor		    "white"
@@ -2397,7 +2398,7 @@ Model {
 	  System {
 	    Name		    "End Effector2"
 	    Location		    [2, 418, 1918, 1431]
-	    Open		    on
+	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -8963,8 +8964,8 @@ Stateflow {
       "(q)\n%#codegen\neta = q(1);\neps = q(2:4);\nS = skew(eps);\nR = eye(3) + 2*eta*S + 2*S^2;\n\nend\n\n\nfunction S"
       " = skew(v)\n%#codegen\n    S = [  0   -v(3)  v(2)\n       v(3)  0    -v(1)\n       -v(2) v(1)   0];\nend\n\n\n%-"
       "---------------------------------------------------------------\n%   use normalization feedback according to fos"
-      "sen\n%   page 31\n%\nfunction qout = getNormalizationFeedback(qin)\n%#codegen\n    qout = zeros(4,1);\n    gamma"
-      " = 100;\n    qout = gamma*0.5*(1-qin'*qin)*qin;\n\nend"
+      "sen\n%   page 31\nfunction qout = getNormalizationFeedback(qin)\n%#codegen\n    qout = zeros(4,1);\n    gamma = "
+      "100;\n    qout = gamma*0.5*(1-qin'*qin)*qin;\n\nend"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
