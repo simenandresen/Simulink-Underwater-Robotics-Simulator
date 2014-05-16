@@ -1,0 +1,1002 @@
+CHANGES FOR RTB 9.8
+=======================================
+
+CodeGenerator
+----------------
+
+A new class CodeGenerator allows you to create efficient robot-specific
+models from any SerialLink manipulator object.  It writes m-files or
+creates Simulink blocks which can be used in real-time systems.
+
+Requires Symbolics Toolbox.  Does not yet support inverse kinematics.
+
+Demo
+----------------
+
+Now has 20 demonstrations that include mobile robotics, CodeGeneration
+and symbolic operations.  The MATLAB code now runs interactively using
+the runscript module.
+
+Link
+----------------
+New subclasses Revolute, Prismatic are polymorphic with Link but 
+have implicit joint type, no need to specify sigma:
+
+L(1) = Revolute('d', 0, 'a', 0, 'alpha', pi/2, ...
+    'I', [0, 0.35, 0, 0, 0, 0], ...
+    'r', [0, 0, 0], ...
+    'm', 0, ...
+    'Jm', 200e-6, ...
+    'G', -62.6111, ...
+    'B', 1.48e-3, ...
+    'Tc', [0.395 -0.435] );
+
+New files
+----------------
+tripleangle, demo of RPY/Euler angles
+
+
+Simulink
+----------------
+Most Simulink models now for MATLAB 2012b.
+pinv option for ikine block.
+
+
+CHANGES FOR RTB 9.7
+=======================================
+
+Link
+----------------
+
+New way to specify link parameters
+
+L(1) = Link('d', 0, 'a', 0, 'alpha', pi/2, ...
+    'I', [0, 0.35, 0, 0, 0, 0], ...
+    'r', [0, 0, 0], ...
+    'm', 0, ...
+    'Jm', 200e-6, ...
+    'G', -62.6111, ...
+    'B', 1.48e-3, ...
+    'Tc', [0.395 -0.435] );
+
+There is no need to give a value for theta in this case, since it is
+the joint variable.
+
+The old syntax is still valid.
+
+New models
+----------------
+
+    mdl_puma560_3  first 3 links of the Puma560
+    mdl_ball       a 50 link robot that folds into a ball
+    mdl_coil       a 50 link robot that forms a helix
+
+Symbolics
+----------------
+
+all the kinematic and dynamics functions can now generate symbolic expressions.  You need
+to have the MATLAB Symbolic Toolbox.
+
+You need to create symbolic links
+
+L(1) = Link('d', 0, 'a', 0, 'alpha', pi/2, 'sym');
+
+and build them into a robot
+
+Alternatively you can create a symbolic version of an existing robot
+
+symbot = sym(twolink);
+
+where all numerical parameters are converted to symbolic versions.  Numerical
+values like pi/2 become the exact symbolic fraction pi/2.
+
+To get a vector symbolic joint angles or rates use the new method
+
+[q,qd] = symbot.gencoords();
+
+then the following functions will give symbolic expressions in terms of the joint coordinates
+and robot parameters:
+
+T = symbot.fkine(q)
+g = symbot.gravload(q)
+C = symbot.coriolis(q, qd)
+J = symbot.jacobn(q)
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+r1061 | peter.i.corke@gmail.com | 2013-01-26 16:25:36 +1000 (Sat, 26 Jan 2013) | 2 lines
+Changed paths:
+   A /matlab/robot/trunk/tripleangle.fig
+   A /matlab/robot/trunk/tripleangle.m
+
+New interactive demo to show 3 axis rotations
+
+------------------------------------------------------------------------
+r1060 | malzahnandroid | 2013-01-25 20:13:41 +1000 (Fri, 25 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/common/tb_optparse.m
+   M /matlab/robot/trunk/@SerialLink/fkine.m
+
+modification hint
+------------------------------------------------------------------------
+r1058 | peter.i.corke@gmail.com | 2013-01-24 16:09:29 +1000 (Thu, 24 Jan 2013) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/@CodeGenerator/CodeGenerator.m
+   M /matlab/robot/trunk/@CodeGenerator/gencoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/gengravload.m
+   M /matlab/robot/trunk/@CodeGenerator/geninertia.m
+   M /matlab/robot/trunk/@CodeGenerator/geninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuncoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfungravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockcoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockgravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockjacobian.m
+
+Documentation tidyup.
+
+------------------------------------------------------------------------
+r1057 | malzahnandroid | 2013-01-24 00:25:38 +1000 (Thu, 24 Jan 2013) | 2 lines
+Changed paths:
+   M /matlab/common/distributeblocks.m
+   M /matlab/common/doesblockexist.m
+   M /matlab/common/multidfprintf.m
+   M /matlab/common/symexpr2slblock.m
+   M /matlab/robot/trunk/@CodeGenerator/CodeGenerator.m
+   M /matlab/robot/trunk/@CodeGenerator/gencoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/gengravload.m
+   M /matlab/robot/trunk/@CodeGenerator/geninertia.m
+   M /matlab/robot/trunk/@CodeGenerator/geninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuncoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfungravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockcoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockgravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/logmsg.m
+   M /matlab/robot/trunk/@CodeGenerator/private/createmconstructor.m
+   M /matlab/robot/trunk/@CodeGenerator/private/createnewblocklibrary.m
+   M /matlab/robot/trunk/@CodeGenerator/private/ffindreplace.m
+   M /matlab/robot/trunk/@CodeGenerator/private/finsertfront.m
+   M /matlab/robot/trunk/@CodeGenerator/private/generatecopyrightnote.m
+   M /matlab/robot/trunk/@CodeGenerator/private/getpibugfixstring.m
+   M /matlab/robot/trunk/@CodeGenerator/private/replaceheader.m
+
++ fixed umlaut issue in headers
++ acknowledgement in copyright note
+------------------------------------------------------------------------
+r1056 | malzahnandroid | 2013-01-24 00:08:12 +1000 (Thu, 24 Jan 2013) | 3 lines
+Changed paths:
+   M /matlab/robot/trunk/@CodeGenerator/CodeGenerator.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockcoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockgravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/private/constructheaderstring.m
+   A /matlab/robot/trunk/@CodeGenerator/private/createnewblocklibrary.m
+   A /matlab/robot/trunk/@CodeGenerator/private/generatecopyrightnote.m
+
++ addpath and rmpath methods for CodeGenerator
++ createnewblocklibrary.m collects multiple lines which would otherwhise be copied in each genslblock*-file. It also creates an slblock.m for the library so we find the autogenerated libraries in the Simulink browser now
++ generatecopyrightnote.m for easier maintenance
+------------------------------------------------------------------------
+r1055 | malzahnandroid | 2013-01-22 23:55:32 +1000 (Tue, 22 Jan 2013) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockcoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockgravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockjacobian.m
+
++ Simulink block generators now check if required blocks are already present in the library, otherwise appropriate generators are called automatically
++ M-code generators check if requirede m-functions are already present in the robot object directory, otherwise appropriate generators are called automatically
+------------------------------------------------------------------------
+r1053 | malzahnandroid | 2013-01-22 02:11:34 +1000 (Tue, 22 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/@SerialLink/rne_dh.m
+
+fixed copy paste bug in rne_dh.m l. 212
+------------------------------------------------------------------------
+r1052 | peter.i.corke@gmail.com | 2013-01-21 21:53:35 +1000 (Mon, 21 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/demos/fdyn.m
+
+Define the robot model
+------------------------------------------------------------------------
+r1051 | peter.i.corke@gmail.com | 2013-01-21 21:51:36 +1000 (Mon, 21 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/mdl_puma560.m
+
+Add joint limits, not quite sure if these number are correct for these DH coordinates
+------------------------------------------------------------------------
+r1050 | peter.i.corke@gmail.com | 2013-01-21 21:50:55 +1000 (Mon, 21 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/simulink/roblocks.mdl
+
+Fix scale error bug in "pose integral"
+------------------------------------------------------------------------
+r1049 | peter.i.corke@gmail.com | 2013-01-20 17:00:18 +1000 (Sun, 20 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/RangeBearingSensor.m
+
+Remove options now parsed by superclass
+------------------------------------------------------------------------
+r1048 | peter.i.corke@gmail.com | 2013-01-20 13:13:18 +1000 (Sun, 20 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/Sensor.m
+
+support an 'animate' option which shows which landmark the sensor is picking up
+------------------------------------------------------------------------
+r1047 | peter.i.corke@gmail.com | 2013-01-20 13:12:07 +1000 (Sun, 20 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/unit_test/DifferentialMotionTest.m
+
+update tests to reflect fix to eul2jac()
+------------------------------------------------------------------------
+r1046 | peter.i.corke@gmail.com | 2013-01-20 13:06:45 +1000 (Sun, 20 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/demos/codegen.m
+
+Added argument to purge() so as to not require manual clicking of confirmation popup
+------------------------------------------------------------------------
+r1045 | peter.i.corke@gmail.com | 2013-01-20 13:05:51 +1000 (Sun, 20 Jan 2013) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/@SerialLink/plot.m
+
+Added logic for 'fps' option
+Added drawnow after pause(), despite documentation saying this is implicit in pause, it doesnt work for 2012b.
+------------------------------------------------------------------------
+r1044 | peter.i.corke@gmail.com | 2013-01-20 13:04:43 +1000 (Sun, 20 Jan 2013) | 5 lines
+Changed paths:
+   M /matlab/robot/trunk/EKF.m
+
+Fix logic around plotting, added 'plot' option to run()
+Plot dimensions come from map (if given), else from the 'dim' option to constructor
+Fix logic for SLAM case which was not estimating the map!
+
+plot_map() now has an argument which is the covariance of the ellipses to be overlaid around landmarks
+------------------------------------------------------------------------
+r1043 | peter.i.corke@gmail.com | 2013-01-20 11:49:11 +1000 (Sun, 20 Jan 2013) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/@SerialLink/rne.m
+   M /matlab/robot/trunk/startup_rtb.m
+
+We can't use FRNE if the robot is symbolic.
+Make RNE a wrapper that invokes mex or m-file according to circumstance.  Note that now the FRNE files live in the MEX directory which must be on the path
+------------------------------------------------------------------------
+r1042 | peter.i.corke@gmail.com | 2013-01-20 11:47:23 +1000 (Sun, 20 Jan 2013) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/@SerialLink/rne_dh.m
+
+Change ' to .', important for symbolic expressions
+line 211, MATLAB 2012b complains with it as written for case of symbolic robot and numerical joint angles...
+------------------------------------------------------------------------
+r1041 | malzahnandroid | 2013-01-19 01:13:19 +1000 (Sat, 19 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/common/symexpr2slblock.m
+   M /matlab/robot/trunk/@CodeGenerator/CodeGenerator.m
+   M /matlab/robot/trunk/@CodeGenerator/gencoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/gengravload.m
+   M /matlab/robot/trunk/@CodeGenerator/geninertia.m
+   M /matlab/robot/trunk/@CodeGenerator/geninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuncoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfungravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockcoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockgravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/logmsg.m
+   M /matlab/robot/trunk/@CodeGenerator/private/constructheaderstring.m
+   M /matlab/robot/trunk/@CodeGenerator/private/createmconstructor.m
+   M /matlab/robot/trunk/@CodeGenerator/private/ffindreplace.m
+   M /matlab/robot/trunk/@CodeGenerator/private/finsertfront.m
+   M /matlab/robot/trunk/@CodeGenerator/private/getpibugfixstring.m
+   M /matlab/robot/trunk/@CodeGenerator/private/replaceheader.m
+
+header formatting
+------------------------------------------------------------------------
+r1040 | malzahnandroid | 2013-01-18 21:29:13 +1000 (Fri, 18 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/common/distributeblocks.m
+   M /matlab/common/doesblockexist.m
+   M /matlab/common/multidfprintf.m
+   M /matlab/common/symexpr2slblock.m
+   M /matlab/robot/trunk/@CodeGenerator/private/constructheaderstring.m
+   M /matlab/robot/trunk/@CodeGenerator/private/createmconstructor.m
+   M /matlab/robot/trunk/@CodeGenerator/private/ffindreplace.m
+   M /matlab/robot/trunk/@CodeGenerator/private/finsertfront.m
+   M /matlab/robot/trunk/@CodeGenerator/private/getpibugfixstring.m
+   M /matlab/robot/trunk/@CodeGenerator/private/replaceheader.m
+
+reformatted headers in common functions and private CodeGenerator methods
+------------------------------------------------------------------------
+r1039 | malzahnandroid@gmail.com | 2013-01-18 09:17:30 +1000 (Fri, 18 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/@CodeGenerator/CodeGenerator.m
+   M /matlab/robot/trunk/@CodeGenerator/gencoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/gengravload.m
+   M /matlab/robot/trunk/@CodeGenerator/geninertia.m
+   M /matlab/robot/trunk/@CodeGenerator/geninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuncoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfungravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockcoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockgravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/logmsg.m
+
++ comments for public CodeGenerator methods reformatted
+------------------------------------------------------------------------
+r1038 | peter.i.corke@gmail.com | 2013-01-12 17:41:37 +1000 (Sat, 12 Jan 2013) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/@CodeGenerator/CodeGenerator.m
+   M /matlab/robot/trunk/@CodeGenerator/gencoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genfdyn.m
+
+Partial updates to doco
+
+------------------------------------------------------------------------
+r1037 | peter.i.corke@gmail.com | 2013-01-12 16:19:49 +1000 (Sat, 12 Jan 2013) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/demos/braitnav.m
+   M /matlab/robot/trunk/demos/bugnav.m
+   M /matlab/robot/trunk/demos/codegen.m
+   M /matlab/robot/trunk/demos/drivepose.m
+   M /matlab/robot/trunk/demos/dstarnav.m
+   M /matlab/robot/trunk/demos/fdyn.m
+   M /matlab/robot/trunk/demos/fkine.m
+   M /matlab/robot/trunk/demos/graphics.m
+   M /matlab/robot/trunk/demos/idyn.m
+   M /matlab/robot/trunk/demos/ikine.m
+   M /matlab/robot/trunk/demos/jacob.m
+   M /matlab/robot/trunk/demos/particlefilt.m
+   M /matlab/robot/trunk/demos/prmnav.m
+   M /matlab/robot/trunk/demos/quadrotor.m
+   M /matlab/robot/trunk/demos/robot.m
+   M /matlab/robot/trunk/demos/rotation.m
+   M /matlab/robot/trunk/demos/slam.m
+   M /matlab/robot/trunk/demos/symbolic.m
+   M /matlab/robot/trunk/demos/traj.m
+   M /matlab/robot/trunk/demos/trans.m
+   M /matlab/robot/trunk/demos/ztorque.m
+
+Added copyright notices
+
+------------------------------------------------------------------------
+r1036 | peter.i.corke@gmail.com | 2013-01-12 16:11:31 +1000 (Sat, 12 Jan 2013) | 4 lines
+Changed paths:
+   A /matlab/robot/trunk/demos/braitnav.m
+   A /matlab/robot/trunk/demos/bugnav.m
+   A /matlab/robot/trunk/demos/codegen.m (from /matlab/robot/trunk/demos/rtsymcgendemo.m:1035)
+   M /matlab/robot/trunk/demos/demos.xml
+   A /matlab/robot/trunk/demos/drivepose.m
+   A /matlab/robot/trunk/demos/dstarnav.m
+   A /matlab/robot/trunk/demos/fdyn.m (from /matlab/robot/trunk/demos/rtfddemo.m:992)
+   A /matlab/robot/trunk/demos/fkine.m (from /matlab/robot/trunk/demos/rtfkdemo.m:992)
+   A /matlab/robot/trunk/demos/graphics.m (from /matlab/robot/trunk/demos/rtandemo.m:992)
+   A /matlab/robot/trunk/demos/idyn.m (from /matlab/robot/trunk/demos/rtidemo.m:992)
+   A /matlab/robot/trunk/demos/ikine.m (from /matlab/robot/trunk/demos/rtikdemo.m:992)
+   A /matlab/robot/trunk/demos/jacob.m (from /matlab/robot/trunk/demos/rtjademo.m:992)
+   A /matlab/robot/trunk/demos/particlefilt.m
+   A /matlab/robot/trunk/demos/prmnav.m
+   A /matlab/robot/trunk/demos/quadrotor.m
+   A /matlab/robot/trunk/demos/robot.m
+   A /matlab/robot/trunk/demos/rotation.m
+   D /matlab/robot/trunk/demos/rtandemo.m
+   D /matlab/robot/trunk/demos/rtfddemo.m
+   D /matlab/robot/trunk/demos/rtfkdemo.m
+   D /matlab/robot/trunk/demos/rtidemo.m
+   D /matlab/robot/trunk/demos/rtikdemo.m
+   D /matlab/robot/trunk/demos/rtjademo.m
+   D /matlab/robot/trunk/demos/rtsymcgendemo.m
+   D /matlab/robot/trunk/demos/rttgdemo.m
+   D /matlab/robot/trunk/demos/rttrdemo.m
+   A /matlab/robot/trunk/demos/slam.m
+   A /matlab/robot/trunk/demos/symbolic.m
+   A /matlab/robot/trunk/demos/traj.m (from /matlab/robot/trunk/demos/rttgdemo.m:992)
+   A /matlab/robot/trunk/demos/trans.m (from /matlab/robot/trunk/demos/rttrdemo.m:992)
+   A /matlab/robot/trunk/demos/ztorque.m
+   A /matlab/robot/trunk/rtbdemo.m (from /matlab/robot/trunk/rtdemo.m:992)
+   D /matlab/robot/trunk/rtdemo.m
+   M /matlab/robot/trunk/unit_test/UtilityTest.m
+
+Changes to names of demo files.
+They are now run using runscript which allows finer grained control of the execution of these scripts.
+Demo scripts no longer go into the users path, rtbdemo points at them explicitly.
+Added many new demo scripts.
+------------------------------------------------------------------------
+r1035 | peter.i.corke@gmail.com | 2013-01-10 21:34:37 +1000 (Thu, 10 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/Bug2.m
+
+Add error message in path() if goal is not given.
+------------------------------------------------------------------------
+r1034 | peter.i.corke@gmail.com | 2013-01-10 21:33:45 +1000 (Thu, 10 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/@SerialLink/plot.m
+
+Movie frames obtained using plot rather than getframe.  Makes resolution better, indep of onscreen figure size, perhaps a bit slower...  Also used fullfile instead instead of sprintf
+------------------------------------------------------------------------
+r1033 | peter.i.corke@gmail.com | 2013-01-10 21:32:48 +1000 (Thu, 10 Jan 2013) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/@SerialLink/maniplty.m
+
+Updated doco/comments for new options
+------------------------------------------------------------------------
+r1031 | malzahnandroid@gmail.com | 2012-12-24 01:59:56 +1000 (Mon, 24 Dec 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/@CodeGenerator/genfdyn.m
+
++ fixed wrong function call to genslblockinvdyn in genfdyn.m
+------------------------------------------------------------------------
+r1030 | malzahnandroid@gmail.com | 2012-12-24 01:22:24 +1000 (Mon, 24 Dec 2012) | 4 lines
+Changed paths:
+   M /matlab/robot/trunk/@CodeGenerator/genfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/geninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockcoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockgravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinertia.m
+   M /matlab/robot/trunk/@SerialLink/gravload.m
+   M /matlab/robot/trunk/unit_test/CodeGeneratorTest.m
+
++ completed unit_test/CodeGeneratorTest.m
++ fixed bug with wrong sign of friction in generation of inverse and forward dynamics
++ fixed camel case call of distributeblocks in genslblock methods
++ fixed missing inertia matrix check in genfdyn.m
+------------------------------------------------------------------------
+r1029 | malzahnandroid@gmail.com | 2012-12-21 09:27:03 +1000 (Fri, 21 Dec 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/demos/demos.xml
+   D /matlab/robot/trunk/demos/html
+   M /matlab/robot/trunk/demos/rtsymcgendemo.m
+   M /wiki/FAQ.wiki
+
++ adjusted the CodeGenerator demo to the format typically used in the Robotics Toolbox
+------------------------------------------------------------------------
+r1028 | malzahnandroid@gmail.com | 2012-12-21 09:08:29 +1000 (Fri, 21 Dec 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/demos/html/rtsymcgendemo.html
+   M /matlab/robot/trunk/demos/html/rtsymcgendemo.png
+   M /matlab/robot/trunk/demos/rtsymcgendemo.m
+
++ cosmetics to rtsymcgendemo.m
+------------------------------------------------------------------------
+r1025 | malzahnandroid@gmail.com | 2012-12-21 08:54:58 +1000 (Fri, 21 Dec 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/demos/demos.xml
+   A /matlab/robot/trunk/demos/html
+   A /matlab/robot/trunk/demos/html/rtsymcgendemo.html
+   A /matlab/robot/trunk/demos/html/rtsymcgendemo.png
+   A /matlab/robot/trunk/demos/html/rtsymcgendemo_01.png
+   A /matlab/robot/trunk/demos/rtsymcgendemo.m
+
++ A getting started example for the symbolics and CodeGenerator class functionality
+------------------------------------------------------------------------
+r1024 | malzahnandroid@gmail.com | 2012-12-19 10:14:43 +1000 (Wed, 19 Dec 2012) | 4 lines
+Changed paths:
+   M /matlab/robot/trunk/@CodeGenerator/genmfuncoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfungravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinertia.m
+   D /matlab/robot/trunk/test/symbolicTestBed.m
+   M /matlab/robot/trunk/unit_test/CodeGeneratorTest.m
+
++ fixed bug regarding test on existing robot constructor in genmfunXYZ.m
++ removed obsolete symbolicTestBed
++ probably found a bug in SerialLink/coriolis
+
+------------------------------------------------------------------------
+r1023 | malzahnandroid | 2012-12-19 09:34:40 +1000 (Wed, 19 Dec 2012) | 3 lines
+Changed paths:
+   M /matlab/robot/trunk/@CodeGenerator/CodeGenerator.m
+   M /matlab/robot/trunk/@CodeGenerator/gengravload.m
+   M /matlab/robot/trunk/@CodeGenerator/geninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuncoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfungravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinvdyn.m
+   M /matlab/robot/trunk/@SerialLink/gravload.m
+   M /matlab/robot/trunk/@SerialLink/inertia.m
+   A /matlab/robot/trunk/unit_test/CodeGeneratorTest.m
+
++ added CodeGeneratorTest.m - test for forward and inverse dynamics yet to be completed, inverse dynamics still produces some errors
++ some transposes changed from ' to .'
++ spelling error for distributeblocks commands in genslblockXYZ functions
+------------------------------------------------------------------------
+r1022 | malzahnandroid@gmail.com | 2012-12-18 21:10:02 +1000 (Tue, 18 Dec 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/@CodeGenerator/CodeGenerator.m
+   M /matlab/robot/trunk/@CodeGenerator/gencoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/gengravload.m
+   M /matlab/robot/trunk/@CodeGenerator/geninertia.m
+   M /matlab/robot/trunk/@CodeGenerator/geninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuncoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfungravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfuninvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genmfunjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockcoriolis.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfkine.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockfriction.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockgravload.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinertia.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockinvdyn.m
+   M /matlab/robot/trunk/@CodeGenerator/genslblockjacobian.m
+   M /matlab/robot/trunk/@CodeGenerator/logmsg.m
+   M /matlab/robot/trunk/@CodeGenerator/private/getpibugfixstring.m
+
+codeGenerator renaming complete
+------------------------------------------------------------------------
+r1021 | malzahnandroid | 2012-12-18 20:49:30 +1000 (Tue, 18 Dec 2012) | 1 line
+Changed paths:
+   D /matlab/robot/trunk/test/mdl_puma560_3_sym.m
+   M /matlab/robot/trunk/test/symbolicTestBed.m
+
+removed obsolete mdl_puma560_3_sym.m
+------------------------------------------------------------------------
+r1020 | malzahnandroid | 2012-12-18 20:46:07 +1000 (Tue, 18 Dec 2012) | 1 line
+Changed paths:
+   A /matlab/robot/trunk/@CodeGenerator/CodeGenerator.m (from /matlab/robot/trunk/@CodeGenerator/codeGenerator.m:1019)
+   D /matlab/robot/trunk/@CodeGenerator/codeGenerator.m
+
+renamed CodeGenerator constructor in repo browser
+------------------------------------------------------------------------
+r1019 | malzahnandroid | 2012-12-18 20:45:26 +1000 (Tue, 18 Dec 2012) | 2 lines
+Changed paths:
+   A /matlab/robot/trunk/@CodeGenerator (from /matlab/robot/trunk/@codeGenerator:1018)
+   D /matlab/robot/trunk/@codeGenerator
+
+renamed CodeGenerator from repo browser
+
+------------------------------------------------------------------------
+r1018 | malzahnandroid | 2012-12-18 20:43:54 +1000 (Tue, 18 Dec 2012) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/@codeGenerator/codeGenerator.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockfkine.m
+
++ purge function also deletes logfile
++ removed camelcase in genslblockfkine.m
+------------------------------------------------------------------------
+r1017 | malzahnandroid@gmail.com | 2012-12-17 05:37:34 +1000 (Mon, 17 Dec 2012) | 4 lines
+Changed paths:
+   M /matlab/common/distributeblocks.m
+   M /matlab/robot/trunk/@codeGenerator/codeGenerator.m
+   M /matlab/robot/trunk/@codeGenerator/gencoriolis.m
+   A /matlab/robot/trunk/@codeGenerator/genfdyn.m
+   M /matlab/robot/trunk/@codeGenerator/genfkine.m
+   M /matlab/robot/trunk/@codeGenerator/genfriction.m
+   M /matlab/robot/trunk/@codeGenerator/gengravload.m
+   M /matlab/robot/trunk/@codeGenerator/geninertia.m
+   M /matlab/robot/trunk/@codeGenerator/geninvdyn.m
+   M /matlab/robot/trunk/@codeGenerator/genjacobian.m
+   M /matlab/robot/trunk/@codeGenerator/genmfuncoriolis.m
+   A /matlab/robot/trunk/@codeGenerator/genmfunfdyn.m
+   M /matlab/robot/trunk/@codeGenerator/genmfunfkine.m
+   M /matlab/robot/trunk/@codeGenerator/genmfunfriction.m
+   M /matlab/robot/trunk/@codeGenerator/genmfungravload.m
+   M /matlab/robot/trunk/@codeGenerator/genmfuninertia.m
+   M /matlab/robot/trunk/@codeGenerator/genmfuninvdyn.m
+   M /matlab/robot/trunk/@codeGenerator/genmfunjacobian.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockcoriolis.m
+   A /matlab/robot/trunk/@codeGenerator/genslblockfdyn.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockfkine.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockfriction.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockgravload.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockinertia.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockinvdyn.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockjacobian.m
+   M /matlab/robot/trunk/@codeGenerator/private/constructheaderstring.m
+   M /matlab/robot/trunk/test/symbolicTestBed.m
+
++ genfdyn, genmfunfdyn, genslblockfdyn added
++ headers revised
++ codeGenerator: purge functionality
++ forward dynamics, inverse dynamics, inertia and coriolis Simulink blocks more tidy: distributeblocks called on created blocks
+------------------------------------------------------------------------
+r1016 | malzahnandroid@gmail.com | 2012-12-14 09:22:09 +1000 (Fri, 14 Dec 2012) | 5 lines
+Changed paths:
+   M /matlab/robot/trunk/@SerialLink/coriolis.m
+   M /matlab/robot/trunk/@SerialLink/fkine.m
+   M /matlab/robot/trunk/@SerialLink/friction.m
+   M /matlab/robot/trunk/@SerialLink/gravload.m
+   M /matlab/robot/trunk/@SerialLink/issym.m
+   M /matlab/robot/trunk/@SerialLink/rne_dh.m
+   M /matlab/robot/trunk/@SerialLink/rne_mdh.m
+   A /matlab/robot/trunk/@codeGenerator/gencoriolis.m
+   A /matlab/robot/trunk/@codeGenerator/genfriction.m
+   M /matlab/robot/trunk/@codeGenerator/gengravload.m
+   A /matlab/robot/trunk/@codeGenerator/geninvdyn.m
+   A /matlab/robot/trunk/@codeGenerator/genmfuncoriolis.m
+   A /matlab/robot/trunk/@codeGenerator/genmfunfriction.m
+   M /matlab/robot/trunk/@codeGenerator/genmfuninertia.m
+   A /matlab/robot/trunk/@codeGenerator/genmfuninvdyn.m
+   A /matlab/robot/trunk/@codeGenerator/genslblockcoriolis.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockfkine.m
+   A /matlab/robot/trunk/@codeGenerator/genslblockfriction.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockgravload.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockinertia.m
+   A /matlab/robot/trunk/@codeGenerator/genslblockinvdyn.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockjacobian.m
+   M /matlab/robot/trunk/Link.m
+
++ changed some ' to .' (true transpose)
++ generator functions for: inverse dynamics, coriolis matrix, gravitational load, inertia and joint friction
++ fkine outputs intermediate transforms only if nargout > 1
++ issym splitted in two functions -> one for SerialLink and one for Link class objects
++ issue with obsolete line in Link/set.Tc fixed
+------------------------------------------------------------------------
+r1001 | peter.i.corke@gmail.com | 2012-12-09 12:56:49 +1000 (Sun, 09 Dec 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/RangeBearingSensor.m
+
+Updated notes regarding noise.
+------------------------------------------------------------------------
+r1000 | peter.i.corke@gmail.com | 2012-12-09 12:56:15 +1000 (Sun, 09 Dec 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/@SerialLink/teach.m
+
+Don't use findjobj with MATLAB r8.0.  Can't make it work, the author says there is no problem...
+------------------------------------------------------------------------
+r999 | peter.i.corke@gmail.com | 2012-12-09 12:54:48 +1000 (Sun, 09 Dec 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/Link.m
+
+Fix bug in displaying DH parameters for revolute joint from SerialLink.display
+------------------------------------------------------------------------
+r998 | peter.i.corke@gmail.com | 2012-12-09 12:52:15 +1000 (Sun, 09 Dec 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/examples/walking.m
+
+Removed spurious line
+------------------------------------------------------------------------
+r997 | peter.i.corke@gmail.com | 2012-12-09 12:51:16 +1000 (Sun, 09 Dec 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/angvec2r.m
+
+typo in comment
+------------------------------------------------------------------------
+r996 | peter.i.corke@gmail.com | 2012-12-09 12:50:52 +1000 (Sun, 09 Dec 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/@SerialLink/maniplty.m
+
+Improved logic for handling manipulability of particular Cartesian DOF, rotation, translation or general specified as a logical 6-vector.
+------------------------------------------------------------------------
+r995 | peter.i.corke@gmail.com | 2012-12-09 12:49:50 +1000 (Sun, 09 Dec 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/@SerialLink/ikine.m
+
+Add warning message if initial pose is singular
+------------------------------------------------------------------------
+r992 | malzahnandroid@gmail.com | 2012-12-08 06:25:27 +1000 (Sat, 08 Dec 2012) | 4 lines
+Changed paths:
+   M /matlab/common/distributeblocks.m
+   M /matlab/common/doesblockexist.m
+   M /matlab/common/multidfprintf.m
+   M /matlab/common/symexpr2slblock.m
+   M /matlab/robot/trunk/@codeGenerator/codeGenerator.m
+   M /matlab/robot/trunk/@codeGenerator/genfkine.m
+   A /matlab/robot/trunk/@codeGenerator/gengravload.m
+   A /matlab/robot/trunk/@codeGenerator/geninertia.m
+   A /matlab/robot/trunk/@codeGenerator/genjacobian.m
+   M /matlab/robot/trunk/@codeGenerator/genmfunfkine.m
+   A /matlab/robot/trunk/@codeGenerator/genmfungravload.m
+   A /matlab/robot/trunk/@codeGenerator/genmfuninertia.m
+   A /matlab/robot/trunk/@codeGenerator/genmfunjacobian.m
+   M /matlab/robot/trunk/@codeGenerator/genslblockfkine.m
+   A /matlab/robot/trunk/@codeGenerator/genslblockgravload.m
+   A /matlab/robot/trunk/@codeGenerator/genslblockinertia.m
+   A /matlab/robot/trunk/@codeGenerator/genslblockjacobian.m
+   A /matlab/robot/trunk/@codeGenerator/logmsg.m
+   M /matlab/robot/trunk/@codeGenerator/private/constructheaderstring.m
+   M /matlab/robot/trunk/@codeGenerator/private/createmconstructor.m
+   M /matlab/robot/trunk/@codeGenerator/private/ffindreplace.m
+   M /matlab/robot/trunk/@codeGenerator/private/finsertfront.m
+   M /matlab/robot/trunk/@codeGenerator/private/getpibugfixstring.m
+   M /matlab/robot/trunk/@codeGenerator/private/replaceheader.m
+   A /matlab/robot/trunk/test/mdl_puma560_3_sym.m
+   A /matlab/robot/trunk/test/symbolicTestBed.m
+
++ added copyright note in headers
++ added block and function generator methods for robot jacobian, gravload, inertia
++ logmsg function for ease of programming and readability
++ symbolicTestBed.m added
+------------------------------------------------------------------------
+r991 | malzahnandroid@gmail.com | 2012-12-04 23:17:54 +1000 (Tue, 04 Dec 2012) | 7 lines
+Changed paths:
+   A /matlab/common/distributeblocks.m
+   A /matlab/common/doesblockexist.m
+   A /matlab/common/multidfprintf.m
+   A /matlab/common/symexpr2slblock.m
+   M /matlab/common/tb_optparse.m
+   M /matlab/robot/trunk/@SerialLink/fkine.m
+   A /matlab/robot/trunk/@SerialLink/issym.m
+   A /matlab/robot/trunk/@codeGenerator
+   A /matlab/robot/trunk/@codeGenerator/codeGenerator.m
+   A /matlab/robot/trunk/@codeGenerator/genfkine.m
+   A /matlab/robot/trunk/@codeGenerator/genmfunfkine.m
+   A /matlab/robot/trunk/@codeGenerator/genslblockfkine.m
+   A /matlab/robot/trunk/@codeGenerator/private
+   A /matlab/robot/trunk/@codeGenerator/private/constructheaderstring.m
+   A /matlab/robot/trunk/@codeGenerator/private/createmconstructor.m
+   A /matlab/robot/trunk/@codeGenerator/private/ffindreplace.m
+   A /matlab/robot/trunk/@codeGenerator/private/finsertfront.m
+   A /matlab/robot/trunk/@codeGenerator/private/getpibugfixstring.m
+   A /matlab/robot/trunk/@codeGenerator/private/replaceheader.m
+   M /matlab/robot/trunk/Link.m
+
++ added code generator class with mat-, m- and simulink code generation for SerialLink fkine 
++ tb_optparse.m: modified to work with classes in addition to structs
++ Link.m: handling friction with symbolic Link objects
++ fkine.m: also outputs intermediate transforms
++ issym moved out of SerialLink class definition file into class trunk
++ Simulink block creation utilities added to common
++ multidfprintf.m for formatted textoutput to multiple destinations
+------------------------------------------------------------------------
+r967 | peter.i.corke@gmail.com | 2012-11-06 21:32:09 +1000 (Tue, 06 Nov 2012) | 5 lines
+Changed paths:
+   M /matlab/robot/trunk/EKF.m
+
+Keep map and P0 as properties
+Move all initialization from constructor to init()
+init() clears history and init's the robot object
+run() method calls init(), has option for 'plot'
+New plot_error() method plots estimation error against std bounds
+------------------------------------------------------------------------
+r966 | peter.i.corke@gmail.com | 2012-11-06 21:28:43 +1000 (Tue, 06 Nov 2012) | 3 lines
+Changed paths:
+   M /matlab/robot/trunk/Link.m
+
+Fix bugs in concatenating Revolute/Prismatic subclass arrays, these are converted
+to Link objects.
+
+------------------------------------------------------------------------
+r965 | peter.i.corke@gmail.com | 2012-11-06 21:24:28 +1000 (Tue, 06 Nov 2012) | 1 line
+Changed paths:
+   D /matlab/robot/trunk/ishomog.m
+   D /matlab/robot/trunk/isrot.m
+   D /matlab/robot/trunk/isvec.m
+
+These moved to common
+------------------------------------------------------------------------
+r964 | peter.i.corke@gmail.com | 2012-11-06 21:24:17 +1000 (Tue, 06 Nov 2012) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/@SerialLink/plot.m
+
+Fixed bug in option parsing mode, also added comments for this.
+Added options for render, ortho, perspective: not yet used but were meant to be.
+------------------------------------------------------------------------
+r963 | peter.i.corke@gmail.com | 2012-11-06 21:23:15 +1000 (Tue, 06 Nov 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/mex/Makefile
+
+Added CFLAGS=-std=c99 to ensure that //-style comments are handled.
+------------------------------------------------------------------------
+r962 | peter.i.corke@gmail.com | 2012-11-06 21:22:27 +1000 (Tue, 06 Nov 2012) | 1 line
+Changed paths:
+   A /matlab/robot/trunk/examples/gait.m
+   M /matlab/robot/trunk/examples/walking.m
+
+walking.m used an archaic version of the toolbox, and needs gait.m (now added)
+------------------------------------------------------------------------
+r961 | peter.i.corke@gmail.com | 2012-10-30 05:53:26 +1000 (Tue, 30 Oct 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/Link.m
+
+Bug fix to link concatenation code to support robot concatenation
+------------------------------------------------------------------------
+r960 | peter.i.corke@gmail.com | 2012-10-28 14:37:51 +1000 (Sun, 28 Oct 2012) | 6 lines
+Changed paths:
+   M /matlab/robot/trunk/RangeBearingSensor.m
+
+Rewrite code for range and angle limits: select features that match criteria then randomly sample, rather than other way around.
+Changes to h() to support this, can return sensor observations for all features now
+Serious bug: noise was not added to sensor output, now fixed.
+Added a char method that invokes superclass char method.
+Add support for animation using superclass plot method
+Change instances of R to W, covariance, to match the book.
+------------------------------------------------------------------------
+r959 | peter.i.corke@gmail.com | 2012-10-28 14:34:56 +1000 (Sun, 28 Oct 2012) | 3 lines
+Changed paths:
+   M /matlab/robot/trunk/ParticleFilter.m
+
+Make w0 a parameter
+Add option to disable animation
+Add char and display methods to summarize the object state
+------------------------------------------------------------------------
+r958 | peter.i.corke@gmail.com | 2012-10-28 14:33:53 +1000 (Sun, 28 Oct 2012) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/Sensor.m
+
+Add plot method, shows animation of sensor detecting landmark.
+char method now uses map.char() to display info about its map
+------------------------------------------------------------------------
+r953 | peter.i.corke@gmail.com | 2012-10-23 09:25:59 +1000 (Tue, 23 Oct 2012) | 4 lines
+Changed paths:
+   M /matlab/robot/trunk/Link.m
+   M /matlab/robot/trunk/Prismatic.m
+   M /matlab/robot/trunk/Revolute.m
+
+Allow a mixture of Revolute and Prismatic objects to be concatenated.
+This requires a mod to Link to convert Revolute/Prismatic objects to the
+equivalent Link object.
+
+------------------------------------------------------------------------
+r948 | peter.i.corke@gmail.com | 2012-10-21 12:33:44 +1000 (Sun, 21 Oct 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/mdl_puma560.m
+
+Modified to use Revolute link subclass
+------------------------------------------------------------------------
+r947 | peter.i.corke@gmail.com | 2012-10-21 12:32:07 +1000 (Sun, 21 Oct 2012) | 1 line
+Changed paths:
+   A /matlab/robot/trunk/mdl_puma560_3.m
+
+Model of first 3 links of Puma, useful for testing symbolic forms.
+------------------------------------------------------------------------
+r946 | peter.i.corke@gmail.com | 2012-10-21 12:30:29 +1000 (Sun, 21 Oct 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/simulink/roblocks.mdl
+
+Fix initial condition assignment for Robot block
+------------------------------------------------------------------------
+r945 | peter.i.corke@gmail.com | 2012-10-21 12:26:47 +1000 (Sun, 21 Oct 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/Navigation.m
+
+Support an SE(2) goal in the char() method
+------------------------------------------------------------------------
+r944 | peter.i.corke@gmail.com | 2012-10-21 12:26:15 +1000 (Sun, 21 Oct 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/unit_test/PGraphTest.m
+
+Extend tests for new PGraph directed edge capability
+------------------------------------------------------------------------
+r943 | peter.i.corke@gmail.com | 2012-10-21 12:25:56 +1000 (Sun, 21 Oct 2012) | 1 line
+Changed paths:
+   M /matlab/robot/trunk/RRT.m
+
+Significant changes in path() method to make it work when start and goal are swapped around.  Also required changes in PGraph
+------------------------------------------------------------------------
+r941 | peter.i.corke@gmail.com | 2012-10-21 12:23:47 +1000 (Sun, 21 Oct 2012) | 1 line
+Changed paths:
+   D /matlab/robot/trunk/simulink/sl_quadcopter.mdl
+   D /matlab/robot/trunk/simulink/sl_quadcopter_vs.mdl
+   A /matlab/robot/trunk/simulink/sl_quadrotor.mdl (from /matlab/robot/trunk/simulink/sl_quadcopter.mdl:909)
+   A /matlab/robot/trunk/simulink/sl_quadrotor_vs.mdl (from /matlab/robot/trunk/simulink/sl_quadcopter_vs.mdl:819)
+
+Change quadcopter to quadrotor
+------------------------------------------------------------------------
+r935 | peter.i.corke@gmail.com | 2012-10-06 21:14:32 +1000 (Sat, 06 Oct 2012) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/Link.m
+   A /matlab/robot/trunk/Prismatic.m
+   A /matlab/robot/trunk/Revolute.m
+
+Add 2 subclasses of Link, update comments for Link class.
+
+------------------------------------------------------------------------
+r934 | peter.i.corke@gmail.com | 2012-10-06 21:13:38 +1000 (Sat, 06 Oct 2012) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/eul2jac.m
+
+Bug in the Jacobian, thanks to Erik van Oene for the fix.
+
+------------------------------------------------------------------------
+r921 | peter.i.corke@gmail.com | 2012-09-29 15:27:31 +1000 (Sat, 29 Sep 2012) | 2 lines
+Changed paths:
+   M /matlab/robot/trunk/mdl_puma560.m
+
+Rewritten using new Link object creation signature
+
+------------------------------------------------------------------------
+r920 | peter.i.corke@gmail.com | 2012-09-29 15:26:46 +1000 (Sat, 29 Sep 2012) | 4 lines
+Changed paths:
+   M /matlab/robot/trunk/@SerialLink/SerialLink.m
+   M /matlab/robot/trunk/@SerialLink/coriolis.m
+   M /matlab/robot/trunk/@SerialLink/fkine.m
+   A /matlab/robot/trunk/@SerialLink/gencoords.m
+   A /matlab/robot/trunk/@SerialLink/genforces.m
+   M /matlab/robot/trunk/@SerialLink/jacobn.m
+   M /matlab/robot/trunk/@SerialLink/rne_dh.m
+   M /matlab/robot/trunk/Link.m
+
+Modifications to support generation of symbolic expressions.
+Significant changes to Link to support symbolics and also a new way
+of expressing parameters using key/value parameter notation.
+
+------------------------------------------------------------------------
+r919 | peter.i.corke@gmail.com | 2012-09-29 15:15:56 +1000 (Sat, 29 Sep 2012) | 2 lines
+Changed paths:
+   A /matlab/robot/trunk/mdl_ball.m
+   A /matlab/robot/trunk/mdl_coil.m
+
+New models with large numbers of joints.
+
+------------------------------------------------------------------------

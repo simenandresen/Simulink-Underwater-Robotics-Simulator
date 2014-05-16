@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion
+END
+Quaternion.m
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/Quaternion.m
+END
+dot.m
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/dot.m
+END
+scale.m
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/scale.m
+END
+q2tr.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/q2tr.m
+END
+minus.m
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/minus.m
+END
+inv.m
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/inv.m
+END
+mtimes.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/mtimes.m
+END
+interp.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/interp.m
+END
+mrdivide.m
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/mrdivide.m
+END
+display.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/display.m
+END
+mpower.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/mpower.m
+END
+subsref.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/subsref.m
+END
+double.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/double.m
+END
+norm.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/norm.m
+END
+char.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/char.m
+END
+plot.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/plot.m
+END
+unit.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/unit.m
+END
+qinterp.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/qinterp.m
+END
+plus.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/726/matlab/robot/trunk/Octave/@Quaternion/plus.m
+END
