@@ -165,7 +165,7 @@ for i = 1:length(time)
 end
 
 
-%%
+
 xi_tilde = zeros(13,N);
 xi_tilde(:,:) = Error_States_log.xi_tilde.Data(:,1,:);
 error_vehicle_position = xi_tilde(1:3,:);
@@ -175,12 +175,15 @@ error_manipulator = xi_tilde(8:13,:);
 error_zeta = zeta_com - zeta_mes;
 
 
-
-
-
-
-
-
+%%
+error_norm_vehicle_t = zeros(1, length(time));
+error_norm_vehicle_r = zeros(1, length(time));
+error_norm_manipulator = zeros(1, length(time));
+for i = 1:length(time)
+    error_norm_vehicle_r(i) = norm( commanded_vehicle_euler(2,i) - measured_vehicle_euler(2,i) );
+    error_norm_manipulator(i) = norm( xi_tilde(8:13, i) );
+    error_norm_vehicle_t(i) = norm( xi_tilde(1:3, i) );
+end
 
 
 

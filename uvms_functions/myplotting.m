@@ -322,9 +322,9 @@ if KINEMATICS_ONLY == false
     grid on;
     
     subplot(3,2,6);
-    plot(time, measured_vehicle_euler );
+    plot(time, measured_vehicle_euler*r2d );
     hold on;
-    plot(time, commanded_vehicle_euler , '-.' );
+    plot(time, commanded_vehicle_euler*r2d , '-.' );
     title('Error vehicle orientation');
     leg=legend('$\phi$','$\theta$','$\psi$', '$\phi_d$','$\theta_d$','$\psi_d$');
     set(leg,'Interpreter','latex');
@@ -334,84 +334,77 @@ if KINEMATICS_ONLY == false
     
     
 
-    % --------------- specific forces  ---------------------
-%     i=i+1;
-%     h(i)=figure(i);
-%     set(h(i), 'name', 'Fig: Specific Forces','NumberTitle','off');
-% 
-%     subplot(2,1,1);
-%     plot(time, specific_forces(1:6,:));
-%     title('Specific forces vehicle )');
-%     xlabel('time [s]'); ylabel('[m/s]');
-%     leg=legend('$\tau_1$','$\tau_2$','$\tau_3$', '$\tau_4$', '$\tau_5$', '$\tau_6$');
-%     set(leg,'Interpreter','latex')
-%     grid on;
-% 
-%     subplot(2,1,2);
-%     plot(time, specific_forces(7:12,:));
-%     title('Specific forces - Manipulator');
-%     xlabel('time [s]'); ylabel('[m/s]');
-%     leg=legend('$\tau_7$','$\tau_8$','$\tau_9$', '$\tau_{10}$', '$\tau_{11}$', '$\tau_{12}$');
-%     set(leg,'Interpreter','latex')
-%     grid on;
+
 end % end KINEMATICS_ONLY == false
 
-% %% check to make sure nothing is overwritten
-% a= input('are you sure you want to go on. file may be overwritten, press 1 for going further ');
-% if a == 0 
-%    disp('ending plotting');
-%    break;
-% elseif a~=1
-%     disp('ending plotting');
-%     break;
-% end
-% %% save plot files
-% i=i+1;
-% h(i)=figure(i);
-% 
-% % plotH = plot(time, [eta2_com(:,:)*r2d]);
-% % titH = title('Commanded vehicle attitude');
-% % set(titH, 'FontSize', 8);
-% % set(gca, 'FontSize', 8);
-% % xlabel('time [s]'); ylabel('[deg]');
-% % leg=legend('\phi','\theta','\psi');
-% % %set(leg,'Interpreter','latex');
-% % set(leg, 'Location', 'NorthWest');
-% % %set(leg,  'FontSize', 10);
-% % grid on;
-% 
-% plot(time, VVpsibe*r2d);
-% titH = title('Angle \psi_{be}');
-% %set(titH, 'Interpreter', 'latex')
+%% check to make sure nothing is overwritten
+a= input('are you sure you want to go on. file may be overwritten, press 1 for going further ');
+if a == 0 
+   disp('ending plotting');
+   break;
+elseif a~=1
+    disp('ending plotting');
+    break;
+end
+%% save plot files
+i=i+1;
+h(i)=figure(i);
+
+
+
+
+% plot(time, xi_mes(1:3,:) );
+% hold on
+% plot(time, xi_com(1:3,:), '-.');
+% titH = title('Vehicle position');
+% xlabel('time [s]'); ylabel('[m, deg]');
+% leg=legend('x','y','z','x_d', 'y_d', 'z_d');
 % grid on;
-% leg = legend('\psi_{be}');
-% %set(leg,'Interpreter','latex');
-% %set(leg, 'Location', 'NorthWest');
-% set(leg,  'FontSize', 10);
-% set(titH, 'FontSize', 8);
-% set(gca, 'FontSize', 8);
-% xlabel('time [s]'); ylabel('[deg]');
-% 
-% % plot(time, [ee_pose_com(:,4),ee_pose_com(:,5),ee_pose_com(:,6) ]*r2d);
-% % grid on;
-% % titH = title('End effector attitude');
-% % set(titH, 'FontSize', 8);
-% % set(gca, 'FontSize', 8);
-% % xlabel('time [s]'); ylabel('[deg]');
-% % leg=legend('\phi','\theta','\psi');
-% % %set(leg,'Interpreter','latex');
-% % set(leg, 'Location', 'NorthWest');
-% % set(leg,  'FontSize', 10);
-% 
-% set(gcf, 'PaperPositionMode', 'manual');
-% set(gcf, 'PaperUnits', 'inches');
-% set(gcf, 'PaperPosition', [2.5 2.5 6.3 2.2]); % last 2 are width/height.
-% 
-% 
-% %filename = input('Save plot as: ', 's');
-% filename = 'simPsisPlot10.eps';
-% filename = strcat('/home/simena/Dropbox/master_thesis/report/figures/', filename);
-% print(h(i), '-depsc', filename );
+
+% plot(time, measured_vehicle_euler*r2d );
+% hold on;
+% plot(time, commanded_vehicle_euler*r2d , '-.' );
+% titH = title('Error vehicle orientation');
+% leg=legend('$\phi$','$\theta$','$\psi$', '$\phi_d$','$\theta_d$','$\psi_d$');
+% set(leg,'Interpreter','latex');
+% grid on;
+% xlabel('time [s]');
+% ylabel('angle [deg]');
+
+
+% plot(time, xi_mes(8:9,:)*r2d );
+% hold on;
+% plot(time, xi_com(8:9,:)*r2d , '-.' );
+% titH = title('Error manipulator joints');
+% leg=legend('$q_1$','$q_2$','$q_{1d}$', '$q_{2d}$');
+% set(leg,'Interpreter','latex');
+% grid on;
+% xlabel('time [s]');
+% ylabel('angle [deg]');
+
+
+
+
+plot(time, error_norm_manipulator(:,:)*r2d);
+titH = title('Norm of manipulator joint error');
+xlabel('time [s]');
+yl = ylabel('$|| \tilde{q} || $ [deg]');
+set(yl, 'FontSize', 12);
+set(yl,'Interpreter','latex');
+grid on;
+set(titH, 'FontSize', 8);
+set(gca, 'FontSize', 8);
+axis([0,25, -5, 5]);
+
+
+set(gcf, 'PaperPositionMode', 'manual');
+set(gcf, 'PaperUnits', 'inches');
+set(gcf, 'PaperPosition', [2.5 2.5 6.3 2.2]); % last 2 are width/height.
+
+%filename = input('Save plot as: ', 's');
+filename = 'simSMCplot7.eps';
+filename = strcat('/home/simena/Dropbox/master_thesis/report/figures/', filename);
+print(h(i), '-depsc', filename );
 
 
 

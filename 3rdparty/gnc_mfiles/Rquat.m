@@ -28,7 +28,7 @@ function R = Rquat(q)
 % E-mail: contact@marinecontrol.org
 % URL:    <http://www.marinecontrol.org>
 
-tol = 1e-6;
+tol = 1e-4;
 if abs(norm(q)-1)>tol; error('norm(q) must be equal to 1'); end
 
 eta = q(1);

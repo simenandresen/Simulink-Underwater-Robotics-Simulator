@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.1750"
+    ComputedModelVersion    "1.1802"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "simena"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri May 16 15:23:37 2014"
+  LastModifiedDate	  "Mon May 19 11:30:45 2014"
   RTWModifiedTimeStamp	  322132730
-  ModelVersionFormat	  "1.%<AutoIncrement:1750>"
+  ModelVersionFormat	  "1.%<AutoIncrement:1802>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -835,7 +835,7 @@ Model {
   System {
     Name		    "uvms_sliding_quaternions"
     Location		    [2, 418, 1198, 841]
-    Open		    off
+    Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
     ScreenColor		    "white"
@@ -1299,7 +1299,7 @@ Model {
 		  SID			  "424"
 		  Position		  [710, 462, 770, 498]
 		  ZOrder		  -9
-		  Denominator		  "[0.01 1]"
+		  Denominator		  "[0.1 1]"
 		}
 		Block {
 		  BlockType		  TransferFcn
@@ -1315,7 +1315,7 @@ Model {
 		  SID			  "426"
 		  Position		  [710, 532, 770, 568]
 		  ZOrder		  -9
-		  Denominator		  "[0.01 1]"
+		  Denominator		  "[0.1 1]"
 		}
 		Block {
 		  BlockType		  TransferFcn
@@ -1339,7 +1339,7 @@ Model {
 		  SID			  "427"
 		  Position		  [710, 602, 770, 638]
 		  ZOrder		  -9
-		  Denominator		  "[0.01 1]"
+		  Denominator		  "[0.1 1]"
 		}
 		Block {
 		  BlockType		  TransferFcn
@@ -1347,7 +1347,7 @@ Model {
 		  SID			  "428"
 		  Position		  [710, 672, 770, 708]
 		  ZOrder		  -9
-		  Denominator		  "[0.01 1]"
+		  Denominator		  "[0.1 1]"
 		}
 		Block {
 		  BlockType		  TransferFcn
@@ -1355,7 +1355,7 @@ Model {
 		  SID			  "429"
 		  Position		  [710, 742, 770, 778]
 		  ZOrder		  -9
-		  Denominator		  "[0.01 1]"
+		  Denominator		  "[0.1 1]"
 		}
 		Block {
 		  BlockType		  TransferFcn
@@ -1363,7 +1363,7 @@ Model {
 		  SID			  "430"
 		  Position		  [710, 812, 770, 848]
 		  ZOrder		  -9
-		  Denominator		  "[0.01 1]"
+		  Denominator		  "[0.1 1]"
 		}
 		Block {
 		  BlockType		  TransferFcn
@@ -2600,7 +2600,7 @@ Model {
 	      System {
 		Name			"get zetas"
 		Location		[406, 718, 904, 933]
-		Open			on
+		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
 		ScreenColor		"white"
@@ -7126,9 +7126,9 @@ Model {
     Line {
       SrcBlock		      "UVMS"
       SrcPort		      1
-      Points		      [11, 0]
+      Points		      [91, 0]
       Branch {
-	Points			[0, 154; -756, 0; 0, -74]
+	Points			[0, 154; -836, 0; 0, -74]
 	DstBlock		"Controller"
 	DstPort			2
       }
@@ -7159,6 +7159,8 @@ Stateflow {
     created		    "19-Feb-2014 09:50:42"
     isLibrary		    0
     firstTarget		    198
+    debug {
+    }
     sfVersion		    76014001.00040001
   }
   chart {
@@ -7357,8 +7359,9 @@ Stateflow {
       "nv(R,p)\n    Rt = transpose(R);\n    ps = skew(p);\n    mat = [Rt , -Rt*ps ; zeros(3,3), Rt ];\nend\n\nfunction "
       "mat = eta2g0b(eta)\n    R = Rquat(eta(4:7));\n    pos = [eta(1); eta(2); eta(3)];\n    mat = [R,pos;0,0,0,1];\ne"
       "nd\n\n%-----------------------------------------------\n% get rotation matrix from quaternion\nfunction R = Rqua"
-      "t(Q)\n    tol = 3*1e-4;\n    if abs(norm(Q)-1)>tol; error('norm(q) must be equal to 1'); end\n    eta = Q(1);\n "
-      "   eps = Q(2:4);\n    S = skew(eps);\n    R = eye(3) + 2*eta*S + 2*S^2;\nend\n\n\n\n\n\n\n\n\n"
+      "t(Q)\n    tol = 4*1e-3;\n    if abs(norm(Q)-1)>tol; error('norm(q) must be equal to 1 (in get transformations) T"
+      "ry decreasing sampling time'); end\n    eta = Q(1);\n    eps = Q(2:4);\n    S = skew(eps);\n    R = eye(3) + 2*e"
+      "ta*S + 2*S^2;\nend\n\n\n\n\n\n\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -7504,11 +7507,12 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function zeta = fcn(t)\n%#codegen\n\nzeta = zeros(12,1);\n\n%% u velocity\nm = 4;\ns = 2;\nk = 1."
-      "3;\nzeta(1)= k * 1/(s*sqrt(2*pi)) * exp(-0.5*(t-m).^2) ;\n\n%% u velocity\nm = 9;\ns = 4;\nk = 0.2;\nzeta(4) = k"
-      "* 1/(s*sqrt(2*pi)) * exp(-0.5*(t-m).^2) ;\n\n%% u velocity\nm = 6;\ns = 1.7;\nk = 2.5;\nzeta(3)= k* 1/(s*sqrt(2*"
-      "pi)) * exp(-0.5*(t-m).^2) ;\n\n%% u velocity\nm = 5;\ns = 2.2;\nzeta(8)= 0.15* 1/(s*sqrt(2*pi)) * exp(-0.5*(t-m)"
-      ".^2) ;\n\n%% u velocity\nm = 4;\ns = 3;\nzeta(11) = 0.2* 1/(s*sqrt(2*pi)) * exp(-0.5*(t-m).^2) ;\n\n\nend"
+      script		      "function zeta = fcn(t)\n%#codegen\n\nzeta = zeros(12,1);\n\n%% u velocity\nm = 6.5;\ns = 2;\nk = "
+      "10;\nzeta(1)= k * 1/(s*sqrt(2*pi)) * exp(-0.5*(t-m).^2) ;\n\n%% u velocity\nm = 4;\ns = 1;\nk = 1;\nzeta(6) = k*"
+      " 1/(s*sqrt(2*pi)) * exp(-0.5*(t-m).^2) ;\nm = 11;\ns = 1;\nk = 1;\nzeta(6) = zeta(6) - k* 1/(s*sqrt(2*pi)) * exp"
+      "(-0.5*(t-m).^2) ;\n\n\n%% u velocity\nm = 6;\ns = 1.7;\nk = 2.5;\nzeta(3)= k* 1/(s*sqrt(2*pi)) * exp(-0.5*(t-m)."
+      "^2) ;\n\n%% u velocity\nm = 9;\ns = 4;\nk = -1.8;\nzeta(8)= k * 1/(s*sqrt(2*pi)) * exp(-0.5*(t-m).^2) ;\n\n%% u "
+      "velocity\nm = 11;\ns = 4;\nk = 1.7;\nzeta(7) = k* 1/(s*sqrt(2*pi)) * exp(-0.5*(t-m).^2) ;\n\n\nend"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -9155,8 +9159,9 @@ Stateflow {
       "% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the \n% GNU General Public License for more details."
       "\n% \n% You should have received a copy of the GNU General Public License\n% along with this program.  If not, s"
       "ee <http://www.gnu.org/licenses/>.\n% \n% E-mail: contact@marinecontrol.org\n% URL:    <http://www.marinecontrol"
-      ".org>\n\ntol = 3*1e-4;\nif abs(norm(q)-1)>tol; error('norm(q) must be equal to 1'); end\n\neta = q(1);\neps = q("
-      "2:4);\n\nS = Smtrx(eps);\nR = eye(3) + 2*eta*S + 2*S^2;\nend\n\n\n"
+      ".org>\n\ntol = 5*1e-3;\nif abs(norm(q)-1)>tol; error('Quaternion not unit. Norm(q) must be equal to 1 (in kineti"
+      "cs - measure states) Try decreasing the sampling rate'); end\n\neta = q(1);\neps = q(2:4);\n\nS = Smtrx(eps);\nR"
+      " = eye(3) + 2*eta*S + 2*S^2;\nend\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -9496,29 +9501,30 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function [dq, dp, dQ] = fcn(zeta, Q)                       \n    %#codegen\n    R0b = Rquat(Q);\n"
-      "    U = getU(Q);\n    Ja = [...\n            R0b , zeros(3,3) , zeros(3,6);\n            zeros(4, 3),  U,    zer"
-      "os(4,6);\n            zeros(6 ,6) , eye(6);\n    ];\n    \n    dXi = Ja * zeta;\n    dp = dXi(1:3);\n    normali"
-      "zation_feedback = getNormalizationFeedback(Q);   % ensure that the quaternion is unit length\n    dQ = dXi(4:7) "
-      "+ normalization_feedback;\n    \n    dq = dXi(8:13);\nend\n\n\n\n\n\n%------------------------------------------"
-      "----------------------\n%   use normalization feedback according to fossen\n%   page 31 to ensure unity of quate"
-      "rnion\nfunction qout = getNormalizationFeedback(qin)\n    gamma = 100;\n    qout = gamma*0.5*(1-qin'*qin)*qin;\n"
-      "end\n\n%----------------------------------------------------------------\n% get the transformation matrix for qu"
-      "aternions\nfunction U = getU(Q)\n    eta  = Q(1); eps1 = Q(2); eps2 = Q(3); eps3 = Q(4); \n    U = 0.5*[...\n   "
-      "-eps1 -eps2 -eps3        \n    eta  -eps3  eps2\n    eps3  eta  -eps1\n   -eps2  eps1  eta   ];\nend\n\n\nfuncti"
-      "on R = Rquat(q)\n% R = Rquat(q) computes the quaternion rotation matrix R in SO(3)\n% for q = [eta eps1 eps2 eps"
-      "3]\n%\n% Author:    Thor I. Fossen\n% Date:      14th June 2001\n% Revisions: 6 October 2001, T I. Fossen - eta "
-      "as first element in q  \n% ________________________________________________________________\n%\n% MSS GNC is a M"
-      "atlab toolbox for guidance, navigation and control.\n% The toolbox is part of the Marine Systems Simulator (MSS)"
-      ".\n%\n% Copyright (C) 2008 Thor I. Fossen and Tristan Perez\n% \n% This program is free software: you can redist"
-      "ribute it and/or modify\n% it under the terms of the GNU General Public License as published by\n% the Free Soft"
-      "ware Foundation, either version 3 of the License, or\n% (at your option) any later version.\n% \n% This program "
-      "is distributed in the hope that it will be useful, but\n% WITHOUT ANY WARRANTY; without even the implied warrant"
-      "y of\n% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the \n% GNU General Public License for more de"
-      "tails.\n% \n% You should have received a copy of the GNU General Public License\n% along with this program.  If "
-      "not, see <http://www.gnu.org/licenses/>.\n% \n% E-mail: contact@marinecontrol.org\n% URL:    <http://www.marinec"
-      "ontrol.org>\n\ntol = 1e-6;\nif abs(norm(q)-1)>tol; error('norm(q) must be equal to 1'); end\n\neta = q(1);\neps "
-      "= q(2:4);\n\nS = Smtrx(eps);\nR = eye(3) + 2*eta*S + 2*S^2;\nend\n\n\n"
+      script		      "function [dq, dp, dQ] = fcn(zeta, Q)                       \n    %#codegen\n    R0b = Rquat(Q / n"
+      "orm(Q));\n    U = getU(Q);\n    Ja = [...\n            R0b , zeros(3,3) , zeros(3,6);\n            zeros(4, 3), "
+      " U,    zeros(4,6);\n            zeros(6 ,6) , eye(6);\n    ];\n    \n    dXi = Ja * zeta;\n    dp = dXi(1:3);\n "
+      "   normalization_feedback = getNormalizationFeedback(Q);   % ensure that the quaternion is unit length\n    dQ ="
+      " dXi(4:7) + normalization_feedback;\n    \n    dq = dXi(8:13);\nend\n\n\n\n\n\n%--------------------------------"
+      "--------------------------------\n%   use normalization feedback according to fossen\n%   page 31 to ensure unit"
+      "y of quaternion\nfunction qout = getNormalizationFeedback(qin)\n    gamma = 100;\n    qout = gamma*0.5*(1-qin'*q"
+      "in)*qin;\nend\n\n%----------------------------------------------------------------\n% get the transformation mat"
+      "rix for quaternions\nfunction U = getU(Q)\n    eta  = Q(1); eps1 = Q(2); eps2 = Q(3); eps3 = Q(4); \n    U = 0.5"
+      "*[...\n   -eps1 -eps2 -eps3        \n    eta  -eps3  eps2\n    eps3  eta  -eps1\n   -eps2  eps1  eta   ];\nend\n"
+      "\n\nfunction R = Rquat(q)\n% R = Rquat(q) computes the quaternion rotation matrix R in SO(3)\n% for q = [eta eps"
+      "1 eps2 eps3]\n%\n% Author:    Thor I. Fossen\n% Date:      14th June 2001\n% Revisions: 6 October 2001, T I. Fos"
+      "sen - eta as first element in q  \n% ________________________________________________________________\n%\n% MSS "
+      "GNC is a Matlab toolbox for guidance, navigation and control.\n% The toolbox is part of the Marine Systems Simul"
+      "ator (MSS).\n%\n% Copyright (C) 2008 Thor I. Fossen and Tristan Perez\n% \n% This program is free software: you "
+      "can redistribute it and/or modify\n% it under the terms of the GNU General Public License as published by\n% the"
+      " Free Software Foundation, either version 3 of the License, or\n% (at your option) any later version.\n% \n% Thi"
+      "s program is distributed in the hope that it will be useful, but\n% WITHOUT ANY WARRANTY; without even the impli"
+      "ed warranty of\n% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the \n% GNU General Public License f"
+      "or more details.\n% \n% You should have received a copy of the GNU General Public License\n% along with this pro"
+      "gram.  If not, see <http://www.gnu.org/licenses/>.\n% \n% E-mail: contact@marinecontrol.org\n% URL:    <http://w"
+      "ww.marinecontrol.org>\n\ntol = 4*1e-3;\nif abs(norm(q)-1)>tol; error('Quaternion not unit. norm(q) must be equal"
+      " to 1 (in Commanded states)'); end\n\neta = q(1);\neps = q(2:4);\n\nS = Smtrx(eps);\nR = eye(3) + 2*eta*S + 2*S^"
+      "2;\nend\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -10268,14 +10274,14 @@ Stateflow {
       "ta(1:3);\n    omegad = Commanded_States.zeta(4:6);\n    qdd = Commanded_States.zeta(7:12);\n    Qd = Commanded_S"
       "tates.xi(4:7);\n    x_tilde = Error_States.xi_tilde(1:3);\n    eta_tilde = Error_States.xi_tilde(4);\n    epsilo"
       "n_tilde = Error_States.xi_tilde(5:7);\n    q_tilde = Error_States.xi_tilde(8:13);\n    \n    %% vehicle translat"
-      "ion\n    lambda = 3;\n    R = Rquat(Qd);\n    zetas1 = vd + lambda* R' * x_tilde;\n    \n    %% vehicle rotation"
+      "ion\n    lambda = 7;\n    R = Rquat(Qd);\n    zetas1 = vd + lambda* R' * x_tilde;\n    \n    %% vehicle rotation"
       "\n    c = 16;\n    zetas2 = omegad + 2* c * sgn(eta_tilde)* epsilon_tilde;\n    \n    %% manipulator\n    Kq = d"
-      "iag([1, 1 ,1 ,1 ,1, 1])* 2;\n    zetas3 = qdd + Kq*q_tilde;\n    \n    %% total\n    zetas = [zetas1 ; zetas2 ; "
-      "zetas3];\nend\n\n%--------------------------------------------------------\n% sgn function returns the sign of t"
-      "he input\nfunction s = sgn(x)\n    if x < 0\n        s = -1;\n    else\n        s = 1;\n    end\nend\n\n\n%-----"
-      "------------------------------------------\n% get rotation matrix from quaternion\nfunction R = Rquat(Q)\n    to"
-      "l = 1e-6;\n    if abs(norm(Q)-1)>tol; error('norm(q) must be equal to 1'); end\n    eta = Q(1);\n    eps = Q(2:4"
-      ");\n    S = skew(eps);\n    R = eye(3) + 2*eta*S + 2*S^2;\nend\n\n\n"
+      "iag([1, 1 ,1 ,1 ,1, 1])* 10;\n    zetas3 = qdd + Kq*q_tilde;\n    \n    %% total\n    zetas = [zetas1 ; zetas2 ;"
+      " zetas3];\nend\n\n%--------------------------------------------------------\n% sgn function returns the sign of "
+      "the input\nfunction s = sgn(x)\n    if x < 0\n        s = -1;\n    else\n        s = 1;\n    end\nend\n\n\n%----"
+      "-------------------------------------------\n% get rotation matrix from quaternion\nfunction R = Rquat(Q)\n    t"
+      "ol = 2*1e-3;\n    if abs(norm(Q)-1)>tol; error('norm(q) must be equal to 1 (In sliding mode controller)'); end\n"
+      "    eta = Q(1);\n    eps = Q(2:4);\n    S = skew(eps);\n    R = eye(3) + 2*eta*S + 2*S^2;\nend\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -10415,131 +10421,132 @@ Stateflow {
       "%#codegen\n    \n    \n    zeta = Measured_States.zeta;\n    zetar_est = zeta;\n    s = zeta - zetas;\n    Mest "
       "= 0.9*getM(Measured_States, Kinetics_Parameters);\n    Cest = 1.2*getC(Measured_States, Kinetics_Parameters, zet"
       "a, zetar_est);\n    Dest = 1.3*getD(Measured_States, Kinetics_Parameters, zetar_est);\n    Nest = 0.75*getN(Meas"
-      "ured_States, Kinetics_Parameters);\n    Xiest = zeros(12,1);\n\n    Kd=diag([ones(1,6)*10, ones(1,6)*10]);\n    "
-      "Ks=diag([ones(1,6)*50, ones(1,6)*10]);\n   \n    tau = Mest* dzetas + Cest* zetas + Dest * zetas + Nest + Xiest "
-      "- Kd* s - Ks*sat( s, 0.4) ;% Ks*sat( s, 0.5);\n    \nend\n\n%---------------------------------------------------"
-      "---------------------\n% saturation function\nfunction vec = sat (x,epsilon)\n    vec=zeros(length(x),1);\n    f"
-      "or i=1:length(x)\n       if x(i) > epsilon\n           vec(i)=1;\n       elseif x(i) < -epsilon\n           vec("
-      "i)=-1;\n       else\n           vec(i)=x(i)/epsilon;\n       end\n    end\nend\n\n\n%% -------------------------"
-      "-------------------------------------\n%  Functions to gather the vectors   \n%%--------------------------------"
-      "-------------------------------\n\nfunction M = getM(Measured_States, Kinetics_Parameters)\n    Mrb = getMrb(Mea"
-      "sured_States, Kinetics_Parameters);\n    Ma = getMa(Measured_States, Kinetics_Parameters);\n    M = (Mrb + Ma);\n"
-      "end\n\n\nfunction C = getC (Measured_States,Kinetics_Parameters, zeta ,zetar)\n    Crb = getCrb(Measured_States,"
-      "Kinetics_Parameters, zeta) ;\n   	Ca = getCa(Measured_States,Kinetics_Parameters,zetar);\n    C = Crb + Ca;\nend"
-      "\n\n\n%% --------------------------------------------------------------\n%  Inertia function   \n%%-------------"
-      "--------------------------------------------------\nfunction M = getMrb(Measured_States, Kinetics_Parameters)\n%"
-      "#codegen\n%   getMrb Returns the sum of the Rigid body inertia and the added mass:\n%   M_rb + M_a\n%   \n    n="
-      "6;\n    i=1;\n    M = zeros(12,12);\n    Inertia = Kinetics_Parameters.Inertia;\n    Jgb = [eye(6), zeros(6,6)];"
-      "                                 % Jacobian from vehicle \n    Ji=Jgb;\n    Hi = Kinetics_Parameters.Persistent."
-      "Hrg(:,:,i);\n    Ii=Hi'*(Inertia(:,:,1))*Hi;                                 % Inertia of vehicle in CO\n    M=M"
-      "+(Ji')*Ii*Ji;\n    for i=1:n\n        Ji = Measured_States.Ji.Ji(:,:,i);                      % body jacobian\n "
-      "       Hi =Kinetics_Parameters.Persistent.Hrg(:,:,i+1);        % get Transformation matrix of link i\n        Ii"
-      "=Hi'*(Inertia(:,:,i+1) )*Hi;                          % Transform Inertia matrix from CG to CO\n        M=M+(Ji'"
-      ")*Ii*Ji;                                        % Add link i's inertia to total inertia\n    end\nend\n\n\n\n\n\n"
-      "\n\n%% ------------------------------------------------------\n% Persistent Forces   \n%%-----------------------"
-      "--------------------------------\nfunction N_p = getN(Measured_States,Kinetics_Parameters)\n%#codegen\n%   N_p -"
-      " 12 x 1 vector of generalized forces\n%   Persistent_Forces returns the generalized forces due to boyancy and \n"
-      "%   gravity\n\n    %% init\n    n=6;\n    N_p=zeros(12,1);\n    Jgis = Measured_States.Ji.Ji;\n    \n    %%  veh"
-      "icle\n    F_bp = getFbp(Measured_States, Kinetics_Parameters,1);      % Get wrench from persistent forces in CO\n"
-      "    Jbb=([eye(6), zeros(6,6)]);                                 % Jacobian from b to b\n    N_p = Jbb'*F_bp;    "
-      "                                        % Get contribution to total forces through Jbb\n    \n    %% robot links"
-      "\n    for i=1:n\n        Jgi=Jgis(:,:,i);                                        % Jacobian from b to i\n       "
-      " F_ip = getFip(Measured_States,Kinetics_Parameters, i+1);     % Get wrench in CO\n        N_p = N_p + (Jgi')*F_i"
-      "p;                                % Map to generalized forces and add to total\n    end\n    N_p = - N_p;       "
-      "                                         % reverse the sign to comply with the sign convention\nend\n    \n    \n"
-      "function F_ip = getFip(Measured_States,Kinetics_Parameters, i)\n%#codegen\n% function calculating wrench from pe"
-      "rsistent forces \n% i=b: vehicle\n% i>=1: robot arms\n    F_ip = zeros(6,1);\n    mi = Kinetics_Parameters.Persi"
-      "stent.m(i);\n    g = Kinetics_Parameters.Persistent.g;\n    rho = Kinetics_Parameters.Persistent.rho;\n    nabla"
-      " = Kinetics_Parameters.Persistent.nabla(i);\n    Ri0 = Measured_States.Ti.R0i(:,:,i-1)';\n    Hrg = Kinetics_Par"
-      "ameters.Persistent.Hrg(:,:,i);  \n    Hrb = Kinetics_Parameters.Persistent.Hrb(:,:,i);\n    ez=[0;0;1];\n    F_i"
-      "p(:,:) = (Hrg')*[-mi*g*Ri0*ez ;0;0;0]  + (Hrb')*[rho*nabla*g*Ri0*ez ;0;0;0 ];\nend\n\n\nfunction F_bp = getFbp(M"
-      "easured_States,Kinetics_Parameters, i)\n%#codegen\n% function calculating wrench from persistent forces \n% i=b:"
-      " vehicle\n% i>=1: robot arms\n    F_bp = zeros(6,1);\n    mi = Kinetics_Parameters.Persistent.m(i);\n    g = Kin"
-      "etics_Parameters.Persistent.g;\n    Hrg = Kinetics_Parameters.Persistent.Hrg(:,:,i);  \n    Hrb = Kinetics_Param"
-      "eters.Persistent.Hrb(:,:,i);\n    rho = Kinetics_Parameters.Persistent.rho;\n    nabla = Kinetics_Parameters.Per"
-      "sistent.nabla(i);\n    Ri0 = (Measured_States.Ti.R0b)';\n    ez=[0;0;1];\n    F_bp(:,:) = (Hrg')*[-mi*g*Ri0*ez ;"
-      " 0;0;0]  + (Hrb')*[rho*nabla*g*Ri0*ez ; 0;0;0 ];\nend\n\n\n%% --------------------------------------------------"
-      "----\n% Coriolis Matrix   \n%%-------------------------------------------------------\n\nfunction C = getCrb(Mea"
-      "sured_States,Kinetics_Parameters, zeta)\n%#codegen\n%-----------------------------------------------------------"
-      "------------\n%   This function calculates the coriolis according to From and Pettersen\n%   (2013).\n%---------"
-      "--------------------------------------------------------------\n    n=6;\n    C=zeros(12,12);\n    Inertia=Kinet"
-      "ics_Parameters.Inertia;\n    Jis = Measured_States.Ji.Ji;\n    \n    % i = b\n    Jgb = [eye(6), zeros(6,6)];\n "
-      "   i=1;\n    Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i);\n    Ii=Hi'*Inertia(:,:,i);\n    Wb = getWb(Ii,zeta"
-      ");\n    C = - (Jgb')*Wb*Hi*Jgb;     % time derivative of Jgb = 0  \n    \n    % i >=1\n    for i=1:n\n        Hi"
-      " = Kinetics_Parameters.Persistent.Hrg(:,:,i+1);\n        Ii=Hi'*Inertia(:,:,i+1);\n        Wi=getWi(Ii,Jis(:,:,i"
-      "), zeta);\n        Jgi_dot=getJgi_dot(Measured_States, zeta,i);\n        Jgi = Jis(:,:,i);\n        \n        C "
-      "= C + (Jgi')*Ii*Hi*Jgi_dot - (Jgi')*Wi*Hi*Jgi;\n    end\nend\n\n\n\nfunction Wb = getWb(I , zeta)\n%#codegen\n% "
-      "Get the matrix Wi for i=b\n% I: Inertia matrix for vehicle\n% zeta: generalized velocity\n    Wb = zeros(6,6);\n"
-      "    v = zeta(1:3);\n    omega = zeta(4:6);\n    mI = I(1:3,1:3); % Identity matrix times mass of link b\n    Ib "
-      "= I(4:6,4:6); % Moment of inertia\n    mrgb = I(4:6,1:3); % mass times skew symmetric r_g^b\n    dKv= mI*v - mrg"
-      "b*omega;\n    dKomega = Ib*omega + mrgb*v;\n    \n    Wb = [zeros(3,3), skew(dKv) ; skew(dKv), skew(dKomega)];\n"
-      "end\n\nfunction Wi = getWi(I, Ji,zeta)\n%#codegen\n% Get matrix Wi for robot links\n% I: inertia matrix for link"
-      " i\n% Ji: Jacobian for link i\n% zeta: generalized coordinates\n    Wi = zeros(6,6);\n    V0i = Ji*zeta;\n    v "
-      "= V0i(1:3);\n    omega = V0i(4:6);\n    mI = I(1:3,1:3); % Identity matrix times mass of link b\n    Ib = I(4:6,"
-      "4:6); % Moment of inertia\n    mrgb = I(4:6,1:3); % mass times skew symmetric r_g^b\n    dKv= mI*v - mrgb*omega;"
-      "\n    dKomega = Ib*omega + mrgb*v;\n    Wi = [zeros(3,3), skew(dKv) ; skew(dKv), skew(dKomega)];\nend\n\nfunctio"
-      "n Jgi_dot=getJgi_dot(Measured_States, zeta,i)\n%#codegen\n% the functions below is related to Jgi_dot\n    Jgi_d"
-      "ot = zeros(6,6+6);\n    n=6;\n    Jgi = Measured_States.Ji.Ji(:,:,i);\n    omega = Jgi*zeta;\n    Rbi = Measured"
-      "_States.Ti.Rbi(:,:,i);\n    pbi = Measured_States.Ti.pbi(:,i);\n    omegaib = getOmegaib(Measured_States,zeta,i)"
-      ";\n    dpbi =  getDpbi(Measured_States,zeta,i);\n        \n    dAdg_inv = [(Rbi')*skew(omegaib) , -(Rbi')*skew(o"
-      "megaib)*skew(pbi) + (Rbi')*skew(dpbi); ...\n                zeros(3,3) , (Rbi')*skew(omegaib) ];\n    dJi = zero"
-      "s(6,6);\n    omega0b = zeta(4:6);\n    \n    % get d/dt(Ji)\n    Xii=[0,0,0,0,0,1]';\n    for k=2:n\n       if k"
-      "<=i\n            dpbk = getDpbi(Measured_States, zeta ,k-1);\n            Rbk= Measured_States.Ti.Rbi(:,:,k-1);\n"
-      "            omega0k = [zeros(3,3) , eye(3)]*Measured_States.Ji.Ji(:,:,k-1)*zeta;\n            omegabk = omega0k "
-      "- (Rbk')*omega0b;\n            dJi(:,k) = [zeros(3,3), skew(dpbk)*Rbk*skew(omegabk) ...\n                ; zeros"
-      "(3,3) , (Rbk')*skew(omegabk)]*Xii;\n       end\n    end\n    Ji=getji(Measured_States.Ti, i);\n    Adg_inv = Mea"
-      "sured_States.Ti.Adgbi_inv(:,:,i);\n    Jgi_dot = [dAdg_inv, dAdg_inv*Ji + Adg_inv*dJi ];\nend\n\nfunction omegai"
-      "b = getOmegaib(Measured_States,zeta,i)\n%#codegen\n% returns angular rate of vehcile wrt frame i noted in vehicl"
-      "e frame\n    omegaib = zeros(3,1);\n    Rbi = Measured_States.Ti.Rbi(:,:,i);\n    Jgi = Measured_States.Ji.Ji(:,"
-      ":,i);\n    omega0b = zeta(4:6);\n    omegaib = omega0b - Rbi*[zeros(3,3), eye(3)]*Jgi*zeta;\nend\n\nfunction dpb"
-      "i = getDpbi( Measured_States, zeta,iter)\n%#codegen\n% returns time derivative of position vector of from frame "
-      "b to frame i\n    dpbi = zeros(3,1);\n    H = [eye(3), zeros(3,3)];\n    Rbi=Measured_States.Ti.Rbi(:,:,iter);\n"
-      "    Adgbi_inv = Measured_States.Ti.Adgbi_inv(:,:,iter);\n    Ji = getji(Measured_States.Ti,iter);\n    qd=zeros("
-      "6,1);\n    qd(:,:)=zeta(7:12);\n    dpbi = Rbi*H*Adgbi_inv*Ji*qd;\nend\n\n\nfunction mat = getji(Ti,i)\n%#codege"
-      "n\n% return matrix Ji (see report)\n    n=6;\n    mat=zeros(6,6);\n    Xii=[0,0,0,0,0,1]';\n    mat(:,1)=eye(6)*"
-      "Xii;\n    for j=2:n\n        if j<=i\n            mat(:,j) = Ti.Adgbi(:,:,j-1)*Xii;\n        end\n    end\nend\n"
-      "\nfunction S = skew(v)\n%#codegen\n\n  S = [  0   -v(3)  v(2)\n       v(3)  0    -v(1)\n       -v(2) v(1)   0];\n"
-      "end\n\n\n%% ------------------------------------------------------\n% D matrix \n%%-----------------------------"
-      "--------------------------\nfunction D = getD(Measured_States, Kinetics_Parameters,zetar)\n%#codegen\n%\n% Retur"
-      "ns the D matrix in the dynamics equation. The total forces is based\n% on mappin the forces in each frame to the"
-      " total generalized forces\n% through the jacoian: tau = J^T*F_i. The forces in frame i is calculated\n% from the"
-      " forces in CG to CO through the transformation matrix: F_co =\n% Hrg^T*F_cg\n%\n    %% init\n    n=6;\n    D=zer"
-      "os(12,12);                                      % init matrix size\n    HydroDynamics = Kinetics_Parameters.Hydr"
-      "oDynamics;   % Hydrodynamics parameters\n    Jgis = Measured_States.Ji.Ji;                             % Jacobia"
-      "ns\n    Hrgs = Kinetics_Parameters.Persistent.Hrg;           % Transformation matrix\n    \n    \n    %% vehicle"
-      "\n    i=1;\n    Jbb=[eye(6), zeros(6)];                               % Jacobian from frame 0 to frame b\n    Hr"
-      "g = Hrgs(:,:,i);                                    % Transformation matrix\n    Vcg = Hrg*Jbb*zetar;           "
-      "                        % velocity in CG mapped from CO\n    Dcg =  HydroDynamics.Linear(:,:,i) + ...\n         "
-      "  HydroDynamics.Quadratic(:,:,i)*diag(abs(Vcg)); % Wrench in CG\n    Di = Hrg'*Dcg;                             "
-      "           % Wrench in CO mapped from CG    \n    D = Jbb'*Di*Jbb;                                      % Add co"
-      "ntribution to the total matrix mapped from frame i \n                                                          %"
-      " to generalized coordinates                                   \n    \n    %% robot links\n    for i=1:n\n       "
-      " Jgi = Jgis(:,:,i);                                % Jacobian from frame 0 to frame i \n        Hrg = Hrgs(:,:,i"
-      "+1);                              % Transformation matrix\n        Vcg = Hrg*Jgi*zetar;                         "
-      "      % velocity in CG\n        Dcg = HydroDynamics.Linear(:,:,i+1)+... \n          HydroDynamics.Quadratic(:,:,"
-      "i+1)*diag(abs(Vcg));% Wrench in CG   \n        Di = Hrg'*Dcg;                                    % Wrench in CO "
-      "   \n        D = D + Jgi'*Di*Jgi;                              % Add frame i's contribution to D matrix    \n   "
-      " end\nend\n\n%% ------------------------------------------------------\n% Added Coriolis\n%%--------------------"
-      "-----------------------------------\nfunction Ca = getCa(Measured_States,Kinetics_Parameters,zetar)\n%%#codegen "
-      "..............................................\n%\n%   This function calculates the added coriolis matrix\n%...."
-      "...................................................\n    n=6;\n    Ca=zeros(12,12);\n    Inertia=Kinetics_Parame"
-      "ters.AddedInertia;\n    Jis = Measured_States.Ji.Ji;\n    \n    % vehicle\n    Jgb = [eye(6), zeros(6,6)];\n    "
-      "i=1;\n    Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i+1);\n    Ii=Hi'*Inertia(:,:,i);\n    Wb = getWb(Ii,zetar"
-      ");\n    Ca = - (Jgb')*Wb*Hi*Jgb;     % time derivative of Jgb = 0  \n    \n    % manipulator links\n    for i=1:"
-      "n\n        Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i+1);\n        Ii=Hi'*Inertia(:,:,i+1);\n        Wi=getWi"
-      "(Ii,Jis(:,:,i), zetar);\n        Jgi_dot=getJgi_dot(Measured_States, zetar,i);\n        Jgi = Jis(:,:,i);\n     "
-      "   Ca = Ca + (Jgi')*Ii*Hi*Jgi_dot - (Jgi')*Wi*Hi*Jgi;\n    end\nend\n\n%% --------------------------------------"
-      "----------------\n% Added Mass\n%%-------------------------------------------------------\nfunction Ma = getMa(M"
-      "easured_States,Kinetics_Parameters)\n%#codegen ..........................\n%\n%  returns rest of the the added m"
-      "ass\n%  force matrix:\n%       Ma*H(xi,zeta)\n% ..................................\n    n=6;\n    i=1;\n    \n  "
-      "  %% get the total Added mass matrix\n    Ma = zeros(12,12);\n    AddedInertia = Kinetics_Parameters.AddedInerti"
-      "a;\n    Jgb = [eye(6), zeros(6,6)];                                 % Jacobian from vehicle \n    Ji=Jgb;\n    H"
-      "i = Kinetics_Parameters.Persistent.Hrg(:,:,i);\n    Ii=Hi'*( AddedInertia(:,:,1))*Hi;                           "
-      "% Inertia of vehicle in CO\n    Ma=Ma+(Ji')*Ii*Ji;\n    for i=1:n\n        Ji = Measured_States.Ji.Ji(:,:,i);   "
-      "                        % body jacobian\n        Hi =Kinetics_Parameters.Persistent.Hrg(:,:,i+1);        % get T"
-      "ransformation matrix of link i\n        Ii=Hi'*(AddedInertia(:,:,i+1))*Hi;                      % Transform Iner"
-      "tia matrix from CG to CO\n        Ma=Ma+(Ji')*Ii*Ji;                                      % Add link i's inertia"
-      " to total inertia\n    end\n end\n\n\n\n\n\n\n\n"
+      "ured_States, Kinetics_Parameters);\n    Xiest = zeros(12,1);\n\n    Kd=diag([10, 10, 10 ,15, 20, 15, ...\n      "
+      "       10, 10, 10, 10, 10, 10])*1.2;\n    Ks=diag([50, 50, 50, 60, 80, 60, ...\n             10, 10, 10, 10, 10,"
+      " 10])*1.5;\n   \n    tau = Mest* dzetas + Cest* zetas + Dest * zetas + Nest + Xiest - Kd* s - Ks*sat( s, 0.3) ;%"
+      " Ks*sat( s, 0.5);\n    \nend\n\n%------------------------------------------------------------------------\n% sat"
+      "uration function\nfunction vec = sat (x,epsilon)\n    vec=zeros(length(x),1);\n    for i=1:length(x)\n       if "
+      "x(i) > epsilon\n           vec(i)=1;\n       elseif x(i) < -epsilon\n           vec(i)=-1;\n       else\n       "
+      "    vec(i)=x(i)/epsilon;\n       end\n    end\nend\n\n\n%% -----------------------------------------------------"
+      "---------\n%  Functions to gather the vectors   \n%%------------------------------------------------------------"
+      "---\n\nfunction M = getM(Measured_States, Kinetics_Parameters)\n    Mrb = getMrb(Measured_States, Kinetics_Param"
+      "eters);\n    Ma = getMa(Measured_States, Kinetics_Parameters);\n    M = (Mrb + Ma);\nend\n\n\nfunction C = getC "
+      "(Measured_States,Kinetics_Parameters, zeta ,zetar)\n    Crb = getCrb(Measured_States,Kinetics_Parameters, zeta) "
+      ";\n   	Ca = getCa(Measured_States,Kinetics_Parameters,zetar);\n    C = Crb + Ca;\nend\n\n\n%% ------------------"
+      "--------------------------------------------\n%  Inertia function   \n%%----------------------------------------"
+      "-----------------------\nfunction M = getMrb(Measured_States, Kinetics_Parameters)\n%#codegen\n%   getMrb Return"
+      "s the sum of the Rigid body inertia and the added mass:\n%   M_rb + M_a\n%   \n    n=6;\n    i=1;\n    M = zeros"
+      "(12,12);\n    Inertia = Kinetics_Parameters.Inertia;\n    Jgb = [eye(6), zeros(6,6)];                           "
+      "      % Jacobian from vehicle \n    Ji=Jgb;\n    Hi = Kinetics_Parameters.Persistent.Hrg(:,:,i);\n    Ii=Hi'*(In"
+      "ertia(:,:,1))*Hi;                                 % Inertia of vehicle in CO\n    M=M+(Ji')*Ii*Ji;\n    for i=1:"
+      "n\n        Ji = Measured_States.Ji.Ji(:,:,i);                      % body jacobian\n        Hi =Kinetics_Paramet"
+      "ers.Persistent.Hrg(:,:,i+1);        % get Transformation matrix of link i\n        Ii=Hi'*(Inertia(:,:,i+1) )*Hi"
+      ";                          % Transform Inertia matrix from CG to CO\n        M=M+(Ji')*Ii*Ji;                   "
+      "                     % Add link i's inertia to total inertia\n    end\nend\n\n\n\n\n\n\n\n%% -------------------"
+      "-----------------------------------\n% Persistent Forces   \n%%-------------------------------------------------"
+      "------\nfunction N_p = getN(Measured_States,Kinetics_Parameters)\n%#codegen\n%   N_p - 12 x 1 vector of generali"
+      "zed forces\n%   Persistent_Forces returns the generalized forces due to boyancy and \n%   gravity\n\n    %% init"
+      "\n    n=6;\n    \n    N_p=zeros(12,1);\n    Jgis = Measured_States.Ji.Ji;\n    \n    %%  vehicle\n    F_bp = get"
+      "Fbp(Measured_States, Kinetics_Parameters,1);      % Get wrench from persistent forces in CO\n    Jbb=([eye(6), z"
+      "eros(6,6)]);                                 % Jacobian from b to b\n    N_p = Jbb'*F_bp;                       "
+      "                     % Get contribution to total forces through Jbb\n    \n    %% robot links\n    for i=1:n\n  "
+      "      Jgi=Jgis(:,:,i);                                        % Jacobian from b to i\n        F_ip = getFip(Meas"
+      "ured_States,Kinetics_Parameters, i+1);     % Get wrench in CO\n        N_p = N_p + (Jgi')*F_ip;                 "
+      "               % Map to generalized forces and add to total\n    end\n    N_p = - N_p;                          "
+      "                      % reverse the sign to comply with the sign convention\nend\n    \n    \nfunction F_ip = ge"
+      "tFip(Measured_States,Kinetics_Parameters, i)\n%#codegen\n% function calculating wrench from persistent forces \n"
+      "% i=b: vehicle\n% i>=1: robot arms\n    F_ip = zeros(6,1);\n    mi = Kinetics_Parameters.Persistent.m(i);\n    g"
+      " = Kinetics_Parameters.Persistent.g;\n    rho = Kinetics_Parameters.Persistent.rho;\n    nabla = Kinetics_Parame"
+      "ters.Persistent.nabla(i);\n    Ri0 = Measured_States.Ti.R0i(:,:,i-1)';\n    Hrg = Kinetics_Parameters.Persistent"
+      ".Hrg(:,:,i);  \n    Hrb = Kinetics_Parameters.Persistent.Hrb(:,:,i);\n    ez=[0;0;1];\n    F_ip(:,:) = (Hrg')*[-"
+      "mi*g*Ri0*ez ;0;0;0]  + (Hrb')*[rho*nabla*g*Ri0*ez ;0;0;0 ];\nend\n\n\nfunction F_bp = getFbp(Measured_States,Kin"
+      "etics_Parameters, i)\n%#codegen\n% function calculating wrench from persistent forces \n% i=b: vehicle\n% i>=1: "
+      "robot arms\n    F_bp = zeros(6,1);\n    mi = Kinetics_Parameters.Persistent.m(i);\n    g = Kinetics_Parameters.P"
+      "ersistent.g;\n    Hrg = Kinetics_Parameters.Persistent.Hrg(:,:,i);  \n    Hrb = Kinetics_Parameters.Persistent.H"
+      "rb(:,:,i);\n    rho = Kinetics_Parameters.Persistent.rho;\n    nabla = Kinetics_Parameters.Persistent.nabla(i);\n"
+      "    Ri0 = (Measured_States.Ti.R0b)';\n    ez=[0;0;1];\n    F_bp(:,:) = (Hrg')*[-mi*g*Ri0*ez ; 0;0;0]  + (Hrb')*["
+      "rho*nabla*g*Ri0*ez ; 0;0;0 ];\nend\n\n\n%% ------------------------------------------------------\n% Coriolis Ma"
+      "trix   \n%%-------------------------------------------------------\n\nfunction C = getCrb(Measured_States,Kineti"
+      "cs_Parameters, zeta)\n%#codegen\n%-----------------------------------------------------------------------\n%   T"
+      "his function calculates the coriolis according to From and Pettersen\n%   (2013).\n%----------------------------"
+      "-------------------------------------------\n    n=6;\n    C=zeros(12,12);\n    Inertia=Kinetics_Parameters.Iner"
+      "tia;\n    Jis = Measured_States.Ji.Ji;\n    \n    % i = b\n    Jgb = [eye(6), zeros(6,6)];\n    i=1;\n    Hi = K"
+      "inetics_Parameters.Persistent.Hrg(:,:,i);\n    Ii=Hi'*Inertia(:,:,i);\n    Wb = getWb(Ii,zeta);\n    C = - (Jgb'"
+      ")*Wb*Hi*Jgb;     % time derivative of Jgb = 0  \n    \n    % i >=1\n    for i=1:n\n        Hi = Kinetics_Paramet"
+      "ers.Persistent.Hrg(:,:,i+1);\n        Ii=Hi'*Inertia(:,:,i+1);\n        Wi=getWi(Ii,Jis(:,:,i), zeta);\n        "
+      "Jgi_dot=getJgi_dot(Measured_States, zeta,i);\n        Jgi = Jis(:,:,i);\n        \n        C = C + (Jgi')*Ii*Hi*"
+      "Jgi_dot - (Jgi')*Wi*Hi*Jgi;\n    end\nend\n\n\n\nfunction Wb = getWb(I , zeta)\n%#codegen\n% Get the matrix Wi f"
+      "or i=b\n% I: Inertia matrix for vehicle\n% zeta: generalized velocity\n    Wb = zeros(6,6);\n    v = zeta(1:3);\n"
+      "    omega = zeta(4:6);\n    mI = I(1:3,1:3); % Identity matrix times mass of link b\n    Ib = I(4:6,4:6); % Mome"
+      "nt of inertia\n    mrgb = I(4:6,1:3); % mass times skew symmetric r_g^b\n    dKv= mI*v - mrgb*omega;\n    dKomeg"
+      "a = Ib*omega + mrgb*v;\n    \n    Wb = [zeros(3,3), skew(dKv) ; skew(dKv), skew(dKomega)];\nend\n\nfunction Wi ="
+      " getWi(I, Ji,zeta)\n%#codegen\n% Get matrix Wi for robot links\n% I: inertia matrix for link i\n% Ji: Jacobian f"
+      "or link i\n% zeta: generalized coordinates\n    Wi = zeros(6,6);\n    V0i = Ji*zeta;\n    v = V0i(1:3);\n    ome"
+      "ga = V0i(4:6);\n    mI = I(1:3,1:3); % Identity matrix times mass of link b\n    Ib = I(4:6,4:6); % Moment of in"
+      "ertia\n    mrgb = I(4:6,1:3); % mass times skew symmetric r_g^b\n    dKv= mI*v - mrgb*omega;\n    dKomega = Ib*o"
+      "mega + mrgb*v;\n    Wi = [zeros(3,3), skew(dKv) ; skew(dKv), skew(dKomega)];\nend\n\nfunction Jgi_dot=getJgi_dot"
+      "(Measured_States, zeta,i)\n%#codegen\n% the functions below is related to Jgi_dot\n    Jgi_dot = zeros(6,6+6);\n"
+      "    n=6;\n    Jgi = Measured_States.Ji.Ji(:,:,i);\n    omega = Jgi*zeta;\n    Rbi = Measured_States.Ti.Rbi(:,:,i"
+      ");\n    pbi = Measured_States.Ti.pbi(:,i);\n    omegaib = getOmegaib(Measured_States,zeta,i);\n    dpbi =  getDp"
+      "bi(Measured_States,zeta,i);\n        \n    dAdg_inv = [(Rbi')*skew(omegaib) , -(Rbi')*skew(omegaib)*skew(pbi) + "
+      "(Rbi')*skew(dpbi); ...\n                zeros(3,3) , (Rbi')*skew(omegaib) ];\n    dJi = zeros(6,6);\n    omega0b"
+      " = zeta(4:6);\n    \n    % get d/dt(Ji)\n    Xii=[0,0,0,0,0,1]';\n    for k=2:n\n       if k<=i\n            dpb"
+      "k = getDpbi(Measured_States, zeta ,k-1);\n            Rbk= Measured_States.Ti.Rbi(:,:,k-1);\n            omega0k"
+      " = [zeros(3,3) , eye(3)]*Measured_States.Ji.Ji(:,:,k-1)*zeta;\n            omegabk = omega0k - (Rbk')*omega0b;\n"
+      "            dJi(:,k) = [zeros(3,3), skew(dpbk)*Rbk*skew(omegabk) ...\n                ; zeros(3,3) , (Rbk')*skew"
+      "(omegabk)]*Xii;\n       end\n    end\n    Ji=getji(Measured_States.Ti, i);\n    Adg_inv = Measured_States.Ti.Adg"
+      "bi_inv(:,:,i);\n    Jgi_dot = [dAdg_inv, dAdg_inv*Ji + Adg_inv*dJi ];\nend\n\nfunction omegaib = getOmegaib(Meas"
+      "ured_States,zeta,i)\n%#codegen\n% returns angular rate of vehcile wrt frame i noted in vehicle frame\n    omegai"
+      "b = zeros(3,1);\n    Rbi = Measured_States.Ti.Rbi(:,:,i);\n    Jgi = Measured_States.Ji.Ji(:,:,i);\n    omega0b "
+      "= zeta(4:6);\n    omegaib = omega0b - Rbi*[zeros(3,3), eye(3)]*Jgi*zeta;\nend\n\nfunction dpbi = getDpbi( Measur"
+      "ed_States, zeta,iter)\n%#codegen\n% returns time derivative of position vector of from frame b to frame i\n    d"
+      "pbi = zeros(3,1);\n    H = [eye(3), zeros(3,3)];\n    Rbi=Measured_States.Ti.Rbi(:,:,iter);\n    Adgbi_inv = Mea"
+      "sured_States.Ti.Adgbi_inv(:,:,iter);\n    Ji = getji(Measured_States.Ti,iter);\n    qd=zeros(6,1);\n    qd(:,:)="
+      "zeta(7:12);\n    dpbi = Rbi*H*Adgbi_inv*Ji*qd;\nend\n\n\nfunction mat = getji(Ti,i)\n%#codegen\n% return matrix "
+      "Ji (see report)\n    n=6;\n    mat=zeros(6,6);\n    Xii=[0,0,0,0,0,1]';\n    mat(:,1)=eye(6)*Xii;\n    for j=2:n"
+      "\n        if j<=i\n            mat(:,j) = Ti.Adgbi(:,:,j-1)*Xii;\n        end\n    end\nend\n\nfunction S = skew"
+      "(v)\n%#codegen\n\n  S = [  0   -v(3)  v(2)\n       v(3)  0    -v(1)\n       -v(2) v(1)   0];\nend\n\n\n%% ------"
+      "------------------------------------------------\n% D matrix \n%%-----------------------------------------------"
+      "--------\nfunction D = getD(Measured_States, Kinetics_Parameters,zetar)\n%#codegen\n%\n% Returns the D matrix in"
+      " the dynamics equation. The total forces is based\n% on mappin the forces in each frame to the total generalized"
+      " forces\n% through the jacoian: tau = J^T*F_i. The forces in frame i is calculated\n% from the forces in CG to C"
+      "O through the transformation matrix: F_co =\n% Hrg^T*F_cg\n%\n    %% init\n    n=6;\n    D=zeros(12,12);        "
+      "                              % init matrix size\n    HydroDynamics = Kinetics_Parameters.HydroDynamics;   % Hyd"
+      "rodynamics parameters\n    Jgis = Measured_States.Ji.Ji;                             % Jacobians\n    Hrgs = Kin"
+      "etics_Parameters.Persistent.Hrg;           % Transformation matrix\n    \n    \n    %% vehicle\n    i=1;\n    Jb"
+      "b=[eye(6), zeros(6)];                               % Jacobian from frame 0 to frame b\n    Hrg = Hrgs(:,:,i);  "
+      "                                  % Transformation matrix\n    Vcg = Hrg*Jbb*zetar;                             "
+      "      % velocity in CG mapped from CO\n    Dcg =  HydroDynamics.Linear(:,:,i) + ...\n           HydroDynamics.Qu"
+      "adratic(:,:,i)*diag(abs(Vcg)); % Wrench in CG\n    Di = Hrg'*Dcg;                                        % Wrenc"
+      "h in CO mapped from CG    \n    D = Jbb'*Di*Jbb;                                      % Add contribution to the "
+      "total matrix mapped from frame i \n                                                          % to generalized co"
+      "ordinates                                   \n    \n    %% robot links\n    for i=1:n\n        Jgi = Jgis(:,:,i)"
+      ";                                % Jacobian from frame 0 to frame i \n        Hrg = Hrgs(:,:,i+1);              "
+      "                % Transformation matrix\n        Vcg = Hrg*Jgi*zetar;                               % velocity i"
+      "n CG\n        Dcg = HydroDynamics.Linear(:,:,i+1)+... \n          HydroDynamics.Quadratic(:,:,i+1)*diag(abs(Vcg)"
+      ");% Wrench in CG   \n        Di = Hrg'*Dcg;                                    % Wrench in CO    \n        D = D"
+      " + Jgi'*Di*Jgi;                              % Add frame i's contribution to D matrix    \n    end\nend\n\n%% --"
+      "----------------------------------------------------\n% Added Coriolis\n%%--------------------------------------"
+      "-----------------\nfunction Ca = getCa(Measured_States,Kinetics_Parameters,zetar)\n%%#codegen .................."
+      "............................\n%\n%   This function calculates the added coriolis matrix\n%......................"
+      ".................................\n    n=6;\n    Ca=zeros(12,12);\n    Inertia=Kinetics_Parameters.AddedInertia;"
+      "\n    Jis = Measured_States.Ji.Ji;\n    \n    % vehicle\n    Jgb = [eye(6), zeros(6,6)];\n    i=1;\n    Hi = Kin"
+      "etics_Parameters.Persistent.Hrg(:,:,i+1);\n    Ii=Hi'*Inertia(:,:,i);\n    Wb = getWb(Ii,zetar);\n    Ca = - (Jg"
+      "b')*Wb*Hi*Jgb;     % time derivative of Jgb = 0  \n    \n    % manipulator links\n    for i=1:n\n        Hi = Ki"
+      "netics_Parameters.Persistent.Hrg(:,:,i+1);\n        Ii=Hi'*Inertia(:,:,i+1);\n        Wi=getWi(Ii,Jis(:,:,i), ze"
+      "tar);\n        Jgi_dot=getJgi_dot(Measured_States, zetar,i);\n        Jgi = Jis(:,:,i);\n        Ca = Ca + (Jgi'"
+      ")*Ii*Hi*Jgi_dot - (Jgi')*Wi*Hi*Jgi;\n    end\nend\n\n%% ------------------------------------------------------\n"
+      "% Added Mass\n%%-------------------------------------------------------\nfunction Ma = getMa(Measured_States,Kin"
+      "etics_Parameters)\n%#codegen ..........................\n%\n%  returns rest of the the added mass\n%  force matr"
+      "ix:\n%       Ma*H(xi,zeta)\n% ..................................\n    n=6;\n    i=1;\n    \n    %% get the total"
+      " Added mass matrix\n    Ma = zeros(12,12);\n    AddedInertia = Kinetics_Parameters.AddedInertia;\n    Jgb = [eye"
+      "(6), zeros(6,6)];                                 % Jacobian from vehicle \n    Ji=Jgb;\n    Hi = Kinetics_Param"
+      "eters.Persistent.Hrg(:,:,i);\n    Ii=Hi'*( AddedInertia(:,:,1))*Hi;                           % Inertia of vehic"
+      "le in CO\n    Ma=Ma+(Ji')*Ii*Ji;\n    for i=1:n\n        Ji = Measured_States.Ji.Ji(:,:,i);                     "
+      "      % body jacobian\n        Hi =Kinetics_Parameters.Persistent.Hrg(:,:,i+1);        % get Transformation matr"
+      "ix of link i\n        Ii=Hi'*(AddedInertia(:,:,i+1))*Hi;                      % Transform Inertia matrix from CG"
+      " to CO\n        Ma=Ma+(Ji')*Ii*Ji;                                      % Add link i's inertia to total inertia\n"
+      "    end\n end\n\n\n\n\n\n\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
