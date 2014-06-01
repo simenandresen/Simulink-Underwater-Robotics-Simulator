@@ -92,39 +92,12 @@ rig(6,:) = [0; 0; 0];
 rib(7,:) = [0; 0; DH.d(6)*0.5];
 rig(7,:) = [0; 0; DH.d(6)*0.5];
 
-Hrg = zeros(6,6,n+1);
-Hrb = zeros(6,6,n+1);
+Adgici = zeros(6,6,n+1);
+Adgibi = zeros(6,6,n+1);
 for i = 1:n+1
-    Hrg(:,:,i) = [eye(3), skew(rig(i,:))'; zeros(3,3), eye(3)];   % matrix transforming velocity of frame i to velocity of CG
-    Hrb(:,:,i) = [eye(3), skew(rig(i,:))'; zeros(3,3), eye(3)];   % matrix transforming velocity of frame i to velocity of CB
+    Adgici(:,:,i) = [eye(3), skew(rig(i,:))'; zeros(3,3), eye(3)];   % matrix transforming velocity of frame i to velocity of CG
+    Adgibi(:,:,i) = [eye(3), skew(rig(i,:))'; zeros(3,3), eye(3)];   % matrix transforming velocity of frame i to velocity of CB
 end
-
-
-%% circle properties - Inverse kinematics
-WsProps = struct('centerOfWs', zeros(3,1), 'XYZPoints', 0, 'XYZIndices',0);
-WsProps.centerOfWs = [1.35;0;-0.2];
-
-% mesh file
-folder = read_config('data_folder','string');
-file = strcat(folder, '/wsMesh.mat');
-if exist(file, 'file')
-    load( file )
-
-    WsProps.XYZPoints = XYZPoints;
-    WsProps.XYZIndices = XYZIndices;
-    CircleProps = struct('CenterInFrameB', zeros(3,1), 'outerCircleRadius', 0, 'middleCircleRadius',0,'innerCircleRadius',0, 'innerMiddelRadiusDelta', 0, 'psis',0, 'psii',0);
-    CircleProps.CenterInFrameB = [4.2,0,0]';  % center of ws and wi
-    radFactor = 0.8;
-    CircleProps.outerCircleRadius = 0.7*radFactor;
-    CircleProps.middleCircleRadius = 0.65*radFactor;
-    CircleProps.innerCircleRadius = 0.13;
-    CircleProps.innerMiddelRadiusDelta = CircleProps.outerCircleRadius - CircleProps.middleCircleRadius;
-
-    CircleProps.psii = 10 * d2r;
-    CircleProps.psis = 50 * d2r;
-end
-
-
 
 %% setup structs
 % Ti is the parent class of all transformations from body to frame i -

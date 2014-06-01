@@ -62,7 +62,7 @@ end
 %% transform the mesh
 gz90 = genCordinates2Matrix([0,0,0] , [0,0,pi]);
 gtemp = genCordinates2Matrix([0.5,0,0],[0,0,0]);
-gbs = genCordinates2Matrix( WsProps.centerOfWs , [0,0,0]);
+gbs = genCordinates2Matrix( KinematicControlParameters.centerOfWs , [0,0,0]);
 g = gtemp*gbs*gz90;
 KK = homtrans(g, [XX' ; YY' ; ZZ']);
 XX = KK(1,:);
@@ -80,7 +80,7 @@ ZZ = ZZ * height;
 surfH = trisurf(ch, XX, YY ,ZZ, 'FaceColor', 'cyan');
 hold on;
 set(surfH, 'facealpha', 0.3);
-set(surfH, 'EdgeColor',[0.9,0.9,0.9]);
+set(surfH, 'EdgeColor',[0.1,0.1,0.1]);
 xlabel('x');
 ylabel('y');
 zlabel('z');
@@ -89,9 +89,9 @@ axis equal;
 %% save data to mat file
 XYZPoints = [XX; YY ; ZZ];
 XYZIndices = ch;
-folder = read_config('data_folder','string');
-file = strcat(folder, '/wsMesh.mat');
-save(file, 'XYZPoints', 'XYZIndices');
+%folder = read_config('data_folder','string');
+%file = strcat(folder, '/wsMesh.mat');
+%save(file, 'XYZPoints', 'XYZIndices');
 
 
 

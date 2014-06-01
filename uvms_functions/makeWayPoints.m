@@ -35,7 +35,7 @@ function  makePath()
         x(end+1) =  pos(1,1);
         y(end+1) = pos(1,2);
         z(end+1) = 0;
-        plothandle2d = plot(ax,x,y,'or');
+        plothandle2d = plot(ax,x,y,'.r');
         update3dPlot;
         figure(1);
     end
@@ -56,6 +56,8 @@ function  makePath()
         update2dPlot();
         set(ax,'ButtonDownFcn',@movePointInZDirection);
         update3dPlot();
+        set(hFig2d,'KeyPressFcn',@checkForExit)
+        set(hFig3d,'KeyPressFcn',@checkForExit)
     end
 
     function movePointInZDirection(hAxes, ~)
@@ -64,8 +66,6 @@ function  makePath()
         ztemp = pos(1,2);
         index = getIndexOfClosestPoint(xtemp, ztemp, x, z);
         set(hFig2d,'WindowButtonUpFcn',@setZDirectionPoint)
-        set(hFig2d,'KeyPressFcn',@checkForExit)
-        set(hFig3d,'KeyPressFcn',@checkForExit)
     end
 
     % change to x - z plane
@@ -126,30 +126,6 @@ function index = getIndexOfClosestPoint(xtemp, ztemp, x, z)
     end
 end
 
-
-% function drawAngles(myPath)
-%     close all;
-%     x = myPath(:,1);
-%     y = myPath(:,2);
-%     z = myPath(:,3);
-%     hFig3d = figure(2);
-%     ax3d = axes;
-%     axis([-scale, scale, -scale , scale, -scale, scale]);
-%     grid on;
-%     hold on;
-%     xlabel('x'); ylabel('y'); zlabel('z');
-%     
-%     hFig2d = figure(1);
-%     ax = axes;
-%     axis([-scale, scale, -scale , scale]);
-%     grid on;
-%     hold on;
-%     xlabel('x'); ylabel('y');
-% 
-% 
-% 
-% 
-% end
 
 
 

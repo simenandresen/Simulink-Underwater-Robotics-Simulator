@@ -11,9 +11,9 @@
 % nabla is calculated based on modeling the links as cylinders with a cross
 % section of 0.1 m^2
 % we also assume that the density of the robot is slightly less than water
-g=9.81;
+g = 9.81;
 rho = 1000;
-nabla=ones(n+1);
+nabla = ones(n+1);
 nabla(1) = 8;
 
 % each link's volume = cross_section x link_length
@@ -32,9 +32,9 @@ m(2) = nabla(2)*rho_robot;
 m(3) = nabla(3)*rho_robot;
 m(4) = nabla(4)*rho_robot;
 m(5) = nabla(5)*rho_robot;
-m(6) = nabla(6)*rho_robot;
+m(6) = nabla(6)*rho_robot + 0.2; % add a small number to avoid singularity in inversion
 m(7) = nabla(7)*rho_robot;
-Persistent=struct('rho',rho,'nabla', nabla, 'g', g, 'rig', rig, 'rib',rib, 'm',m, 'Hrg', Hrg, 'Hrb', Hrb );
+Persistent=struct('rho',rho,'nabla', nabla, 'g', g, 'rig', rig, 'rib',rib, 'm',m, 'Adgici', Adgici, 'Adgibi', Adgibi );
 
 %% Inertia in CG of each link %%
 

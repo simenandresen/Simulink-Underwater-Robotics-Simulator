@@ -33,7 +33,7 @@ for i = 2:length(x)
     interval = norm([x(i) - x(i-1), y(i) - y(i-1), z(i) - z(i-1)]);
     timex(i) = timex(i-1) + interval;
 end
-timex = linspace(0,time_stop, length(x));
+% timex = linspace(0,time_stop, length(x));
 
 % scale time to time_stop:
 timex = (time_stop / timex(end) )* timex;
@@ -141,7 +141,7 @@ grid on;
 
 
 subplot(2,1,2);
-plot(phitime, [dphi, dtheta , dpsi]');
+plot(phitime, r2d*[dphi, dtheta , dpsi]');
 title('Euler angle rates');
 xlabel('time [s]');
 ylabel('angular velocity [deg/s]');

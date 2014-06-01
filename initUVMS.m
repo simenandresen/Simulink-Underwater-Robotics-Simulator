@@ -13,12 +13,15 @@ addpath(dfolder );
 addpath(gncfolder);
 addpath(rvcfolder);
 
-write_config('uvms_root_folder', root);
-write_config('functions_folder', ffolder);
-write_config('data_folder', dfolder);
+write_config('uvms_root_folder', root,root);
+write_config('functions_folder', ffolder, root);
+write_config('data_folder', dfolder, root);
 
-run startup_rvc
-
+disp(' ');
+run(strcat(rvcfolder,'/startup_rvc'));
+disp(' ');
+disp('UVMS Simulator initialization finished successfully!');
+disp(' ');
 
 
 
