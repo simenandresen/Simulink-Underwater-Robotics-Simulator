@@ -8,20 +8,30 @@ The simulator is implemented in Matlab/Simulink and is tested for Matlab version
 
 ### Content
 
-* uvms_functions
->Includes misc matlab scripts and functions for UVMS transformations and initialization of simulation
+
+
+* initUVMS.m
+>initialization script. Run this one time to set path variables.
 
 * run_simulation.m
 >Matlab script to initialize and run simulation. Entry point of simulation.
 
-* uvms.mdl
-> Simulink diagram with the simulator.
+* uvms_config.ini
+>Configuration file for the simulator. Holds path variables and simulation time
 
-* rvctools
+* uvms_functions
+>Includes misc matlab scripts and functions for UVMS transformations and initialization of simulation
+
+* data
+>Directory with trajectory and polygon mesh data
+
+* uvms_total.mdl
+> Simulink diagram with the simulator of the UVMS and controllers.
+
+* 3rdparty
 >Includes the Robotics, Vision & Control toolbox for visualization 
+>Includes gnc library functions
 
-* gnc_mfiles
->Includes matlab code for rigid body transformations
 
 
 ~~~´\/`~~~´\/`~~~´\/`~~~´\/`~~~´\/`~~~´\/`~~~~

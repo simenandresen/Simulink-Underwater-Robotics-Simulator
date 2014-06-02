@@ -9,13 +9,16 @@ function  makePath()
     grid on;
     hold on;
     xlabel('\phi'); ylabel('\psi'); zlabel('\theta');
-    
+    set(hFig3d, 'name', '3D path of orientation of end effector in SO(3)','NumberTitle','off');
+        
     hFig2d = figure(1);
     ax = axes;
     axis([-scale, scale, -scale , scale]);
     grid on;
     hold on;
     xlabel('\phi'); ylabel('\psi');
+    set(hFig2d, 'name', 'roll yaw plane of end effector path angular path','NumberTitle','off');
+    title('Click to generate waypoints')
     
     
     plothandle2d = 1;
@@ -54,6 +57,7 @@ function  makePath()
         hold off;
         theta = 0*psi;
         update2dPlot();
+        set(hFig2d, 'name', 'roll pitch plane of end effector path angular path','NumberTitle','off');
         set(ax,'ButtonDownFcn',@movePointInZDirection);
         update3dPlot();
         set(hFig2d,'KeyPressFcn',@checkForExit)

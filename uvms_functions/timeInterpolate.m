@@ -1,6 +1,7 @@
-%timeInterpolate
-%% Interpolate path in time
-
+% ------------------------------------------------------------------------------------------
+% Interpolate path in time to create smooth end effector trajectories
+% by Simen Andresen
+% ------------------------------------------------------------------------------------------
 clc
 close all;
 load waypointsOrientation.mat
@@ -14,30 +15,33 @@ global dt;
 dt = read_config('dt', 'number');
 Length = time_stop / dt;
 
-
+% waypoints from waypoints.mat
 x = wayPoints(1,:);
 y = wayPoints(2,:);
 z = wayPoints(3,:);
 
+% orientation from orientationWaypoints.mat
 phi =  d2r * orientationWaypoints(1,:);
 theta = d2r * orientationWaypoints(2,:);
 psi = d2r * orientationWaypoints(3,:);
 
 
-%% linear path
+%% Interpolate translational part of trajectory 
 
 % assign time intervals equal to eulidean distance between points
-timex = zeros(1,length(x));
-timex(1) = 0;
-for i = 2:length(x)
-    interval = norm([x(i) - x(i-1), y(i) - y(i-1), z(i) - z(i-1)]);
-    timex(i) = timex(i-1) + interval;
-end
-% timex = linspace(0,time_stop, length(x));
+% timex = zeros(1,length(x));
+% timex(1) = 0;
+% for i = 2:length(x)
+%     interval = norm([x(i) - x(i-1), y(i) - y(i-1), z(i) - z(i-1)]);
+%     timex(i) = timex(i-1) + interval;
+% end
 
 % scale time to time_stop:
-timex = (time_stop / timex(end) )* timex;
+% timex = (time_stop / timex(end) )* timex;
 
+timex = linspace(0,time_stop, length(x));
+
+% interpolate
 px = spline(timex ,[ 0 , x , 0 ]);
 py = spline(timex , [ 0,  y , 0  ] );
 pz = spline(timex , [0, z , 0] );
@@ -47,11 +51,9 @@ XX = ppval(px, ptime);
 YY = ppval(py, ptime);
 ZZ = ppval(pz, ptime);
 
-
 dx = zeros(length(ptime),1);
 dy = zeros(length(ptime),1);
 dz = zeros(length(ptime),1);
-
 
 pdx = fnder(px);
 dx(:) = fnval(pdx, ptime );
@@ -60,21 +62,8 @@ dy(:) = fnval(pdy, ptime );
 pdz = fnder(pz);
 dz(:) = fnval(pdz, ptime );
 
-speed = zeros(Length);
-for i = 1 : Length
-   speed(i) = norm([dx(i), dy(i), dz(i)]);
-end
 
-
-%% angular path
-% assign time intervals equal to eulidean distance between points
-timephi = zeros(1,length(x));
-timephi(1) = 0;
-for i = 2:length(x)
-    interval = norm([x(i) - x(i-1), y(i) - y(i-1), z(i) - z(i-1)]);
-    timephi(i) = timephi(i-1) + interval;
-end
-
+%% Interpolate rotational part of trajectory 
 
 timephi = linspace(0,time_stop, length(phi));
 pphi = spline(timephi , [0, phi, 0] );
@@ -86,11 +75,9 @@ PHI = ppval(pphi, phitime);
 THETA = ppval(ptheta, phitime);
 PSI = ppval(ppsi, phitime);
 
-
 dphi = zeros(length(phitime),1);
 dtheta = zeros(length(phitime),1);
 dpsi = zeros(length(phitime),1);
-
 
 pdphi = fnder(pphi);
 dphi(:) = fnval(pdphi, phitime );
@@ -99,9 +86,32 @@ dtheta(:) = fnval(pdtheta, phitime );
 pdpsi = fnder(ppsi);
 dpsi(:) = fnval(pdpsi, phitime );
 
+%% check that trajectory is feasible
+angularRateMax = 10 * d2r;
+linearVelocityMax = 3;
+
+largestRotationalRate = max([dphi ; dtheta; dpsi]);
+if largestRotationalRate > angularRateMax
+   disp('Generated Trajectory has too high rotational velocity');
+   disp('Rotational Velocity is scaled');
+   dphi = (dphi * angularRateMax) ./ largestRotationalRate;
+   dtheta = (dtheta * angularRateMax) ./ largestRotationalRate;
+   dpsi = (dpsi * angularRateMax) ./ largestRotationalRate;
+end
+
+largestTranslationalRate = max([dx ; dy; dz]);
+if largestTranslationalRate > linearVelocityMax
+   disp('Generated Trajectory has too high linear velocity');
+   disp('Linear Velocity is scaled');
+   dx = (dx * linearRateMax) ./ largestTranslationalRate;
+   dy = (dy * linearRateMax) ./ largestTranslationalRate;
+   dz = (dz * linearRateMax) ./ largestTranslationalRate;
+end
 
 
-%% plotting linear
+%% Plot the trajectory
+
+% translational
 hinterp(1) = figure(2);
 subplot(2,2,1);
 plot(ptime, [XX; YY ;ZZ]);
@@ -112,7 +122,7 @@ ylabel('distance [m]')
 grid on;
 
 subplot(2,2,2);
-plot3(XX,YY,ZZ, '-or');
+plot3(XX,YY,ZZ, '-r');
 title('3D trajectory')
 xlabel('x');
 ylabel('y');
@@ -121,14 +131,14 @@ axis equal
 grid on;
 
 subplot(2,2,3);
-plot(ptime, [dx, dy , dz, speed]');
+plot(ptime, [dx, dy , dz]');
 title('Linear Velocity');
-legend('dx', 'dy' ,'dz', 'speed');
+legend('dx', 'dy' ,'dz');
 xlabel('time [s]');
 ylabel('velocity [m/s]');
 grid on;
 
-%% plotting angular
+% rotational
 hinterp(2) = figure(3);
 subplot(2,1,1);
 plot(phitime, r2d*[PHI; THETA ;PSI]);
@@ -138,8 +148,6 @@ xlabel('time [s]');
 ylabel('angle [deg]')
 grid on;
 
-
-
 subplot(2,1,2);
 plot(phitime, r2d*[dphi, dtheta , dpsi]');
 title('Euler angle rates');
@@ -147,18 +155,16 @@ xlabel('time [s]');
 ylabel('angular velocity [deg/s]');
 grid on;
 
-%% set angular velocities
-% p = zeros(length(ptime),1);
-% q = zeros(length(ptime),1);
-% r = zeros(length(ptime),1);
-% r = 0.6*cos(ptime / 20 )';
-% q = 0.3*cos(ptime / 20 )'
 
 %% save trajectory in mat file
 V = [dx,dy,dz, dphi , dtheta , dpsi];
 ee_traj_input = timeseries(V , ptime');
 folder = read_config('data_folder','string');
 file = strcat(folder, '/trajectory.mat');
+
+disp('Trajectory is saved to :');
+disp(file)
+
 save(file , 'ee_traj_input');
 
 

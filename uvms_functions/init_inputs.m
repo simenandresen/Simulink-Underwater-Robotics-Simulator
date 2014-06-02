@@ -47,19 +47,6 @@ ee_pose_quaternion_init = [g0e_init(1:3,4)', q'];
 %% Current
 V_current = [0.3,0.1,0,0,0,0]';
 
-%% Commanded states
-commanded_zeta = zeros(12,1);
-commanded_zeta(1) = 0.1;
-commanded_zeta(8) = 0;
-
-%% Commanded End effector
-
-Vee_com = zeros(6,1);
-Vee_com(1) = -0.03;
-
-%% Commanded Vehicle
-V_vehicle = zeros(6,1);
-V_vehicle(1) = -0.1;
 
 
 

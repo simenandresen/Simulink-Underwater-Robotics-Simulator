@@ -24,6 +24,8 @@ init_inputs;
 trajfile = read_config('data_folder', 'string');
 trajfile = strcat(trajfile, '/trajectory.mat');
 load( trajfile );
+disp('Using trajectory from: ' );
+disp(trajfile);
 
 %% Global Simulation parameters
 time_stop = read_config('time_stop', 'number');
@@ -36,7 +38,7 @@ Measured_States = struct('dzeta',zeros(12,1), 'zeta',zeros(12,1),'xi',zeros(13,1
 Commanded_States = struct('dzeta',zeros(12,1), 'zeta',zeros(12,1),'xi',zeros(13,1), 'xi_euler', zeros(12,1));
 Error_States = struct('dzeta_tilde',zeros(12,1), 'zeta_tilde',zeros(12,1),'xi_tilde',zeros(13,1), 'integral_xi_tilde', zeros(13,1),'xi_euler_tilde',zeros(12,1));
 VV_States = struct('StatusLinear',0, 'StatusAngular', 0 ,'Circle2EEVec',zeros(3,1), 'linearVehicleVelocity', zeros(6,1), ...
-                   'angularVehicleVelocity', zeros(6,1) , 'psibe',0, 'V_EE', zeros(6,1), 'VdotP',0, 'insideWs', 0);
+                   'angularVehicleVelocity', zeros(6,1) , 'psibe',0, 'V_EE', zeros(6,1), 'VdotP',0, 'insideWs', 0, 'returnToWi', false);
 End_Effector_Mes = struct('velocity', zeros(6,1), 'pose',zeros(6,1), 'pose_quaternion',zeros(7,1));
 End_Effector_Com = struct('velocity', zeros(6,1), 'pose',zeros(7,1));
 
@@ -67,7 +69,6 @@ error_states_bus = slBus8;
 QLimits_bus = Simulink.Bus.createObject(QLimits);
 qlimits_bus = slBus9;
 
-
 Vehicle_Velocity_States_bus = Simulink.Bus.createObject(VV_States);
 vehicleVelocityStates_bus = slBus10;
 
@@ -82,12 +83,7 @@ kinematicControlParameters_bus = slBus13;
 
 %% run simulation
 tic
-    if KINEMATICS_ONLY == true
-        disp('running kinematics only');
-        sim('uvms_kinematics',time_stop);
-    else
-        sim('uvms_total',time_stop);
-    end
+sim('uvms_total',time_stop);
 toc
 fprintf('Simulation finished.\nSaving logged Data\n');
 
@@ -112,8 +108,6 @@ q_mes = xi_mes(8:13,:)';
 zeta_mes = measured_states_log.zeta.Data;
 dzeta_mes = measured_states_log.dzeta.Data;
 tau = tau_log.Data(:,:)';
-
-
 
 ee_v_com = zeros(6, length(time));
 ee_v_com(:,:) = Ee_com_log.velocity.Data;
@@ -185,7 +179,7 @@ error_manipulator = xi_tilde(8:13,:);
 error_zeta = zeta_com - zeta_mes;
 
 
-%%
+%% get the error data
 error_norm_vehicle_t = zeros(1, length(time));
 error_norm_vehicle_r = zeros(1, length(time));
 error_norm_manipulator = zeros(1, length(time));
@@ -202,13 +196,7 @@ for i = 1:length(time)
     error_norm_ee_euler(i) = norm(error_ee_euler(:,i));
 end
 
-%%
-SS = zeros(12,length(time));
-S0 = zeros(1, length(time));
-SS(:,:) = S_log.Data';
-for i=1:length(time)
-   S0(i) = norm(SS(:,i));
-end
+
 
 
 

@@ -4,19 +4,23 @@ function  makePath()
     folder = read_config('data_folder', 'string');
     disp('Click on points in the xy plane. finish by clicking the key s');
     hFig3d = figure(2);
+    set(hFig3d, 'name', '3D path of end effector','NumberTitle','off');
     ax3d = axes;
     axis([-scale, scale, -scale , scale, -scale, scale]);
     grid on;
     hold on;
     xlabel('x'); ylabel('y'); zlabel('z');
+    hold off;
     
     hFig2d = figure(1);
     ax = axes;
-    axis([-scale, scale, -scale , scale]);
+    xlim(ax, [-scale, scale]);
+    ylim(ax, [-scale, scale]);
     grid on;
     hold on;
     xlabel('x'); ylabel('y');
-    
+    set(hFig2d, 'name', 'XY plane of end effector path','NumberTitle','off');
+    title('Click to generate waypoints')
     
     plothandle2d = 1;
     plothandle3d = 1;
@@ -35,7 +39,10 @@ function  makePath()
         x(end+1) =  pos(1,1);
         y(end+1) = pos(1,2);
         z(end+1) = 0;
-        plothandle2d = plot(ax,x,y,'.r');
+        plothandle2d = plot(ax,x,y,'.r', 'LineWidth' , 1);
+        titH=get(gca,'Title');
+        set(titH, 'FontSize', 12);
+        set(gca, 'FontSize', 12);
         update3dPlot;
         figure(1);
     end
@@ -54,6 +61,8 @@ function  makePath()
         hold off;
         z = 0*y;
         update2dPlot();
+        set(hFig2d, 'name', 'XZ plane of end effector path','NumberTitle','off');
+        ylabel('z');
         set(ax,'ButtonDownFcn',@movePointInZDirection);
         update3dPlot();
         set(hFig2d,'KeyPressFcn',@checkForExit)
@@ -71,6 +80,7 @@ function  makePath()
     % change to x - z plane
     function checkForExit(src,event)
         if event.Character == 'q'
+           zlabel(ax, 'z');
            disp('Finished Drawing Path');
            wayPoints = [x;y;z];
            save( strcat(folder,'/waypoints.mat'), 'wayPoints');
@@ -97,14 +107,17 @@ function  makePath()
         grid on;
         hold on;
         xlabel('x'); ylabel('y');
-        set(plot2d,'LineWidth' , 3);
+        set(plot2d,'LineWidth' , 1);
     end
 
     function update3dPlot()
         figure(2);
         hold off;
         [az,el]=view;
-        plot3(x,y,z, '-r');
+        plot3(x,y,z, '-r', 'LineWidth',2);
+        titH=get(gca,'Title');
+        set(titH, 'FontSize', 12);
+        set(gca, 'FontSize', 12);
         view([az,el]);
         axis([-scale, scale, -scale , scale, -scale , scale]);
         grid on;
