@@ -20,8 +20,8 @@ $ make
 Run the following in the terminal
 ```bash
 $ ./checkPoint  
-$ make
 ```
+This will run the program that checks if a point is inside the mesh.
 
 
 
