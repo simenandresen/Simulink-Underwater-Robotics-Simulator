@@ -1,8 +1,6 @@
 %-----------------------------------
 %
-%  this file holds the parameters 
-%  defining the kinematic structure
-%  in Denavit-Hartenbarg terms
+% Script for running the simulation
 %
 %-----------------------------------
 clear all; clc; close all;
@@ -14,9 +12,10 @@ fprintf('Running simulation at %i:%i:%i\n', c(4), c(5), c(6));
 %% Mathematical parameters
 d2r=pi/180;
 r2d=180/pi;
-KINEMATICS_ONLY = false;
 format compact;
 addpath './uvms_functions'
+
+%% initialize parameters
 init_kinematics;
 init_kinetics;
 init_control;

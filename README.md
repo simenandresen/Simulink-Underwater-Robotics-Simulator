@@ -5,6 +5,7 @@ Underwater Vehicle-Manipulator Simulator
 
 This simulator is for simulating the dynamics of an Underwater Vehicle-Manipulator System (UVMS). 
 The simulator is implemented in Matlab/Simulink and is tested for Matlab version 2013.
+Please file an issue if something is not working
 
 ### Content
 
