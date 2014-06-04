@@ -103,9 +103,9 @@ largestTranslationalRate = max([dx ; dy; dz]);
 if largestTranslationalRate > linearVelocityMax
    disp('Generated Trajectory has too high linear velocity');
    disp('Linear Velocity is scaled');
-   dx = (dx * linearRateMax) ./ largestTranslationalRate;
-   dy = (dy * linearRateMax) ./ largestTranslationalRate;
-   dz = (dz * linearRateMax) ./ largestTranslationalRate;
+   dx = (dx * linearVelocityMax) ./ largestTranslationalRate;
+   dy = (dy * linearVelocityMax) ./ largestTranslationalRate;
+   dz = (dz * linearVelocityMax) ./ largestTranslationalRate;
 end
 
 
